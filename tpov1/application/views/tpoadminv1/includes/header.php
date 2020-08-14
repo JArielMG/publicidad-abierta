@@ -350,7 +350,14 @@ header('Expires: 0'); // Proxies.
                     ?>
                     
                     
-                    
+                    <?php if(isset($_SESSION['pnt']) AND isset($_SESSION["pnt"]["success"]) AND $_SESSION["pnt"]["success"] ){?>
+                        <!--li class=" <?php if($active == 'pnt') { echo ' active'; } ?>"-->
+                        <li class="">
+                            <a href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt">
+                                 <i class="fa fa-database"></i> SIPOT
+                            </a>
+                        </li>
+                    <?php } ?>
                    
                     
                     <?php

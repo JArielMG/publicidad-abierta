@@ -1,3 +1,3 @@
-#,Nombre,Descripcion,Estatus
-1,Administrador,"Rol encargado de supervisar todo.",Activo
-2,Capturista,"Rol encargado de alimentar la Base de Datos",Activo
+#,Usuario,Email,Nombre,Apellido,"Sujeto Obligado",Estatus
+1,inai,inai@inai.org.mx,inai,inai,"Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales",Activo
+2,admin,admin@admin.com,admin,admin,"Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales",Activo
