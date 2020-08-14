@@ -18,7 +18,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/(carpeta_ejemplo)/';
+$config['base_url'] = 'http://localhost:8888/publicidad_abierta';
 
+//$config['base_dir'] = '/Applications/MAMP/htdocs/publicidad_abierta';
+//$config['base_dir'] = '/Applications/MAMP/htdocs/publicidad_abierta';
 /*
 |--------------------------------------------------------------------------
 | Index File

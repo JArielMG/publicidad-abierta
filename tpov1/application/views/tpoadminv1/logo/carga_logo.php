@@ -4,7 +4,8 @@
 /* 
  INAI / CARGA LOGO
  */
-
+ //var_dump($_SESSION["pnt"]["token"]["token"]);
+//session_destroy();
 ?>
 
 <style>
@@ -25,6 +26,42 @@
         pointer-events: none;
         cursor: default;
     }
+
+    #login-pnt .form-control {
+        display: inline ;
+        width: 200px ;
+    }
+
+
+    #login-pnt label{
+        margin-left: 45px;
+        margin-right: 5px;
+    }
+
+    .status{
+        font-weight: bolder;
+        display:none;
+    }
+
+    .active{ color: green; }
+
+    .inactive{ color: red; }
+
+    #login-pnt input[type=submit]{
+        margin-left: 25px;
+    }
+
+    .circle {
+        
+        display: inline-flex;
+        width: 15px;
+        color: #5cb85c;
+        height: 15px;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+    }
+
 </style>
 
 
@@ -254,6 +291,8 @@
         </div>
     </div>
 
+
+
     <div class="row">
         <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
         <div class="box box">
@@ -282,6 +321,139 @@
             </div>
         </div>
     </div>
+
+
+    <div class="row">
+        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
+        <div class="box box-info">
+            <div class="box-header">
+               <h4 class="modal-title">
+               <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Cuando se ingrese a los servicios del PNT se podrán agregar registros."></i>  
+                Conexión a WEB Services PNT 
+               </h4>
+            </div>
+            <div class="box-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Usuario activo de PNT."></i>
+                            Usuario
+                        </th>
+
+                        <th>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i>
+                            Clave Secreta
+                        </th>
+
+                        <th>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="En activo se habilitan los servicios del PNT, en Inactivo no."></i>
+                            Estatus
+                        </th>
+                        <th> <?php 
+                                if(!isset($recaptcha)){  
+                                    echo "<button type='button' class='btn-group btn btn-primary btn-sm' onclick=\"entrarPNT()\"> <i class='fa fa-edit'></i> Ingresar </button>";
+                                }
+                            ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                        //$myfile = fopen($_SERVER["DOCUMENT_ROOT"] . "/tpov2/data/archivo_conexion.txt", "w") or die("Unable to open file!");
+                        echo "<tr>";
+                        if( isset($_SESSION['pnt']) ){
+                            if($_SESSION["pnt"]["success"]){
+                                echo "<td> <input type='input' id='re-user' class='form-control' name='re-user' value='" . $_SESSION["user_pnt"] . "'> </td>";
+                                echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
+                                echo "<td class='active'> <span class='circle' style='background: #3f3'>  </span> Activo </td>";
+                                
+                                echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a> &nbsp;&nbsp;&nbsp;"; 
+                                echo      "<a type='submit' class='btn-group btn btn-danger btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/logo/salir_pnt'  id='desconectar'> Desconectar </a> </td>";
+                                echo "</tr></tbody></table>";
+                                echo "</form>";
+                                
+                                //$txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . $_SESSION["pnt"]["mensaje"];
+                            } else{
+                                $_SESSION["user_pnt"] = "";
+                                echo "<td> <input type='input' id='re-user' class='form-control' name='re-user'>  </td>";
+                                echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
+                                echo "<td class='inactive'> <span class='circle' style='background: #f33'> </span> Inactivo </td>";
+                                echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' 
+                                              href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a></td>";
+                                              
+                                echo "</tr></tbody> </table>";
+                              
+                                //$txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . ( isset($_SESSION["pnt"]["mensaje"])? $_SESSION["pnt"]["mensaje"] : '');
+                            }
+                            /*
+                            echo "<div class='box-header'>" . 
+                                        "<h4 class='modal-title'>" . 
+                                            "<i class='fa fa-info-circle text-primary' data-toggle='tooltip' " . 
+                                            "title='En este documento puedes ver los el detalle de tu conexión.'></i>" . 
+                                            "Logs de conexión" . 
+                                        "</h4>" . 
+                                    "</div><div class='box-body'>" . 
+                                    "<table class='table table-bordered table-hover'>" . 
+                                        "<tr>" . 
+                                            "<!--th> <a href='" . base_url() . "data/archivo_conexion.txt' download> archivo_conexion.txt </a> </th-->" . 
+                                            "<!--th> <a href='" . base_url() . "data/archivo_conexion.txt' download type='submit' class='btn btn-default' type='button'> Descargar </th-->" . 
+                                        "</tr> " . 
+                                    "</table>" . 
+                                    "</div>";
+
+                            fwrite($myfile, $txt);
+                            fclose($myfile); */
+                        }else{
+                            echo "<td> <input type='input' id='re-user' class='form-control' name='re-user'> </td>";
+                            echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
+                            echo "<td class='inactive'> <span class='circle' style='background: #f33'> </span> Inactivo </td>";
+                            echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' 
+                                          href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a></td>";
+                                          
+                            echo "</tr></tbody> </table>";
+                        }
+                    ?>
+                </tbody>
+            </table>
+            </div>
+
+            <?php if( ( isset($_SESSION['pnt']) ) and ( isset($_SESSION["pnt"]["success"]) ) and ( $_SESSION["pnt"]["success"] ) ){ ?>
+                <div class="box-body"><table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Usuario activo de PNT."></i>
+                                Unidad Administrativa
+                            </th>
+
+                            <th>
+                                <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i>
+                                Sujeto Obligado
+                            </th>
+                            <th> 
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php 
+                        echo "  <tr>";
+                        echo "    <form>";
+                        echo "    <td> <input type='input' id='unidad_administrativa' class='form-control' name='unidad_administrativa' value='" . ( ( isset($_SESSION['unidad_administrativa']) )? $_SESSION["unidad_administrativa"] : '' ) . "'> </td>";
+                        echo "    <td> <input type='input' id='sujeto_obligado' class='form-control' name='sujeto_obligado' value='" . ( ( isset($_SESSION['sujeto_obligado']) )? $_SESSION["sujeto_obligado"] : '' ) . "'> </td>";
+                        echo "    <td> <a type='button' id='modificar_sujeto' href='" . base_url() . "index.php/tpoadminv1/logo/logo/modificar_sujeto' 
+                                            class='btn-group btn btn-primary btn-sm'> <i class='fa fa-edit'></i> Actualizar datos de Sujeto Obligado </a> </td>"; 
+                        echo "    </form>";
+                        echo "  </tr>";
+                    ?>
+                    </tbody>
+                </table> </div>
+            <?php  } ?>
+        </div>
+    </div>
+
+   
 
     <!-- MODAL EDITAR FECHA -->
     <div class="modal fade" id="modalEditarFecha" role="dialog">
@@ -354,7 +526,7 @@
                                     Clave secreta:
                                     <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Se debe obtener en Google reCAPTCHA"></i>
                                 </label>
-                                <input type="text" id= "clave" class="form-control" placeholder="Ingresa la clave secreta" name="clave" value="" autocomplete="off">
+                                <input type="password" id= "clave" class="form-control" placeholder="Ingresa la clave secreta" name="clave" value="" autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label class="custom-file-label">
@@ -365,6 +537,45 @@
                                     <option value="1">Activo</option>
                                     <option value="0">Inactivo</option>
                                 </select>
+                            </div>
+                            <div class="box-footer">
+                                <button class="btn btn-primary" type="submit">Guardar</button>
+                                <button class="btn btn-default" type="button" onclick="cerrarModel()">Cerrar</button>
+                            </div>
+                        </div>
+                    </form>                       
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPNT" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">reCaptcha</h3>
+                </div>
+                <div class="modal-body">
+                    <span>Se deben agregar los datos correctos de la conexión exitosa al WEB services del PNT.</span>
+
+                    <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/entrar_pnt">
+                        <input type="hidden" name="id_settings" id="id_settings" value="" />
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="custom-file-label">
+                                    Usuario:
+                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Usuario del PNT"></i>
+                                </label>
+                                <input type="text" id= "user" class="form-control" placeholder="Ingresa tu usuario del sitio" name="user" value="" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label class="custom-file-label">
+                                    Clave Secreta:
+                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Password del PNT"></i>
+                                </label>
+                                <input type="password" id= "password" class="form-control" placeholder="Ingresa la clave secreta" name="password" value="" autocomplete="off">
                             </div>
                             <div class="box-footer">
                                 <button class="btn btn-primary" type="submit">Guardar</button>
@@ -409,7 +620,50 @@
             eliminar_archivo();
         }
     }
-    
+
+
+    $("a#re-conectar").on("click", function(e){
+        e.preventDefault()
+        $("td.inactive").prepend(
+            "<img class='loading' src='<?php echo base_url(); ?>plugins/img/loading.gif'>")
+        
+        $.post( $(this).attr("href"), { 'user': $("#re-user").val() , 'password': $("#re-pass").val() }, 
+            function(data, error){
+                $("td.inactive").children(".loading").remove()
+                location.reload(); 
+            }
+        );
+        $("td.inactive").children(".loading").remove()
+    })
+
+     $("a#modificar_sujeto").on("click", function(e){
+        e.preventDefault()
+        if ( confirm( "El cambio de estos parámetros podría afectar el uso del módulo de PNT" + 
+            "¿Esta seguro que quiere modificarlo? ") ){
+
+            $.post( $(this).attr("href"), { 'sujeto_obligado': $("#sujeto_obligado").val(), 
+                'unidad_administrativa': $("#unidad_administrativa").val() }, function(data){  
+                    if(data) location.reload();
+                    else console.log(data)
+                }
+            );
+        }
+    })
+
+
+    $("a#desconectar").on("click", function(e){
+        //$.ajaxSetup({ async: false });  
+        e.preventDefault()
+        $(".active").prepend("<img class='loading' src='<?php echo base_url(); ?>plugins/img/loading.gif'>")
+        $.post( $(this).attr("href"), {  }, 
+            function(data){ 
+                $(".active").children(".loading").remove()
+                location.reload(); 
+            }
+        );
+        $(".active").children(".loading").remove()   
+    })
+
     var upload_file = function (){
         if($("input[name='file_programa_imagen']")[0].files.length > 0){
             $('#name_file_input').val($("input[name='file_programa_imagen']")[0].files[0].name );
@@ -529,6 +783,13 @@
         $('#modalRecaptcha').find('.modal-title').append('<h3>Agregar reCAPTCHA</h3>');
         $('#modalRecaptcha').modal('show');
     }
+
+    var entrarPNT = function(){
+        $('#modalPNT').find('.modal-title').empty();
+        $('#modalPNT').find('.modal-title').append('<h3>Entrar PNT</h3>');
+        $('#modalPNT').modal('show');
+    }
+
 
     var editarRecaptcha = function(id, recaptcha, clave, estatus){
         console.log('entro');
