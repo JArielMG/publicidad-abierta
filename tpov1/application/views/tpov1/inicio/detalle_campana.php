@@ -174,6 +174,36 @@ if($disponible == true){ /* se muestra la info*/
                         <td>Fecha de término tiempo oficial <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_termino_to']?>"></i></td>
                         <td><?php echo $fecha_termino_to; ?></td>
                     </tr>
+                    
+                    <tr>
+                        <td>Medio de comunicación <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i></td>
+                        <td><?php echo $campana['nombre_servicioCat'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Descripción de unidad <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i></td>
+                        <td><?php echo $campana['descripcion_unidad'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Concesionario responsable de publicar la campaña o la comunicación correspondiente (razón social) <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i></td>
+                        <td><?php echo $campana['responsable_publisher'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Distintivo y/o nombre comercial del concesionario responsable de publicar la campaña o comunicación <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i></td>
+                        <td><?php echo $campana['name_comercial'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Descripción breve de las razones que justifican la elección del proveedor <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i></td>
+                        <td><?php echo $campana['razones_supplier'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Área administrativa encargada de solicitar la difusión del mensaje o producto, en su caso <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i></td>
+                        <td><?php echo $campana['difusion_mensaje'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Número de factura, en su caso <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i></td>
+                        <td><?php echo $campana['num_factura'] ?></td>
+                    </tr>
+                    
                     <tr>
                         <td>Publicación SEGOB. <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['segob']?>"></i></td>
                         <td><?php echo $campana['publicacion_segob']?></td>

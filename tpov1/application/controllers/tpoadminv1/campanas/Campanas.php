@@ -1089,6 +1089,8 @@ class Campanas extends CI_Controller
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         $data['print_onclick_exp'] = "onclick=\"window.open('" . $print_url_exp . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         
+        $data['ejercicios'] = $this->Campana_model->dame_all_ejercicios(true);
+        
         $data['registros'] = '';//$this->Facturas_model->dame_todas_facturas(false);
         
         $data['path_file_csv'] = ''; //$this->Facturas_model->descarga_facturas();
@@ -1124,6 +1126,12 @@ class Campanas extends CI_Controller
             'segundos_to' => '',
             'tipoTO' => '',
             'mensajeTO' => '',
+            'descripcion_unidad' => '',
+            'responsable_publisher' => '',
+            'name_comercial' => '',
+            'razones_supplier' => '',
+            'difusion_mensaje' => '',
+            'num_factura' => '',
             'fecha_inicio_tiempo_oficial' => 'Fecha de inicio del uso del tiempo oficial de la campa&ntilde;a de la campa&ntilde;a o aviso institucional',
             'fecha_termino_tiempo_oficial' => 'Fecha de termino del uso del tiempo oficial de la campa&ntilde;a de la campa&ntilde;a o aviso institucional',
             'segob' => 'Hiperv&iacute;nculo a la informaci&oacute;n sobre la utilizaci&oacute;n de Tiempo Oficial, publicada por la Direcci&oacute;n General de Radio, Televisi&oacute;n y Cinematograf&iacute;a, adscrita a la Secretar&iacute;a de Gobernaci&oacute;n',
@@ -1145,6 +1153,12 @@ class Campanas extends CI_Controller
                                     "}, 3000);" .
                                     "init();" .
                                 "});" .
+                                "$(function () {" .
+                                    "inicializar_componentes();" .
+                                "});" .
+                                "$('select[name=\"id_ejercicio\"]').change(function (){" .
+                                    "inicializar_componentes();" .
+                                 "});" .
                             "</script>";
         
         $this->load->view('tpoadminv1/includes/template', $data);
@@ -1153,7 +1167,6 @@ class Campanas extends CI_Controller
     function lista_campanas(){
 
         $this->load->model('tpoadminv1/campanas/Campana_model');
-        //$data = $this->Campana_model->dame_todas_campanas(false);
         $data = $this->Campana_model->dame_todas_campanas();
         
         header('Content-type: application/json');
@@ -1206,13 +1219,13 @@ class Campanas extends CI_Controller
         $data['camp_subtipo'] = $this->Campana_model->dame_todos_camp_subtipos();
         $data['ejercicios'] = $this->Campana_model->dame_todos_ejercicios(true);
         $data['trimestres'] = $this->Campana_model->dame_todos_trimestres();
-        //$data['sujetos'] = $this->Campana_model->dame_todos_sujetos();
         $data['so_contratantes'] = $this->Campana_model->dame_todos_so_contratantes(true);
         $data['so_solicitantes'] = $this->Campana_model->dame_todos_so_solicitantes(true);
         $data['temas'] = $this->Campana_model->dame_todos_temas();
         $data['objetivos'] = $this->Campana_model->dame_todos_objetivos();
         $data['coberturas'] = $this->Campana_model->dame_todas_coberturas();
         $data['tiposTO'] = $this->Campana_model->dame_todos_tiposTO();
+        $data['categorias'] = $this->Campana_model->dame_todos_mediosCat();
 		$data['docpacs'] = $this->Campana_model->dame_todos_docpacs();
         
         // poner true para ocultar los botones
@@ -1261,6 +1274,12 @@ class Campanas extends CI_Controller
             'segundos_to' => '',
             'tipoTO' => '',
             'mensajeTO' => '',
+            'descripcion_unidad' => '',
+            'responsable_publisher' => '',
+            'name_comercial' => '',
+            'razones_supplier' => '',
+            'difusion_mensaje' => '',
+            'num_factura' => '',
             'fecha_inicio_to' => 'Fecha de inicio del uso de tiempo oficial de la campa&ntilde;a o aviso institucional.',
             'fecha_termino_to' => 'Fecha de término del uso de tiempo oficial de la campa&ntilde;a o aviso institucional.',
             'segob' => 'Hipervínculo a la informaci&oacute;n sobre la utilizaci&oacute;n de Tiempo Oficial, publicada por Direcci&oacute;n General de Radio, Televisi&oacute;n y Cinematografía, adscrita a la Secretaría de Gobernaci&oacute;n.',
@@ -1450,18 +1469,17 @@ class Campanas extends CI_Controller
         $data['camp_subtipo'] = $this->Campana_model->dame_todos_camp_subtipos();
         $data['ejercicios'] = $this->Campana_model->dame_todos_ejercicios(true);
         $data['trimestres'] = $this->Campana_model->dame_todos_trimestres();
-        //$data['sujetos'] = $this->Campana_model->dame_todos_sujetos();
         $data['so_contratantes'] = $this->Campana_model->dame_todos_so_contratantes(true);
         $data['so_solicitantes'] = $this->Campana_model->dame_todos_so_solicitantes(true);
         $data['temas'] = $this->Campana_model->dame_todos_temas();
         $data['objetivos'] = $this->Campana_model->dame_todos_objetivos();
         $data['coberturas'] = $this->Campana_model->dame_todas_coberturas();
         $data['tiposTO'] = $this->Campana_model->dame_todos_tiposTO();
+        $data['categorias'] = $this->Campana_model->dame_todos_mediosCat();
 		$data['docpacs'] = $this->Campana_model->dame_todos_docpacs();
         $data['registro'] = array(
             'id_presupuesto' => $this->input->post('id_presupuesto'),
             'id_ejercicio' => $this->input->post('id_ejercicio'),
-            //'id_sujeto_obligado' => $this->input->post('id_sujeto_obligado'),
             'id_so_contratante' => $this->input->post('id_so_contratante'),
             'id_so_solicitante' => $this->input->post('id_so_solicitante'),
             'denominacion' => $this->input->post('denominacion'),
@@ -1478,6 +1496,12 @@ class Campanas extends CI_Controller
             'minutos_to' => $this->input->post('minutos_to'),
             'segundos_to' => $this->input->post('segundos_to'),
             'mensajeTO' => $this->input->post('mensajeTO'),
+            'descripcion_unidad' => $this->input->post('descripcion_unidad'),
+            'responsable_publisher' => $this->input->post('responsable_publisher'),
+            'name_comercial' => $this->input->post('name_comercial'),
+            'razones_supplier' => $this->input->post('razones_supplier'),
+            'difusion_mensaje' => $this->input->post('difusion_mensaje'),
+            'num_factura' => $this->input->post('num_factura'),
             'nota' => $this->input->post('nota'),
             'mision' => $this->input->post('mision'),
             'objetivo' => $this->input->post('objetivo'),
@@ -1517,6 +1541,12 @@ class Campanas extends CI_Controller
             'segundos_to' => '',
             'tipoTO' => '',
             'mensajeTO' => '',
+            'descripcion_unidad' => '',
+            'responsable_publisher' => '',
+            'name_comercial' => '',
+            'razones_supplier' => '',
+            'difusion_mensaje' => '',
+            'num_factura' => '', 
             'fecha_inicio_to' => 'Fecha de inicio del uso de tiempo oficial de la campa&ntilde;a o aviso institucional.',
             'fecha_termino_to' => 'Fecha de término del uso de tiempo oficial de la campa&ntilde;a o aviso institucional.',
             'segob' => 'Hipervínculo a la informaci&oacute;n sobre la utilizaci&oacute;n de Tiempo Oficial, publicada por Direcci&oacute;n General de Radio, Televisi&oacute;n y Cinematografía, adscrita a la Secretaría de Gobernaci&oacute;n.',
@@ -2068,13 +2098,13 @@ class Campanas extends CI_Controller
         $data['camp_subtipo'] = $this->Campana_model->dame_todos_camp_subtipos();
         $data['ejercicios'] = $this->Campana_model->dame_todos_ejercicios(true);
         $data['trimestres'] = $this->Campana_model->dame_todos_trimestres();
-        //$data['sujetos'] = $this->Campana_model->dame_todos_sujetos();
         $data['so_contratantes'] = $this->Campana_model->dame_todos_so_contratantes(true);
         $data['so_solicitantes'] = $this->Campana_model->dame_todos_so_solicitantes(true);
         $data['temas'] = $this->Campana_model->dame_todos_temas();
         $data['objetivos'] = $this->Campana_model->dame_todos_objetivos();
         $data['coberturas'] = $this->Campana_model->dame_todas_coberturas();
         $data['tiposTO'] = $this->Campana_model->dame_todos_tiposTO();
+        $data['categorias'] = $this->Campana_model->dame_todos_mediosCat();
 		$data['docpacs'] = $this->Campana_model->dame_todos_docpacs();
 
         //texto para dialogos de ayuda
@@ -2103,6 +2133,12 @@ class Campanas extends CI_Controller
             'segundos_to' => '',
             'tipoTO' => '',
             'mensajeTO' => '',
+            'descripcion_unidad' => '',
+            'responsable_publisher' => '',
+            'name_comercial' => '',
+            'razones_supplier' => '',
+            'difusion_mensaje' => '',
+            'num_factura' => '',
             'fecha_inicio_to' => 'Fecha de inicio del uso de tiempo oficial de la campa&ntilde;a o aviso institucional.',
             'fecha_termino_to' => 'Fecha de término del uso de tiempo oficial de la campa&ntilde;a o aviso institucional.',
             'segob' => 'Hipervínculo a la informaci&oacute;n sobre la utilizaci&oacute;n de Tiempo Oficial, publicada por Direcci&oacute;n General de Radio, Televisi&oacute;n y Cinematografía, adscrita a la Secretaría de Gobernaci&oacute;n.',
@@ -2339,13 +2375,13 @@ class Campanas extends CI_Controller
         $data['camp_subtipo'] = $this->Campana_model->dame_todos_camp_subtipos();
         $data['ejercicios'] = $this->Campana_model->dame_todos_ejercicios(true);
         $data['trimestres'] = $this->Campana_model->dame_todos_trimestres();
-        //$data['sujetos'] = $this->Campana_model->dame_todos_sujetos();
         $data['so_contratantes'] = $this->Campana_model->dame_todos_so_contratantes(true);
         $data['so_solicitantes'] = $this->Campana_model->dame_todos_so_solicitantes(true);
         $data['temas'] = $this->Campana_model->dame_todos_temas();
         $data['objetivos'] = $this->Campana_model->dame_todos_objetivos();
         $data['coberturas'] = $this->Campana_model->dame_todas_coberturas();
         $data['tiposTO'] = $this->Campana_model->dame_todos_tiposTO();
+        $data['categorias'] = $this->Campana_model->dame_todos_mediosCat();
 		$data['docpacs'] = $this->Campana_model->dame_todos_docpacs();
 
         $data['registro'] = array(
@@ -2401,6 +2437,12 @@ class Campanas extends CI_Controller
             'segundos_to' => '',
             'tipoTO' => '',
             'mensajeTO' => '',
+            'descripcion_unidad' => '',
+            'responsable_publisher' => '',
+            'name_comercial' => '',
+            'razones_supplier' => '',
+            'difusion_mensaje' => '',
+            'num_factura' => '',
             'fecha_inicio_to' => 'Fecha de inicio del uso de tiempo oficial de la campa&ntilde;a o aviso institucional.',
             'fecha_termino_to' => 'Fecha de término del uso de tiempo oficial de la campa&ntilde;a o aviso institucional.',
             'segob' => 'Hipervínculo a la informaci&oacute;n sobre la utilizaci&oacute;n de Tiempo Oficial, publicada por Direcci&oacute;n General de Radio, Televisi&oacute;n y Cinematografía, adscrita a la Secretaría de Gobernaci&oacute;n.',
