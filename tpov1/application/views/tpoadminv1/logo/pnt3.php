@@ -53,40 +53,39 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
     <thead>
           <tr>
               <th> ID TPO </th>
-        <th> ID PNT </th>
-        <th> ID </th>
-        <th> Id Factura </th>
-        <th> Factura Desglose </th>
-        <th> Ejercicio </th>
-        <th> Fecha de inicio del periodo que se informa </th>
-        <th> Fecha de termino del periodo que se informa </th>
-        <th> Sujeto obligado al que se le proporcionó el servicio/permiso </th>
-        <th> Tipo (catálogo) </th>
-        <th> Medio de comunicación (catálogo) </th>
-        <th> Descripción de unidad por ejemplo: spot de 30 segundos (radio); mensaje en TV 20 segundos </th>
-        <th> Concepto o campaña </th>
-        <th> Clave única de identificación de campaña o aviso institucional en su caso </th>
-        <th> Autoridad que proporcionó la clave única de identificación de campaña o aviso institucional </th>
-        <th> Cobertura (catálogo) </th>
-        <th> Ámbito geográfico de cobertura </th>
-        <th> Sexo (catálogo) </th>
-        <th> Lugar de residencia </th>
-        <th> Nivel educativo </th>
-        <th> Grupo de edad </th>
-        <th> Nivel económico </th>
-        <th> Concesionario responsable de publicar la campaña o la comunicación correspondiente (razón social) </th>
-        <th> Distintivo y/o nombre comercial del concesionario responsable de publicar la campaña o comunicación </th>
-        <th> Descripción breve de las razones que justifican la elección del proveedor </th>
-        <th> Monto total del tiempo de Estado o tiempo fiscal consumidos </th>
-        <th> Área administrativa encargada de solicitar la difusión del mensaje o producto en  </th>su caso
-        <th> Fecha de inicio de difusión del concepto o campaña </th>
-        <th> Fecha de término de difusión del concepto o campaña </th>
-        <th> Número de factura en su caso </th>
-        <th> Área(s) responsable(s) que genera(n) posee(n) publica(n) y actualizan la  </th>información
-        <th> Fecha de validación </th>
-        <th> Fecha de Actualización </th>
-        <th> Nota </th>
-        <th> Estatus </th>
+              <th> ID PNT </th>
+              <th> ID </th>
+              <th> Id Factura </th>
+              <th> Ejercicio </th>
+              <th> Fecha de inicio del periodo que se informa </th>
+              <th> Fecha de termino del periodo que se informa </th>
+              <th> Sujeto obligado al que se le proporcionó el servicio/permiso </th>
+              <th> Tipo (catálogo) </th>
+              <th> Medio de comunicación (catálogo) </th>
+              <th> Descripción de unidad por ejemplo: spot de 30 segundos (radio); mensaje en TV 20 segundos </th>
+              <th> Concepto o campaña </th>
+              <th> Clave única de identificación de campaña o aviso institucional en su caso </th>
+              <th> Autoridad que proporcionó la clave única de identificación de campaña o aviso institucional </th>
+              <th> Cobertura (catálogo) </th>
+              <th> Ámbito geográfico de cobertura </th>
+              <th> Sexo (catálogo) </th>
+              <th> Lugar de residencia </th>
+              <th> Nivel educativo </th>
+              <th> Grupo de edad </th>
+              <th> Nivel económico </th>
+              <th> Concesionario responsable de publicar la campaña o la comunicación correspondiente (razón social) </th>
+              <th> Distintivo y/o nombre comercial del concesionario responsable de publicar la campaña o comunicación </th>
+              <th> Descripción breve de las razones que justifican la elección del proveedor </th>
+              <th> Monto total del tiempo de Estado o tiempo fiscal consumidos </th>
+              <th> Área administrativa encargada de solicitar la difusión del mensaje o producto en  </th>su caso
+              <th> Fecha de inicio de difusión del concepto o campaña </th>
+              <th> Fecha de término de difusión del concepto o campaña </th>
+              <th> Número de factura en su caso </th>
+              <th> Área(s) responsable(s) que genera(n) posee(n) publica(n) y actualizan la  </th>información
+              <th> Fecha de validación </th>
+              <th> Fecha de Actualización </th>
+              <th> Nota </th>
+              <th> Estatus </th>
           </tr>
       </thead>
       <tbody></tbody>
@@ -134,40 +133,39 @@ $(document).ready(function(){
       scrollX: true,
       columns: [
         { data: 'id_tpo' },
-      { data: 'id_pnt' },
-      { data: 'id' },
-      { data: 'id_factura' },
-      { data: 'id_factura_desglose' },
-      { data: 'ejercicio' },
-      { data: 'fecha_inicio_periodo' },
-      { data: 'fecha_termino_periodo' },
-      { data: 'nombre_sujeto_obligado' },
-      { data: 'nombre_campana_tipoTO' },
-      { data: 'nombre_servicio_categoria' },
-      { data: 'nombre_servicio_unidad' },
-      { data: 'nombre_campana_aviso' },
-      { data: 'clave_campana' },
-      { data: 'autoridad' },
-      { data: 'nombre_campana_cobertura' },
-      { data: 'campana_ambito_geo' },
-      { data: 'nombre_poblacion_sexo' },
-      { data: 'poblacion_lugar' },
-      { data: 'nombre_poblacion_nivel_educativo' },
-      { data: 'nombre_poblacion_grupo_edad' },
-      { data: 'nombre_poblacion_nivel' },
-      { data: 'nombre_razon_social' },
-      { data: 'nombre_comercial' },
-      { data: 'descripcion_justificacion' },
-      { data: 'monto_tiempo' },
-      { data: 'area_responsable' },
-      { data: 'fecha_inicio' },
-      { data: 'fecha_termino' },
-      { data: 'numero_factura' },
-      { data: 'area_responsable' },
-      { data: 'fecha_validacion' },
-      { data: 'fecha_actualizacion' },
-      { data: 'nota' },
-      { data: 'estatus_pnt' }
+        { data: 'id_pnt' },
+        { data: 'id' },
+        { data: 'id_factura' },
+        { data: 'ejercicio' },
+        { data: 'fecha_inicio_periodo' },
+        { data: 'fecha_termino_periodo' },
+        { data: 'nombre_sujeto_obligado' },
+        { data: 'nombre_campana_tipoTO' },
+        { data: 'nombre_servicio_categoria' },
+        { data: 'nombre_servicio_unidad' },
+        { data: 'nombre_campana_aviso' },
+        { data: 'clave_campana' },
+        { data: 'autoridad' },
+        { data: 'nombre_campana_cobertura' },
+        { data: 'campana_ambito_geo' },
+        { data: 'nombre_poblacion_sexo' },
+        { data: 'poblacion_lugar' },
+        { data: 'nombre_poblacion_nivel_educativo' },
+        { data: 'nombre_poblacion_grupo_edad' },
+        { data: 'nombre_poblacion_nivel' },
+        { data: 'nombre_razon_social' },
+        { data: 'nombre_comercial' },
+        { data: 'descripcion_justificacion' },
+        { data: 'monto_tiempo' },
+        { data: 'area_responsable' },
+        { data: 'fecha_inicio' },
+        { data: 'fecha_termino' },
+        { data: 'numero_factura' },
+        { data: 'area_responsable' },
+        { data: 'fecha_validacion' },
+        { data: 'fecha_actualizacion' },
+        { data: 'nota' },
+        { data: 'estatus_pnt' }
     ],
     columnDefs: [ 
       {
@@ -179,7 +177,7 @@ $(document).ready(function(){
           }
       },
       {
-          targets: 34,
+          targets: 33,
           data: "data",
           render: function ( data, type, row, meta ) {
               var response = ""
@@ -215,7 +213,7 @@ $(document).ready(function(){
         }
       },
       {
-          targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],
+          targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,32],
           data: "data",
           render: function ( data, type, row, meta ) {
             if( !(row.id_pnt) || row.id_pnt === ""){ 

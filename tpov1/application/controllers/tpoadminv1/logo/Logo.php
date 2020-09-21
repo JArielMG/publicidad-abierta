@@ -1109,7 +1109,7 @@ class Logo extends CI_Controller
                       "ccob.nombre_campana_cobertura", "sex.nombre_poblacion_sexo", "lug.poblacion_lugar", 
                       "edu.nombre_poblacion_nivel_educativo", "eda.nombre_poblacion_grupo_edad", 
                       "niv.nombre_poblacion_nivel", "prov.nombre_razon_social", "prov.nombre_comercial", 
-                      "ord.descripcion_justificacion", "cam.monto_tiempo", "cam.area_responsable", "fdes.id_factura_desglose",
+                      "ord.descripcion_justificacion", "cam.monto_tiempo", "cam.area_responsable", 
                       "cam.fecha_inicio", "cam.fecha_termino", "fac.id_factura", "fac.numero_factura", "fac.area_responsable", 
                       "cam.fecha_validacion", "cam.fecha_actualizacion", "pnt.estatus_pnt", "cam.nota");
 
