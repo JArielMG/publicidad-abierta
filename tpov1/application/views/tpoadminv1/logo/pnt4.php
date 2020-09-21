@@ -51,7 +51,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	            <th>Fecha de inicio del periodo que se informa</th>
 				<th>Fecha de término del periodo que se informa</th>
 				<th>Mensaje</th>
-				<!--th>Hipervínculo que dirija a la información relativa a la utilización de los Tiempos oficiales </th-->
+				<th>Hipervínculo que dirija a la información relativa a la utilización de los Tiempos oficiales </th>
 				<th>Área(s) responsable(s) que genera(n) posee(n) publica(n) y actualizan la información</th>
 				<th>Fecha de validación</th>
 				<th>Fecha de actualización</th>
@@ -107,7 +107,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'fecha_inicio_periodo' },
 				{ data: 'fecha_termino_periodo' },
 				{ data: 'mensajeTO' },
-				//{ data: 'Hipervínculo' },
+				{ data: 'publicacion_segob' }, //'Hipervínculo'
 				{ data: 'fecha_validacion' },
 				{ data: 'fecha_actualizacion' },
 				{ data: 'area_responsable' },
@@ -124,7 +124,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    }
 				},
 				{
-				    targets: 11,
+				    targets: 12,
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				      	var response = ""

@@ -1199,8 +1199,8 @@ class Logo extends CI_Controller
 //"pnt.id_tpo", "pnt.id_pnt", "f.id_factura"
     function registros4(){
         $cols = array("pnt.id_campana_aviso id_tpo", "pnt.id_pnt", "cam.id_campana_aviso id", "pnt.estatus_pnt", "ej.ejercicio", 
-                      "cam.fecha_inicio_periodo", "cam.fecha_termino_periodo", "cam.mensajeTO", 
-                      "cam.fecha_validacion", "cam.fecha_actualizacion", "cam.area_responsable", "cam.nota");
+                      "cam.fecha_inicio_periodo", "cam.fecha_termino_periodo", "cam.mensajeTO", "cam.fecha_validacion", 
+                      "cam.publicacion_segob", "cam.fecha_actualizacion", "cam.area_responsable", "cam.nota");
 
         foreach ($cols as &$col) {
             $tag = $col;
@@ -1211,7 +1211,6 @@ class Logo extends CI_Controller
         }
 
         $query = $this->db->query("SELECT " . join(", ", $cols) . "
-                /* Hipervínculo, */ 
                 FROM tab_campana_aviso cam 
                 JOIN cat_ejercicios ej ON ej.id_ejercicio = cam.id_ejercicio 
                 LEFT JOIN rel_pnt_campana_aviso pnt ON pnt.id_campana_aviso = cam.id_campana_aviso;"); 
