@@ -98,11 +98,18 @@ class Campana_Model extends CI_Model
                 $array_camp_avisos[$cont]['fecha_termino_to'] = $row['fecha_termino_to'];
                 $array_camp_avisos[$cont]['id_campana_tipoTO'] = $row['id_campana_tipoTO'];
 				$array_camp_avisos[$cont]['id_presupuesto'] = $row['id_presupuesto'];
+				$array_camp_avisos[$cont]['id_servicio_categoria'] = $row['id_servicio_categoria'];
                 $array_camp_avisos[$cont]['monto_tiempo'] = $row['monto_tiempo'];
                 $array_camp_avisos[$cont]['hora_to'] = $row['hora_to'];
                 $array_camp_avisos[$cont]['minutos_to'] = $row['minutos_to'];
                 $array_camp_avisos[$cont]['segundos_to'] = $row['segundos_to'];
                 $array_camp_avisos[$cont]['mensajeTO'] = $row['mensajeTO'];
+                $array_camp_avisos[$cont]['descripcion_unidad'] = $row['descripcion_unidad'];
+                $array_camp_avisos[$cont]['responsable_publisher'] = $row['responsable_publisher'];
+                $array_camp_avisos[$cont]['name_comercial'] = $row['name_comercial'];
+                $array_camp_avisos[$cont]['razones_supplier'] = $row['razones_supplier'];
+                $array_camp_avisos[$cont]['difusion_mensaje'] = $row['difusion_mensaje'];
+                $array_camp_avisos[$cont]['num_factura'] = $row['num_factura'];
                 $array_camp_avisos[$cont]['publicacion_segob'] = $row['publicacion_segob'];
                 $array_camp_avisos[$cont]['campana_ambito_geo'] = $row['campana_ambito_geo'];
                 $array_camp_avisos[$cont]['plan_acs'] = $row['plan_acs'];
@@ -122,7 +129,32 @@ class Campana_Model extends CI_Model
             return $array_camp_avisos;
         }
     }
+	
+	function dame_all_ejercicios($activos)
+    {
+        $this->load->model('tpoadminv1/Generales_model');
 
+        if($activos == true){
+            $this->db->where('active', '1');
+        }
+        $query = $this->db->get('cat_ejercicios');
+        
+        if($query->num_rows() > 0)
+        {
+            $array_items = [];
+            $cont = 0;
+            foreach ($query->result_array() as $row) 
+            {
+    
+                    $array_items[$cont]['id_ejercicio'] = $row['id_ejercicio'];
+                    $array_items[$cont]['ejercicio'] = $row['ejercicio'];
+                    $array_items[$cont]['active'] = $this->Generales_model->get_estatus_name($row['active']);
+                    $cont++;
+            }
+            return $array_items;
+        }
+    }
+	
     function descarga_campanas()
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
@@ -541,6 +573,24 @@ class Campana_Model extends CI_Model
         }
     }
 	
+	function dame_medioComunicacion_nombre($id)
+    {
+        $this->db->select('nombre_servicio_categoria');
+        $this->db->where('id_servicio_categoria', $id);
+        $this->db->where('active', '1');
+        $query = $this->db->get('cat_servicios_categorias');
+        
+        if ($query->num_rows() == 1)
+        {
+            foreach ($query->result_array() as $row){
+            }
+            return $row['nombre_servicio_categoria'];
+        }else
+        {
+            return '';
+        }
+    }
+	
 	function dame_docs_nombre($id)
     {
         $this->db->select('denominacion');
@@ -800,11 +850,18 @@ class Campana_Model extends CI_Model
                 $array_camp_avisos[$cont]['objetivo_comunicacion'] = $row['objetivo_comunicacion'];
                 $array_camp_avisos[$cont]['id_campana_tipoTO'] = $row['id_campana_tipoTO'];
 				$array_camp_avisos[$cont]['id_presupuesto'] = $row['id_presupuesto'];
+				$array_camp_avisos[$cont]['id_servicio_categoria'] = $row['id_servicio_categoria'];
                 $array_camp_avisos[$cont]['monto_tiempo'] = $row['monto_tiempo'];
                 $array_camp_avisos[$cont]['hora_to'] = $row['hora_to'];
                 $array_camp_avisos[$cont]['minutos_to'] = $row['minutos_to'];
                 $array_camp_avisos[$cont]['segundos_to'] = $row['segundos_to'];
                 $array_camp_avisos[$cont]['mensajeTO'] = $row['mensajeTO'];
+                $array_camp_avisos[$cont]['descripcion_unidad'] = $row['descripcion_unidad'];
+                $array_camp_avisos[$cont]['responsable_publisher'] = $row['responsable_publisher'];
+                $array_camp_avisos[$cont]['name_comercial'] = $row['name_comercial'];
+                $array_camp_avisos[$cont]['razones_supplier'] = $row['razones_supplier'];
+                $array_camp_avisos[$cont]['difusion_mensaje'] = $row['difusion_mensaje'];
+                $array_camp_avisos[$cont]['num_factura'] = $row['num_factura'];
                 $array_camp_avisos[$cont]['fecha_inicio'] = $row['fecha_inicio'];
                 $array_camp_avisos[$cont]['fecha_termino'] = $row['fecha_termino'];
                 $array_camp_avisos[$cont]['fecha_inicio_to'] = $row['fecha_inicio_to'];
@@ -1651,10 +1708,8 @@ class Campana_Model extends CI_Model
                 $camp_aviso['fecha_inicio_periodo'] = $this->Generales_model->dateToString($row['fecha_inicio_periodo']);
                 $camp_aviso['fecha_termino_periodo'] = $this->Generales_model->dateToString($row['fecha_termino_periodo']);
                 $camp_aviso['id_so_solicitante'] = $row['id_so_solicitante'];
-                //$camp_aviso['nombre_so_solicitante'] = $this->dame_sos_nombre($row['id_so_solicitante']);
                 $camp_aviso['nombre_so_solicitante'] = $this->dame_nombre_solicitante($row['id_so_solicitante']);
                 $camp_aviso['id_so_contratante'] = $row['id_so_contratante'];
-                //$camp_aviso['nombre_so_contratante'] = $this->dame_soc_nombre($row['id_so_contratante']);
                 $camp_aviso['nombre_so_contratante'] = $this->dame_nombre_contratante($row['id_so_contratante']);
                 $camp_aviso['id_tiempo_oficial'] = $row['id_tiempo_oficial'];
                 $camp_aviso['nombre_tiempo_oficial'] = $this->dame_tiempo_oficial_nombre($row['id_tiempo_oficial']);
@@ -1662,6 +1717,10 @@ class Campana_Model extends CI_Model
                 $camp_aviso['nombre_tipoTO'] = $this->dame_tipoTO_nombre($row['id_campana_tipoTO']);
 				$camp_aviso['denominacion'] = $this->dame_docs_nombre($row['id_presupuesto']);
 				$camp_aviso['id_presupuesto'] = $row['id_presupuesto'];
+				
+				$camp_aviso['nombre_servicioCat'] = $this->dame_medioComunicacion_nombre($row['id_servicio_categoria']);
+				$camp_aviso['id_servicio_categoria'] = $row['id_servicio_categoria'];
+				
                 $camp_aviso['nombre_campana_aviso'] = $row['nombre_campana_aviso'];
                 $camp_aviso['objetivo_comunicacion'] = $row['objetivo_comunicacion'];
                 $camp_aviso['monto_tiempo'] = $row['monto_tiempo'];
@@ -1669,6 +1728,12 @@ class Campana_Model extends CI_Model
                 $camp_aviso['minutos_to'] = $row['minutos_to'];
                 $camp_aviso['segundos_to'] = $row['segundos_to'];
                 $camp_aviso['mensajeTO'] = $row['mensajeTO'];
+                $camp_aviso['descripcion_unidad'] = $row['descripcion_unidad'];
+                $camp_aviso['responsable_publisher'] = $row['responsable_publisher'];
+                $camp_aviso['name_comercial'] = $row['name_comercial'];
+                $camp_aviso['razones_supplier'] = $row['razones_supplier'];
+                $camp_aviso['difusion_mensaje'] = $row['difusion_mensaje'];
+                $camp_aviso['num_factura'] = $row['num_factura'];
                 $camp_aviso['fecha_inicio'] = $this->Generales_model->dateToString($row['fecha_inicio']);
                 $camp_aviso['fecha_termino'] = $this->Generales_model->dateToString($row['fecha_termino']);
                 $camp_aviso['fecha_inicio_to'] = $this->Generales_model->dateToString($row['fecha_inicio_to']);
@@ -1742,10 +1807,8 @@ class Campana_Model extends CI_Model
                     'fecha_inicio_periodo' => $row['fecha_inicio_periodo'],
                     'fecha_termino_periodo' => $row['fecha_termino_periodo'],
                     'id_so_solicitante' => $row['id_so_solicitante'],
-                    //'nombre_so_solicitante' => $this->dame_sos_nombre($row['id_so_solicitante']),
                     'nombre_so_solicitante' => $this->dame_nombre_solicitante($row['id_so_solicitante']),
                     'id_so_contratante' => $row['id_so_contratante'],
-                    //'nombre_so_contratante' => $this->dame_soc_nombre($row['id_so_contratante']),
                     'nombre_so_contratante' => $this->dame_nombre_contratante($row['id_so_contratante']),
                     'id_tiempo_oficial' => $row['id_tiempo_oficial'],
                     'nombre_tiempo_oficial' => $this->dame_tiempo_oficial_nombre($row['id_tiempo_oficial']),
@@ -1753,6 +1816,10 @@ class Campana_Model extends CI_Model
                     'nombre_tipoTO' => $this->dame_tipoTO_nombre($row['id_campana_tipoTO']),
 					'id_presupuesto' => $row['id_presupuesto'],
 					'denominacion' => $this->dame_docs_nombre($row['id_presupuesto']),
+					
+					'id_servicio_categoria' => $row['id_servicio_categoria'],
+					'nombre_servicioCat' => $this->dame_medioComunicacion_nombre($row['id_servicio_categoria']),
+					
                     'nombre_campana_aviso' => $row['nombre_campana_aviso'],
                     'objetivo_comunicacion' => $row['objetivo_comunicacion'],
                     'monto_tiempo' => $row['monto_tiempo'],
@@ -1760,6 +1827,12 @@ class Campana_Model extends CI_Model
                     'minutos_to' => $row['minutos_to'],
                     'segundos_to' => $row['segundos_to'],
                     'mensajeTO' => $row['mensajeTO'],
+                    'descripcion_unidad' => $row['descripcion_unidad'],
+                    'responsable_publisher' => $row['responsable_publisher'],
+                    'name_comercial' => $row['name_comercial'],
+                    'razones_supplier' => $row['razones_supplier'],
+                    'difusion_mensaje' => $row['difusion_mensaje'],
+                    'num_factura' => $row['num_factura'],
                     'fecha_inicio' => $row['fecha_inicio'],
                     'fecha_termino' => $row['fecha_termino'],
                     'fecha_inicio_to' => $row['fecha_inicio_to'],
@@ -1968,10 +2041,8 @@ class Campana_Model extends CI_Model
                     'fecha_inicio_periodo' => $row['fecha_inicio_periodo'],
                     'fecha_termino_periodo' => $row['fecha_termino_periodo'],
                     'id_so_solicitante' => $row['id_so_solicitante'],
-                    //'nombre_so_solicitante' => $this->dame_sos_nombre($row['id_so_solicitante']),
                     'nombre_so_solicitante' => $this->dame_nombre_solicitante($row['id_so_solicitante']),
                     'id_so_contratante' => $row['id_so_contratante'],
-                    //'nombre_so_contratante' => $this->dame_soc_nombre($row['id_so_contratante']),
                     'nombre_so_contratante' => $this->dame_nombre_contratante($row['id_so_contratante']),
                     'id_tiempo_oficial' => $row['id_tiempo_oficial'],
                     'nombre_tiempo_oficial' => $this->dame_tiempo_oficial_nombre($row['id_tiempo_oficial']),
@@ -1979,6 +2050,10 @@ class Campana_Model extends CI_Model
                     'nombre_tipoTO' => $this->dame_tipoTO_nombre($row['id_campana_tipoTO']),
 					'id_presupuesto' => $row['id_presupuesto'],
 					'denominacion' => $this->dame_docs_nombre($row['id_presupuesto']),
+					
+					'id_servicio_categoria' => $row['id_servicio_categoria'],
+					'nombre_servicioCat' => $this->dame_medioComunicacion_nombre($row['id_servicio_categoria']),
+					
                     'nombre_campana_aviso' => $row['nombre_campana_aviso'],
                     'objetivo_comunicacion' => $row['objetivo_comunicacion'],
                     'monto_tiempo' => $row['monto_tiempo'],
@@ -1986,6 +2061,12 @@ class Campana_Model extends CI_Model
                     'minutos_to' => $row['minutos_to'],
                     'segundos_to' => $row['segundos_to'],
                     'mensajeTO' => $row['mensajeTO'],
+                    'descripcion_unidad' => $row['descripcion_unidad'],
+                    'responsable_publisher' => $row['responsable_publisher'],
+                    'name_comercial' => $row['name_comercial'],
+                    'razones_supplier' => $row['razones_supplier'],
+                    'difusion_mensaje' => $row['difusion_mensaje'],
+                    'num_factura' => $row['num_factura'],
                     'fecha_inicio' => $row['fecha_inicio'],
                     'fecha_termino' => $row['fecha_termino'],
                     'fecha_inicio_to' => $row['fecha_inicio_to'],
@@ -2109,6 +2190,7 @@ class Campana_Model extends CI_Model
             'id_tiempo_oficial' => $this->input->post('id_tiempo_oficial'),
             'id_campana_tipoTO' => $this->input->post('id_campana_tipoTO'),
 			'id_presupuesto' => $this->input->post('id_presupuesto'),
+			'id_servicio_categoria' => $this->input->post('id_servicio_categoria'),
             'nombre_campana_aviso' => $this->input->post('nombre_campana_aviso'),
             'objetivo_comunicacion' => $this->input->post('objetivo_comunicacion'),
             'monto_tiempo' => $this->input->post('monto_tiempo'),
@@ -2116,6 +2198,12 @@ class Campana_Model extends CI_Model
             'minutos_to' => $this->input->post('minutos_to'),
             'segundos_to' => $this->input->post('segundos_to'),
             'mensajeTO' => $this->input->post('mensajeTO'),
+            'descripcion_unidad' => $this->input->post('descripcion_unidad'),
+            'responsable_publisher' => $this->input->post('responsable_publisher'),
+            'name_comercial' => $this->input->post('name_comercial'),
+            'razones_supplier' => $this->input->post('razones_supplier'),
+            'difusion_mensaje' => $this->input->post('difusion_mensaje'),
+            'num_factura' => $this->input->post('num_factura'),
             'fecha_inicio' =>  $this->stringToDate($this->input->post('fecha_inicio')),
             'fecha_termino' => $this->stringToDate($this->input->post('fecha_termino')),
             'fecha_inicio_to' => $this->stringToDate($this->input->post('fecha_inicio_to')),
@@ -2833,6 +2921,29 @@ class Campana_Model extends CI_Model
         }
     }
     
+    function dame_todos_mediosCat()
+    {
+        $this->db->where('active', '1');
+        $this->db->order_by('nombre_servicio_categoria', 'ASC');
+        $query = $this->db->get('cat_servicios_categorias');
+        
+        if($query->num_rows() > 0)
+        {
+            $array_categorias = [];
+            $cont = 0;
+            foreach ($query->result_array() as $row) 
+            {
+                $array_categorias[$cont]['id_servicio_categoria'] = $row['id_servicio_categoria'];
+                $array_categorias[$cont]['nombre_servicio_categoria'] = $row['nombre_servicio_categoria'];
+                $array_categorias[$cont]['active'] = $row['active'];
+                $cont++;
+            }
+            return $array_categorias;
+        }
+    }
+    
+    
+    
 	function dame_todos_docpacs()
     {
         $this->db->order_by('denominacion', 'ASC');
@@ -3282,6 +3393,7 @@ class Campana_Model extends CI_Model
             'id_campana_cobertura' => $this->input->post('id_campana_cobertura'),
             'id_campana_tipoTO' => $this->input->post('id_campana_tipoTO'),
 			'id_presupuesto' => $this->input->post('id_presupuesto'),
+			'id_servicio_categoria' => $this->input->post('id_servicio_categoria'),
             'id_campana_tipo' => $this->input->post('id_campana_tipo'),
             'id_campana_subtipo' => $this->input->post('id_campana_subtipo'),
             'id_campana_tema' => $this->input->post('id_campana_tema'),
@@ -3300,6 +3412,12 @@ class Campana_Model extends CI_Model
             'minutos_to' => $this->input->post('minutos_to'),
             'segundos_to' => $this->input->post('segundos_to'),
             'mensajeTO' => $this->input->post('mensajeTO'),
+            'descripcion_unidad' => $this->input->post('descripcion_unidad'),
+            'responsable_publisher' => $this->input->post('responsable_publisher'),
+            'name_comercial' => $this->input->post('name_comercial'),
+            'razones_supplier' => $this->input->post('razones_supplier'),
+            'difusion_mensaje' => $this->input->post('difusion_mensaje'),
+            'num_factura' => $this->input->post('num_factura'),
             'fecha_inicio' =>  $this->stringToDate($this->input->post('fecha_inicio')),
             'fecha_termino' => $this->stringToDate($this->input->post('fecha_termino')),
             'fecha_inicio_to' => $this->stringToDate($this->input->post('fecha_inicio_to')),

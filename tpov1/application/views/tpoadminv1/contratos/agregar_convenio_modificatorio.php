@@ -200,7 +200,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="custom-file-label"> Archivo del contrato en PDF
+                        <label class="custom-file-label"> Archivo del convenio modificatorio en PDF
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_convenio']?>"></i>
                         </label>
                     </div>

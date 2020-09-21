@@ -1,11 +1,13 @@
 <?php
-
-/* 
- *
- * INAI TPO
- * DIC - 2018
- */
-
+    $sel_ejercicios = '<option value="">Todos</option>';
+    for($z = 0; $z < sizeof($ejercicios); $z++)
+    {
+        if($ejercicios == $ejercicios[$z]['id_ejercicio']){
+            $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'" selected>' . $ejercicios[$z]['ejercicio'] . '</option>';
+        }else{
+            $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'">' . $ejercicios[$z]['ejercicio'] . '</option>';
+        }
+    }
 ?>
 
 <style>
@@ -66,6 +68,27 @@
             <div class="box table-responsive no-padding">
                 <div class="box-header">
                     <?php echo anchor("tpoadminv1/campanas/campanas/alta_campanas_avisos", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
+                    <div class="pull-right">
+                    	<br><br><br>
+                    	<input type="submit" value="Aplicar">
+                    </div>
+                    <div class="pull-right col-md-2">
+		                <h4>Cambiar estatus:</h4>
+		                <form action="../../form-result.php" method="post">
+						  <div style="padding-left: 3em;">
+						    <input type="checkbox" name="estatus" value="true"> Activo
+						  </div>
+						  <div style="padding-left: 3em;">
+						    <input type="checkbox" name="estatus" value="false"> Inactivo
+						  </div>
+						</form>
+		            </div>
+                    <div class="pull-right col-md-1">
+		                <h4>Ejercicio:</h4>
+		                <select id="id_ejercicio" name="id_ejercicio">
+		                    <?php echo $sel_ejercicios; ?>
+		                </select>
+		            </div>
                     <div class="pull-right">
                         <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
                         <a id="descargabtn" class="btn btn-default" onclick="descargar_archivo()" <?php //echo $print_onclick_exp   ?>><i class="fa fa-file"></i> Exportar a Excel</a>
@@ -278,17 +301,57 @@
                         
                         <tr class="form-group">
                             <td class="control-label col-sm-4">
-                                <b>Fecha inicio tiempo oficial </b>
-                                
+                                <b>Fecha inicio tiempo oficial </b>                                
                             </td>
                             <td class="col-sm-8" id="item_18"></td>
                         </tr>
                         <tr class="form-group">
                             <td class="control-label col-sm-4">
-                                <b>Fecha t&eacute;rmino tiempo oficial</b>
-                                
+                                <b>Fecha t&eacute;rmino tiempo oficial</b>                            
                             </td>
                             <td class="col-sm-8" id="item_19"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td class="control-label col-sm-4">
+                                <b>Medio de comunicación</b>
+                            </td>
+                            <td class="col-sm-8" id="item_35"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td class="control-label col-sm-4">
+                                <b>Descripción de unidad</b>
+                            </td>
+                            <td class="col-sm-8" id="item_36"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td class="control-label col-sm-4">
+                                <b>Concesionario responsable de publicar la campaña o la comunicación correspondiente (razón social)</b>
+                            </td>
+                            <td class="col-sm-8" id="item_37"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td class="control-label col-sm-4">
+                                <b>Distintivo y/o nombre comercial del concesionario responsable de publicar la campaña o comunicación</b>
+                            </td>
+                            <td class="col-sm-8" id="item_38"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td class="control-label col-sm-4">
+                                <b>Descripción breve de las razones que justifican la elección del proveedor</b>
+                            </td>
+                            <td class="col-sm-8" id="item_39"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td class="control-label col-sm-4">
+                                <b>Área administrativa encargada de solicitar la difusión del mensaje o producto, en su caso</b>
+                            </td>
+                            <td class="col-sm-8" id="item_40"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td class="control-label col-sm-4">
+                                <b>Número de factura, en su caso</b>
+                            </td>
+                            <td class="col-sm-8" id="item_41"></td>
                         </tr>
                         
                         <tr class="form-group">
@@ -473,6 +536,13 @@
                     $('#myModal').find('#item_33').html(response.mensajeTO);
                     $('#myModal').find('#item_18').html(response.fecha_inicio_to);
                     $('#myModal').find('#item_19').html(response.fecha_termino_to);
+                    $('#myModal').find('#item_35').html(response.nombre_servicio_categoria);
+                    $('#myModal').find('#item_36').html(response.descripcion_unidad);
+                    $('#myModal').find('#item_37').html(response.responsable_publisher);
+                    $('#myModal').find('#item_38').html(response.name_comercial);
+                    $('#myModal').find('#item_39').html(response.razones_supplier);
+                    $('#myModal').find('#item_40').html(response.difusion_mensaje);
+                    $('#myModal').find('#item_41').html(response.num_factura);
                     $('#myModal').find('#item_20').html(response.publicacion_segob);
                     $('#myModal').find('#item_21').html(response.denominacion);
                     $('#myModal').find('#item_22').html(response.fecha_dof);
@@ -519,7 +589,11 @@
         $('#campanas').find('tbody').empty();
         initDataTable();
     }
-
+	
+	var inicializar_componentes = function(){
+        set_valores_tabla();
+    }
+	
     var set_valores_tabla = function(response, container){
         $('#campanas').find('tbody').empty();
         if(Array.isArray(response)){
@@ -541,12 +615,14 @@
                         '</tr>';
                 $('#campanas').find('tbody').append(html);
             });
-        }
+        } 
         initDataTable();
     }
 
-    var initDataTable = function(){
+    var initDataTable = function(){        
         $('#campanas').dataTable({
+
+        	'retrieve': true, //aqui
             'bPaginate': true,
             'bLengthChange': true,
             'bFilter': true,

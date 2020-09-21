@@ -129,6 +129,18 @@
         }
     }
 	
+	$sel_categorias = '<option value="0">-Seleccione-</option>';
+    if(isset($categorias)){
+        for($z = 0; $z < sizeof($categorias); $z++)
+        {
+            if($campana['id_servicio_categoria'] == $categorias[$z]['id_servicio_categoria']){
+                $sel_categorias .= '<option value="'.$categorias[$z]['id_servicio_categoria'].'" selected>' . $categorias[$z]['nombre_servicio_categoria'] . '</option>';
+            }else{
+                $sel_categorias .= '<option value="'.$categorias[$z]['id_servicio_categoria'].'">' . $categorias[$z]['nombre_servicio_categoria'] . '</option>';
+            }
+        }
+    }
+    
 	$sel_pacs = '<option value="0">- Selecciona -</option>';
 	for($z = 0; $z < sizeof($docpacs); $z++)
 	{
@@ -420,94 +432,158 @@
                                     <input type="text" value="<?php if($campana['fecha_termino'] != '0000-00-00'){ echo $campana['fecha_termino'];}else { echo '';} ?>" class="form-control" id="fecha_termino" name="fecha_termino" autocomplete="off"/>
                                 </div>
 
+		 <!-- I N I C I O      T I E M P O       O F I C I A L -->
+
                                 <div class="form-group">
                                     <label>Tiempo oficial*
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['tiempo_oficial']?>"></i>
                                     </label>
-                                    <select name="id_tiempo_oficial" class="form-control <?php if($error_so) echo 'has-error' ?>">
-                                        <option value="0">- Selecciona -</option>
-                                        <option value="1" <?php if($campana['id_tiempo_oficial'] == '1') { ?>  selected="selected"; <?php } ?> >Sí</option>
-                                        <option value="2" <?php if($campana['id_tiempo_oficial'] == '2') { ?>  selected="selected"; <?php } ?>>No</option>
+                                    <select name="id_tiempo_oficial" onChange="toOnChange(this)" class="form-control <?php if($error_so) echo 'has-error' ?>">
+                                        <option value="1" <?php if($campana['id_tiempo_oficial'] == '1') { ?>  selected="selected"; <?php } ?> >No</option>
+                                        <option value="2" <?php if($campana['id_tiempo_oficial'] == '2') { ?>  selected="selected"; <?php } ?>>Sí</option>
                                     </select>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label>Monto total del tiempo de estado o tiempo fiscal consumidos
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['monto_tiempo']?>"></i>
-                                    </label>
-                                     <br>                                                           
-	                                <table class="table">
-										<tr>
-											<th>Horas</th>
-											<th>Minutos</th>
-											<th>Segundos</th>
-											<th>Monto total del tiempo</th>
-										</tr>
-	
-										<tr>
-											<td>
-                                            <input class="form-control" name="hora_to" id="hora_to" value="<?php echo $campana['hora_to']; ?>" onchange="javascript:monto_TO();"><?php echo set_value('hora_to');?> <?php echo set_value('hora_to');?>		  
-											</td>
-											<td>
-											<input class="form-control" name="minutos_to" id="minutos_to" value="<?php echo $campana['minutos_to']; ?>" onchange="javascript:monto_TO();"><?php echo set_value('minutos_to');?> 
-											</td>
-											<td>
-											<input class="form-control" name="segundos_to" id="segundos_to" value="<?php echo $campana['segundos_to']; ?>" onchange="javascript:monto_TO();"><?php echo set_value('segundos_to');?> 
-											</td>
-											<td>
-											<input class="form-control" readonly="readonly" name="monto_tiempo" id="monto_tiempo" value="<?php echo $campana['monto_tiempo']; ?>"  />
-											</td>
-										</tr>
-									</table>
-                                </div>
-                                
-                        <script type="text/javascript">
-
-							function monto_TO() {
-							
-							    hora_to=document.getElementById('hora_to').value;
-							    minutos_to=document.getElementById('minutos_to').value;
-							    segundos_to=document.getElementById('segundos_to').value;
-							
-							    monto_tiempo=hora_to+':'+minutos_to+':'+segundos_to;
-							
-							    document.getElementById('monto_tiempo').value=monto_tiempo;
-								
-	                       	}
-						
-						</script>    
-                                                              
-                                <div class="form-group">
-                                    <label>Tipo de tiempo oficial
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['tipoTO']?>"></i>
-                                    </label>
-                                    <select name="id_campana_tipoTO" class="form-control <?php if($error_tipoTO) echo 'has-error' ?>">
-                                        <?php echo $sel_tipoTO; ?>
-                                    </select>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Mensaje sobre el tiempo oficial
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['mensajeTO']?>"></i>
-                                    </label>
-                                    <textarea class="form-control" name="mensajeTO" id="mensajeTO">
-                                        <?php echo $campana['mensajeTO']; ?>
-                                    </textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Fecha inicio tiempo oficial 
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_inicio_to']?>"></i>
-                                    </label>
-                                    <input type="text" value="<?php if($campana['fecha_inicio_to'] != '0000-00-00'){ echo $campana['fecha_inicio_to'];}else { echo '';} ?>" class="form-control" id="fecha_inicio_to" name="fecha_inicio_to" autocomplete="off"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Fecha t&eacute;rmino tiempo oficial
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_termino_to']?>"></i> 
-                                    </label>
-                                    <input type="text" value="<?php if($campana['fecha_termino_to'] != '0000-00-00'){ echo $campana['fecha_termino_to'];}else { echo '';} ?>" class="form-control" id="fecha_termino_to" name="fecha_termino_to" autocomplete="off"/>
-                                </div>
+                                                             
+                                <div>								      
+								    <div id="timeOficial" style="display:none;">
+		                                <div class="form-group">
+		                                    <label>Monto total del tiempo de estado o tiempo fiscal consumidos
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['monto_tiempo']?>"></i>
+		                                    </label>
+		                                     <br>                                                           
+			                                <table class="table">
+												<tr>
+													<th>Horas</th>
+													<th>Minutos</th>
+													<th>Segundos</th>
+													<th>Monto total del tiempo</th>
+												</tr>
+			
+												<tr>
+													<td>
+		                                            <input class="form-control" name="hora_to" id="hora_to" value="<?php echo $campana['hora_to']; ?>" onchange="javascript:monto_TO();"><?php echo set_value('hora_to');?> <?php echo set_value('hora_to');?>		  
+													</td>
+													<td>
+													<input class="form-control" name="minutos_to" id="minutos_to" value="<?php echo $campana['minutos_to']; ?>" onchange="javascript:monto_TO();"><?php echo set_value('minutos_to');?> 
+													</td>
+													<td>
+													<input class="form-control" name="segundos_to" id="segundos_to" value="<?php echo $campana['segundos_to']; ?>" onchange="javascript:monto_TO();"><?php echo set_value('segundos_to');?> 
+													</td>
+													<td>
+													<input class="form-control" readonly="readonly" name="monto_tiempo" id="monto_tiempo" value="<?php echo $campana['monto_tiempo']; ?>"  />
+													</td>
+												</tr>
+											</table>
+		                                </div>
+		                                
+					                        <script type="text/javascript">
+												function monto_TO() {
+												    hora_to=document.getElementById('hora_to').value;
+												    minutos_to=document.getElementById('minutos_to').value;
+												    segundos_to=document.getElementById('segundos_to').value;
+												
+												    monto_tiempo=hora_to+':'+minutos_to+':'+segundos_to;
+												
+												    document.getElementById('monto_tiempo').value=monto_tiempo;	
+						                       	}											
+											</script>    
+		                                                              
+		                                <div class="form-group">
+		                                    <label>Tipo de tiempo oficial
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['tipoTO']?>"></i>
+		                                    </label>
+		                                    <select name="id_campana_tipoTO" class="form-control <?php if($error_tipoTO) echo 'has-error' ?>">
+		                                        <?php echo $sel_tipoTO; ?>
+		                                    </select>
+		                                </div>		                                
+		                                <div class="form-group">
+		                                    <label>Mensaje sobre el tiempo oficial
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['mensajeTO']?>"></i>
+		                                    </label>
+		                                    <textarea class="form-control" name="mensajeTO" id="mensajeTO">
+		                                        <?php echo $campana['mensajeTO']; ?>
+		                                    </textarea>
+		                                </div>		
+		                                <div class="form-group">
+		                                    <label>Fecha inicio tiempo oficial 
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_inicio_to']?>"></i>
+		                                    </label>
+		                                    <input type="text" value="<?php if($campana['fecha_inicio_to'] != '0000-00-00'){ echo $campana['fecha_inicio_to'];}else { echo '';} ?>" class="form-control" id="fecha_inicio_to" name="fecha_inicio_to" autocomplete="off"/>
+		                                </div>		
+		                                <div class="form-group">
+		                                    <label>Fecha t&eacute;rmino tiempo oficial
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_termino_to']?>"></i> 
+		                                    </label>
+		                                    <input type="text" value="<?php if($campana['fecha_termino_to'] != '0000-00-00'){ echo $campana['fecha_termino_to'];}else { echo '';} ?>" class="form-control" id="fecha_termino_to" name="fecha_termino_to" autocomplete="off"/>
+		                                </div>
+		                                <div class="form-group">
+		                                    <label>Medio de comunicación
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title=""></i>
+		                                    </label>
+		                                    <select name="id_servicio_categoria" class="form-control">
+		                                        <?php echo $sel_categorias; ?>
+		                                    </select> 
+		                                </div>
+		                                <div class="form-group">
+		                                    <label>Descripción de unidad, por ejemplo: spot de 30 segundos (radio); mensaje en TV 20 segundos
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['descripcion_unidad']?>"></i>
+		                                    </label>
+		                                    <?php $class = "form-control";
+                                            echo form_input(array('type' => 'text', 'name' => 'descripcion_unidad', 'value' => $campana['descripcion_unidad'], 'class' => $class)); ?>  
+		                                </div>
+		                                <div class="form-group">
+		                                    <label>Concesionario responsable de publicar la campaña o la comunicación correspondiente (razón social)
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['responsable_publisher']?>"></i>
+		                                    </label>
+		                                    <?php $class = "form-control";
+                                            echo form_input(array('type' => 'text', 'name' => 'responsable_publisher', 'value' => $campana['responsable_publisher'], 'class' => $class)); ?>  
+		                                </div>
+		                                <div class="form-group">
+		                                    <label>Distintivo y/o nombre comercial del concesionario responsable de publicar la campaña o comunicación
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['name_comercial']?>"></i>
+		                                    </label>
+		                                    <?php $class = "form-control";
+                                            echo form_input(array('type' => 'text', 'name' => 'name_comercial', 'value' => $campana['name_comercial'], 'class' => $class)); ?>		                                   
+		                                </div>
+		                                <div class="form-group">
+		                                    <label>Descripción breve de las razones que justifican la elección del proveedor
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['razones_supplier']?>"></i>
+		                                    </label>
+		                                    <?php $class = "form-control";
+                                            echo form_input(array('type' => 'text', 'name' => 'razones_supplier', 'value' => $campana['razones_supplier'], 'class' => $class)); ?>
+		                                </div>
+		                                <div class="form-group">
+		                                    <label>Área administrativa encargada de solicitar la difusión del mensaje o producto, en su caso
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['difusion_mensaje']?>"></i>
+		                                    </label>
+		                                    <?php $class = "form-control";
+                                            echo form_input(array('type' => 'text', 'name' => 'difusion_mensaje', 'value' => $campana['difusion_mensaje'], 'class' => $class)); ?>
+		                                </div>
+		                                <div class="form-group">
+		                                    <label>Número de factura, en su caso
+		                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['num_factura']?>"></i>
+		                                    </label>
+		                                    <?php $class = "form-control";
+                                            echo form_input(array('type' => 'text', 'name' => 'num_factura', 'value' => $campana['num_factura'], 'class' => $class)); ?>		                             
+		                                </div>
+		                      		</div>                              
+								</div>
+								 
+		<script>
+			function toOnChange(sel) {
+				if (sel.value=="1"){								
+					divT = document.getElementById("timeOficial");
+					divT.style.display = "none";				
+				}else{								
+					divT = document.getElementById("timeOficial");
+					divT.style.display = "";
+			    }
+			}
+			
+			window.onload= toOnChange();
+		</script>						
+									                               
+         <!--   F I N      T I E M P O        O F I C I A L   --> 
                                 
                                 <div class="form-group">
                                     <label>Publicaci&oacute;n SEGOB.
