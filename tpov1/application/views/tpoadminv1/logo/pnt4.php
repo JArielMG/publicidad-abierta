@@ -127,31 +127,31 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    targets: 11,
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
-			      	var response = ""
-		      		
-		      		_row = JSON.stringify(row) 
-		      		_row = HtmlSanitizer.SanitizeHtml(_row) 
-			      	if( !(row.id_pnt) || row.id_pnt === ""){ 
-			      		response += "<a class='tpo_btn crear' href='#' data='" + _row + "'>" 
-			      		response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i>  </span> </a>"
+				      	var response = ""
+			      		
+			      		_row = JSON.stringify(row) 
+			      		//_row = HtmlSanitizer.SanitizeHtml(_row) 
+				      	if( !(row.id_pnt) || row.id_pnt === ""){ 
+				      		response += "<a class='tpo_btn crear' href='#' data='" + _row + "'>" 
+				      		response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i>  </span> </a>"
 
-			      		response += "<a class='tpo_btn eliminar invisible' href='#' data='" + _row + "'>" 
-			      		response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
+				      		response += "<a class='tpo_btn eliminar invisible' href='#' data='" + _row + "'>" 
+				      		response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
 
-			      		response += "<a class='tpo_btn editar invisible' href='#' data='" + _row + "'>" 
-			      		response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
-			      	}else{
-			      		response += "<a class='tpo_btn crear invisible' href='#' data='" + _row + "'>" 
-			      		response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i> </span> </a>"
+				      		response += "<a class='tpo_btn editar invisible' href='#' data='" + _row + "'>" 
+				      		response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
+				      	}else{
+				      		response += "<a class='tpo_btn crear invisible' href='#' data='" + _row + "'>" 
+				      		response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i> </span> </a>"
 
-			      		response += "<a class='tpo_btn eliminar' href='#' data='" + _row + "'>" 
-			      		response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
+				      		response += "<a class='tpo_btn eliminar' href='#' data='" + _row + "'>" 
+				      		response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
 
-			      		response += "<a class='tpo_btn editar' href='#' data='" + _row + "'>" 
-			      		response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
-			      	}
-			      	return response
-				}
+				      		response += "<a class='tpo_btn editar' href='#' data='" + _row + "'>" 
+				      		response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
+				      	}
+				      	return response
+					}
 				},
 				{
 				    targets: [3,4,5,6,7,8,9,10,11],
