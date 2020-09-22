@@ -70,7 +70,6 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				<td> Hipervínculo a la factura</td>
 				<td> Fecha de validación</td>
 				<td> Fecha de actualización</td>
-				<td> Nota</td>
 				<td> Estatus</td>
 	        </tr>
 	    </thead>
@@ -132,7 +131,6 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'files_factura_pdf' },
 				{ data: 'fecha_validacion' },
 				{ data: 'fecha_actualizacion' },
-				{ data: 'nota' },
 				{ data: 'estatus_pnt' }
 			],
 			columnDefs: [ 
@@ -145,7 +143,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    }
 				},
 				{
-				    targets: 18,
+				    targets: 17,
 				    data: "data",
    				    render: function ( data, type, row, meta ) {
 				      	var response = ""
@@ -173,7 +171,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 					}
 				},
 				{
-				    targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
+				    targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16],
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 

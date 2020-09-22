@@ -1068,7 +1068,7 @@ class Logo extends CI_Controller
         $cols = array("pnt.id_contrato id_tpo", "pnt.id_pnt id_pnt", "pnt.id", "ej.ejercicio", 
                       "cont.fecha_celebracion", "cont.numero_contrato", "cont.objeto_contrato", 
                       "f.numeros_factura", "f.files_factura_pdf", "conv.file_convenio", 
-                      "cont.fecha_validacion", "cont.fecha_actualizacion", "cont.nota", "pnt.estatus_pnt");
+                      "cont.fecha_validacion", "cont.fecha_actualizacion", "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
             $tag = $col;
