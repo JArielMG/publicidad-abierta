@@ -102,8 +102,6 @@ $(document).ready(function(){
         return (year == ejercicio);
     });
 
-
-
     var table = $('#grid1').DataTable({
     	ajax: {
     		url: "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros",
@@ -194,9 +192,15 @@ $(document).ready(function(){
     });
 
     $('#year').change( function() { table.draw(); });
-    
+
+    function validURL(str) {
+	 	try { new URL(string) } catch (_){ return false } 
+  		return true
+	}
 
 	$(document).on("click","a.crear",function(e){
+
+
     	e.preventDefault();
 	    var data = JSON.parse( $(this).attr("data") )
 		  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/agregar_pnt";
@@ -224,7 +228,6 @@ $(document).ready(function(){
 			    	{ "idCampo": 333991, "valor": (data.fecha_termino_periodo != null)? data.fecha_termino_periodo.split('-').reverse().join('/') : ''},
 			    	{ "idCampo": 333985, "valor": data.denominacion},
 			    	{ "idCampo": 333987, "valor": (data.fecha_publicacion != null)? data.fecha_publicacion.split('-').reverse().join('/') : ''},
-			    	{ "idCampo": 333995, "valor": data.file_programa_anual},
 			    	{ "idCampo": 333994, "valor": data.area_responsable},
 			    	{ "idCampo": 333988, "valor": (data.fecha_validacion != null)? data.fecha_validacion.split('-').reverse().join('/') : ''},
 			    	{ "idCampo": 333992, "valor": (data.fecha_actualizacion != null)? data.fecha_actualizacion.split('-').reverse().join('/') : ''},
@@ -233,21 +236,25 @@ $(document).ready(function(){
 			}],
 		  "_id_interno": data.id_presupuesto
 		}
+
+		if ( validURL(data.file_programa_anual) ){
+			formato.registros[0].campos.push( { "idCampo": 333995, "valor": data.file_programa_anual } )
+		}
+
     	$.post(url, formato, function(res, error){
-    		console.log(res, error)
+    		console.log(res)
     		res = JSON.parse(res)
-    		console.log(res, error)
 
     		if(!res || !('success' in res) ) {
     			console.log("No se pudo insertar el elemento correctamente")
     			console.log(res, error)
     			a.css("display", "block")
     		} else {
-    			tr.children("td").eq(1).text(res.id_pnt)
+    			tr.children("td").eq(1).text(res.mensaje.registros[0].idRegistro)
     			tr.children("td").eq(13).children("a.eliminar").removeClass("invisible")
     			tr.children("td").eq(13).children("img.check").removeClass("invisible")
     			tr.children("td").eq(13).children("a.crear").addClass("invisible")
-				location.reload(); 
+				table.draw(); 
     		}
 
 			td.children("img.loading").remove("")
