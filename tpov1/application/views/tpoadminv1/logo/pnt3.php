@@ -116,117 +116,117 @@ $(document).ready(function(){
 
     $.fn.dataTable.ext.search.push( function( settings, data, dataIndex ){
         var year = $('#year').val()
-        var ejercicio = parseInt( data[3] ) || 0; 
+        var ejercicio = parseInt( data[4] ) || 0; 
 
       if (year == "") return true
         return (year == ejercicio);
     });
-
-    $('#year').change( function() { table.draw(); });
     
-    table = $('#grid').DataTable({
+    var table = $('#grid').DataTable({
       ajax: {
         url: "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros3",
         dataSrc: ''
       },
-    scrollY: true,
-      scrollX: true,
-      columns: [
-        { data: 'id_tpo' },
-        { data: 'id_pnt' },
-        { data: 'id' },
-        { data: 'id_factura' },
-        { data: 'ejercicio' },
-        { data: 'fecha_inicio_periodo' },
-        { data: 'fecha_termino_periodo' },
-        { data: 'nombre_sujeto_obligado' },
-        { data: 'nombre_campana_tipoTO' },
-        { data: 'nombre_servicio_categoria' },
-        { data: 'nombre_servicio_unidad' },
-        { data: 'nombre_campana_aviso' },
-        { data: 'clave_campana' },
-        { data: 'autoridad' },
-        { data: 'nombre_campana_cobertura' },
-        { data: 'campana_ambito_geo' },
-        { data: 'nombre_poblacion_sexo' },
-        { data: 'poblacion_lugar' },
-        { data: 'nombre_poblacion_nivel_educativo' },
-        { data: 'nombre_poblacion_grupo_edad' },
-        { data: 'nombre_poblacion_nivel' },
-        { data: 'nombre_razon_social' },
-        { data: 'nombre_comercial' },
-        { data: 'descripcion_justificacion' },
-        { data: 'monto_tiempo' },
-        { data: 'area_responsable' },
-        { data: 'fecha_inicio' },
-        { data: 'fecha_termino' },
-        { data: 'numero_factura' },
-        { data: 'area_responsable' },
-        { data: 'fecha_validacion' },
-        { data: 'fecha_actualizacion' },
-        { data: 'nota' },
-        { data: 'estatus_pnt' }
-    ],
-    columnDefs: [ 
-      {
-          targets: 1,
-          data: "data",
-          render: function ( data, type, row, meta ) {
-              if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
-              return data
-          }
-      },
-      {
-          targets: 33,
-          data: "data",
-          render: function ( data, type, row, meta ) {
-              var response = ""
-              _row = JSON.stringify(row)  //HtmlSanitizer.SanitizeHtml(JSON.stringify(row)) 
-              if( !(row.id_pnt) || row.id_pnt === ""){ 
-                response += "<a class='tpo_btn crear' href='#' data='" + _row + "'>" 
-                response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i>  </span> </a>"
-
-                response += "<img class='check invisible' src='<?php echo base_url(); ?>plugins/img/correct.png'>"
-
-                response += "<a class='tpo_btn eliminar invisible' href='#' data='" + _row + "'>" 
-                response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
-
-                response += "<a class='tpo_btn editar invisible' href='#' data='" + _row + "'>" 
-                response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
-              }else{
-                response += "<a class='tpo_btn crear invisible' href='#' data='" + _row + "'>" 
-                response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i> </span> </a>"
-
-                response += "<img class='check' src='<?php echo base_url(); ?>plugins/img/correct.png'>"
-
-                response += "<a class='tpo_btn eliminar' href='#' data='" + _row + "'>" 
-                response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
-
-                response += "<a class='tpo_btn editar' href='#' data='" + _row + "'>" 
-                response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
-              }
-
-              response += "<a class='tpo_btn ver_mas' href='#' data='" + row.id_factura_desglose + "'>" 
-              response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  Ver más información </span></a>"
-
-              return response
-        }
-      },
-      {
-          targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,32],
-          data: "data",
-          render: function ( data, type, row, meta ) {
-            if( !(row.id_pnt) || row.id_pnt === ""){ 
-                if(!data) return "<label class='btn'> <small> N/D </small></label>"
+      scrollY: true,
+        scrollX: true,
+        columns: [
+          { data: 'id_tpo' },
+          { data: 'id_pnt' },
+          { data: 'id' },
+          { data: 'id_factura' },
+          { data: 'ejercicio' },
+          { data: 'fecha_inicio_periodo' },
+          { data: 'fecha_termino_periodo' },
+          { data: 'nombre_sujeto_obligado' },
+          { data: 'nombre_campana_tipoTO' },
+          { data: 'nombre_servicio_categoria' },
+          { data: 'nombre_servicio_unidad' },
+          { data: 'nombre_campana_aviso' },
+          { data: 'clave_campana' },
+          { data: 'autoridad' },
+          { data: 'nombre_campana_cobertura' },
+          { data: 'campana_ambito_geo' },
+          { data: 'nombre_poblacion_sexo' },
+          { data: 'poblacion_lugar' },
+          { data: 'nombre_poblacion_nivel_educativo' },
+          { data: 'nombre_poblacion_grupo_edad' },
+          { data: 'nombre_poblacion_nivel' },
+          { data: 'nombre_razon_social' },
+          { data: 'nombre_comercial' },
+          { data: 'descripcion_justificacion' },
+          { data: 'monto_tiempo' },
+          { data: 'area_responsable' },
+          { data: 'fecha_inicio' },
+          { data: 'fecha_termino' },
+          { data: 'numero_factura' },
+          { data: 'area_responsable' },
+          { data: 'fecha_validacion' },
+          { data: 'fecha_actualizacion' },
+          { data: 'nota' },
+          { data: 'estatus_pnt' }
+      ],
+      columnDefs: [ 
+        {
+            targets: 1,
+            data: "data",
+            render: function ( data, type, row, meta ) {
+                if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
                 return data
-            //} else return "<input type='text' value='" + data + "'>" 
-            } else return data
+            }
+        },
+        {
+            targets: 33,
+            data: "data",
+            render: function ( data, type, row, meta ) {
+                var response = ""
+                _row = JSON.stringify(row)  //HtmlSanitizer.SanitizeHtml(JSON.stringify(row)) 
+                if( !(row.id_pnt) || row.id_pnt === ""){ 
+                  response += "<a class='tpo_btn crear' href='#' data='" + _row + "'>" 
+                  response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i>  </span> </a>"
+
+                  response += "<img class='check invisible' src='<?php echo base_url(); ?>plugins/img/correct.png'>"
+
+                  response += "<a class='tpo_btn eliminar invisible' href='#' data='" + _row + "'>" 
+                  response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
+
+                  response += "<a class='tpo_btn editar invisible' href='#' data='" + _row + "'>" 
+                  response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
+                }else{
+                  response += "<a class='tpo_btn crear invisible' href='#' data='" + _row + "'>" 
+                  response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i> </span> </a>"
+
+                  response += "<img class='check' src='<?php echo base_url(); ?>plugins/img/correct.png'>"
+
+                  response += "<a class='tpo_btn eliminar' href='#' data='" + _row + "'>" 
+                  response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
+
+                  response += "<a class='tpo_btn editar' href='#' data='" + _row + "'>" 
+                  response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
+                }
+
+                response += "<a class='tpo_btn ver_mas' href='#' data='" + row.id_factura_desglose + "'>" 
+                response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  Ver más información </span></a>"
+
+                return response
           }
-      }
-    ]
+        },
+        {
+            targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,32],
+            data: "data",
+            render: function ( data, type, row, meta ) {
+              if( !(row.id_pnt) || row.id_pnt === ""){ 
+                  if(!data) return "<label class='btn'> <small> N/D </small></label>"
+                  return data
+              //} else return "<input type='text' value='" + data + "'>" 
+              } else return data
+            }
+        }
+      ]
     });
 
-  $(document).on("click","a.ver_mas",function(e){ 
+    $('#year').change( function() { table.draw(); });
+
+    $(document).on("click","a.ver_mas",function(e){ 
         e.preventDefault();
         var id = $(this).attr("data")
         var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros51";
