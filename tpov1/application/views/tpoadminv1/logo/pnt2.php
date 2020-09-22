@@ -148,7 +148,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             scrollY: true,
             scrollX: true,
             columns: [
-                { data: 'id_tpo' },
+                { data: 'id_factura' },
                 { data: 'id_pnt' },
                 { data: 'id_factura' },
                 { data: 'ejercicio' },
@@ -308,16 +308,19 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             }
 
             $.post(url, formato, function(res, error){
-                res = JSON.parse(res); console.log(res, error)
+                console.log(res)
+                res = JSON.parse(res); 
+                console.log(res)
+                
                 if(!res || !('success' in res) ){
                     console.log("No se pudo insertar el elemento correctamente")
                     a.css("display", "block")
                 } else {
-                    tr.children("td").eq(1).text(res.id_pnt)
+                    tr.children("td").eq(1).text(res.mensaje.registros[0].idRegistro)
                     tr.children("td").eq(35).children("a.eliminar").removeClass("invisible")
                     tr.children("td").eq(35).children("img.check").removeClass("invisible")
                     tr.children("td").eq(35).children("a.crear").addClass("invisible")
-                    location.reload();
+                    table.draw(); 
                 }
 
                 td.children("img.loading").remove("")
@@ -395,7 +398,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     tr.children("td").eq(35).children("a.eliminar").addClass("invisible")
                     tr.children("td").eq(35).children("img.check").addClass("invisible")
                     tr.children("td").eq(35).children("a.crear").css("display", "block")
-                    location.reload();
+                    table.draw(); 
                 }
 
                 td.children("img.loading").remove("")
