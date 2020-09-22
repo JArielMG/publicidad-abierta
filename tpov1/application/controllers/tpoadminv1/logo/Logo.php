@@ -1067,7 +1067,7 @@ class Logo extends CI_Controller
     function registros23(){
         $cols = array("pnt.id_contrato id_tpo", "pnt.id_pnt id_pnt", "pnt.id", "ej.ejercicio", 
                       "cont.fecha_celebracion", "cont.numero_contrato", "cont.objeto_contrato", 
-                      "f.numeros_factura", "f.files_factura_pdf", "cont.area_responsable", 
+                      "f.numeros_factura", "f.files_factura_pdf", "cont.area_responsable", "conv.file_convenio", 
                       "cont.fecha_validacion", "cont.fecha_actualizacion", "cont.nota", "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
@@ -1080,7 +1080,6 @@ class Logo extends CI_Controller
 
         $query = $this->db->query("SELECT " . join(", ", $cols) . ",
                 IFNULL(vcon.`Archivo contrato en PDF (Vinculo al archivo)` , '') AS 'Hipervínculo al contrato firmado',
-                IFNULL(vcmod.`Archivo convenio en PDF (Vinculo al archivo)` , '') AS 'Hipervínculo al convenio modificatorio en su caso',
                 IFNULL(vcon.`Monto original del contrato` , '') AS 'Monto total del contrato',
                 IFNULL(vcon.`Monto pagado a la fecha` , '') AS 'Monto pagado al periodo publicado',
                 IFNULL(vcon.`Fecha inicio` , '') AS 'Fecha de inicio de los servicios contratados',
@@ -1093,6 +1092,7 @@ class Logo extends CI_Controller
                        FROM tab_facturas f ) f ON f.id_contrato = cont.id_contrato
             LEFT JOIN cat_ejercicios ej ON ej.id_ejercicio = f.id_ejercicio
             LEFT JOIN rel_pnt_contrato pnt ON pnt.id_contrato = cont.id_contrato
+            LEFT JOIN tab_convenios_modificatorios conv ON conv.id_contrato = cont.id_contrato
             WHERE cont.numero_contrato != 'Sin contrato'; ");
 
         $rows = $query->result_array();
