@@ -81,16 +81,17 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		$.fn.dataTable.ext.errMode = 'none';
 		var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/ejercicios"
 	
-	$.post(ejercicios_url, function(res, error){
-    	if(res) {
-    		for( var i = 0 in res)
-    			$("#year").append("<option value='" + res[i].ejercicio + "'>" + res[i].ejercicio + "</option>")
-    	}
-	});
+		$.post(ejercicios_url, function(res, error){
+	    	if(res) {
+	    		for( var i = 0 in res)
+	    			$("#year").append("<option value='" + res[i].ejercicio + "'>" + res[i].ejercicio + "</option>")
+	    	}
+		});
 
-	$("#formato_<?php echo $formato?>").css("background-color:", "#0277bd")
+		$("#formato_<?php echo $formato?>").css("background-color:", "#0277bd")
 
 	    $.fn.dataTable.ext.search.push( function( settings, data, dataIndex ){
 	        var year = $('#year').val()
