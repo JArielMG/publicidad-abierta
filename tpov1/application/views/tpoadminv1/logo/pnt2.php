@@ -206,6 +206,20 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                             default: return data;
                         }
                     }
+                },{
+                    targets: 8,
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                        if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
+
+                        switch(data){
+                            case "1": return "Servicios de difusión en medios de comunicación"; break;
+                            case "2": return "Otros servicios asociados a la comunicación"; break;
+                            case "3": return "Erogación de recursos por contratación de servicios de impresión, difusión y publicidad"; break;
+                            case "4": return "Utilización de tiempos oficiales: Tiempo de estado y Tiempo Fiscal"; break;
+                            default: return data;
+                        }
+                    }
                 },
                 {
                     targets: 35,
