@@ -220,6 +220,81 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                             default: return data;
                         }
                     }
+                },{
+                    targets: 10,
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                        if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
+
+                        switch(data){
+                            case "1": return "Cine"; break; 
+                            case "2": return "Medios digitales"; break; 
+                            case "3": return "Otro tipo de difusión por Internet"; break; 
+                            case "4": return "Redes sociales y buscadores"; break; 
+                            case "5": return "Artículos promocionales"; break; 
+                            case "6": return "Cenefas"; break; 
+                            case "7": return "Dovelas"; break; 
+                            case "8": return "Mobiliario urbano"; break; 
+                            case "9": return "Muros o bardas"; break; 
+                            case "10": return "Otros medios complementarios"; break; 
+                            case "11": return "Parabuses"; break; 
+                            case "12": return "Publicidad móvil"; break; 
+                            case "13": return "Rótulos o anuncios exteriores"; break; 
+                            case "14": return "Tarjetas telefónicas"; break; 
+                            case "15": return "Vallas"; break; 
+                            case "16": return "Videobus"; break; 
+                            case "17": return "Diarios Editados en el D.F."; break; 
+                            case "18": return "Diarios Editados en los Estados"; break; 
+                            case "19": return "Encartes"; break; 
+                            case "20": return "Medios Impresos Internacionales"; break; 
+                            case "21": return "Otros medios impresos"; break; 
+                            case "22": return "Revistas"; break; 
+                            case "23": return "Suplementos"; break; 
+                            case "24": return "Cadenas radiofónicas"; break; 
+                            case "25": return "Radiodifusoras comunitarias e indígenas"; break; 
+                            case "26": return "Radiodifusoras internacionales"; break; 
+                            case "27": return "Radiodifusoras locales"; break; 
+                            case "28": return "Publicidad virtual"; break; 
+                            case "29": return "Televisión abierta local"; break; 
+                            case "30": return "Televisión abierta nacional"; break; 
+                            case "31": return "Televisión internacional"; break; 
+                            case "32": return "Televisión restringida"; break; 
+                            case "33": return "Estudios (Pre-Campaña, Post-Campaña)"; break; 
+                            case "34": return "Plan de medios"; break; 
+                            case "35": return "Carteles o Pósters"; break; 
+                            case "36": return "Folletos, Dípticos o Trípticos"; break; 
+                            case "37": return "Mantas o Lonas"; break; 
+                            case "38": return "Otro tipo de materiales impresos"; break; 
+                            case "39": return "Copiado"; break; 
+                            case "40": return "Diseño y servicios publicitarios"; break; 
+                            case "41": return "Otro tipo de servicio de producción"; break; 
+                            case "42": return "Post-Producción"; break; 
+                            case "43": return "Producción"; break; 
+                            case "44": return "Espectaculares"; break; 
+                            case "45": return "Streaming"; break; 
+                            case "46": return "Edición"; break; 
+                            case "47": return "Estudio"; break; 
+                            case "48": return "Locución"; break; 
+                            case "49": return "Materiales fotográficos"; break; 
+                            case "50": return "Multicopiado"; break; 
+                            case "51": return "Renderización material"; break; 
+                            case "52": return "Streaming"; break; 
+                            case "53": return "Difusión"; break; 
+                            default: return data;
+                        }
+                    }
+                },{
+                    targets: 12,
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                        if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
+
+                        switch(data){
+                            case "1": return "Aviso Institucional"; break;
+                            case "0": return "Campaña"; break;
+                            default: return data;
+                        }
+                    }
                 },
                 {
                     targets: 35,
