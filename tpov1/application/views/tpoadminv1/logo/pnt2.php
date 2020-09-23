@@ -295,6 +295,19 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                             default: return data;
                         }
                     }
+                },{
+                    targets: 25,
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                        if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
+
+                        switch(data){
+                            case "1": return "Masculino"; break;
+                            case "0": return "Femenino"; break;
+                            case "2": return "Masculino y Femenino"; break;
+                            default: return data;
+                        }
+                    }
                 },
                 {
                     targets: 35,
