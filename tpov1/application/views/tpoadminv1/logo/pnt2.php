@@ -296,6 +296,20 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         }
                     }
                 },{
+                    targets: 21,
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                        if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
+
+                        switch(data){
+                            case "3": return "Delegacional o municipal"; break;
+                            case "2": return "Estatal"; break;
+                            case "1": return "Nacional"; break;
+                            case "0": return "Internacional"; break;
+                            default: return data;
+                        }
+                    }
+                },{
                     targets: 25,
                     data: "data",
                     render: function ( data, type, row, meta ) {
