@@ -193,6 +193,19 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
                         return data
                     }
+                },{
+                    targets: 6,
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                        if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
+
+                        switch(data){
+                            case "2": return "Contratante y Solicitante"; break;
+                            case "1": return "Solicitante"; break;
+                            case "0": return "Contratante"; break;
+                            default: return data;
+                        }
+                    }
                 },
                 {
                     targets: 35,
@@ -223,7 +236,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         }
 
                         response += "<a class='tpo_btn ver_mas' href='#' data='" + row.resp_pro_con + "'>" 
-                        response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  Ver más información </span></a>"
+                        response += "<span class='btn btn-info btn-sm'> <i class='fa fa-edit'></i>  Ver más información </span></a>"
                         
                         return response
                     }
@@ -311,7 +324,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 console.log(res)
                 res = JSON.parse(res); 
                 console.log(res)
-                
+
                 if(!res || !('success' in res) ){
                     console.log("No se pudo insertar el elemento correctamente")
                     a.css("display", "block")
