@@ -917,17 +917,22 @@ class Logo extends CI_Controller
                         WHEN ( (fd.id_so_contratante IS NULL) && (fd.id_so_solicitante IS NOT NULL) ) THEN 1
                     END) funcion_sujeto,
                     (CASE 
-                        WHEN cam.id_campana_tipo= NULL THEN '' WHEN cam.id_campana_tipo = 1 THEN 1
+                        WHEN cam.id_campana_tipo= NULL THEN '' 
+                        WHEN cam.id_campana_tipo = 1 THEN 1
                         WHEN cam.id_campana_tipo = 2 THEN 0
                     END) 'tipo',
                     (CASE 
-                        WHEN ccob.id_campana_cobertura = NULL THEN '' WHEN ccob.id_campana_cobertura = 1 THEN 3
-                        WHEN ccob.id_campana_cobertura = 2 THEN 2 WHEN ccob.id_campana_cobertura = 3 THEN 1
+                        WHEN ccob.id_campana_cobertura = NULL THEN '' 
+                        WHEN ccob.id_campana_cobertura = 1 THEN 3
+                        WHEN ccob.id_campana_cobertura = 2 THEN 2 
+                        WHEN ccob.id_campana_cobertura = 3 THEN 1
                         WHEN ccob.id_campana_cobertura = 4 THEN 0
                     END) 'cobertura', 
                     (CASE 
-                        WHEN sexo.poblacion_sexo = NULL THEN '' WHEN sexo.poblacion_sexo = 1 THEN 1
-                        WHEN sexo.poblacion_sexo = 2 THEN 0 WHEN sexo.poblacion_sexo = 3 THEN 2
+                        WHEN sexo.poblacion_sexo = NULL THEN '' 
+                        WHEN sexo.poblacion_sexo = 1 THEN 1
+                        WHEN sexo.poblacion_sexo = 2 THEN 0 
+                        WHEN sexo.poblacion_sexo = 3 THEN 2
                     END) 'sexo', 
                     CONCAT(f.id_ejercicio, '-', f.id_factura, '-', f.id_orden_compra, '-', f.id_contrato, '-', f.id_proveedor) 'resp_pro_con', 
                     CONCAT(f.id_ejercicio, '-', f.id_factura, '-', f.id_orden_compra, '-', f.id_contrato, '-', f.id_proveedor) 'resp_rec_pre', 
@@ -974,7 +979,7 @@ class Logo extends CI_Controller
     }
 
     function registros21(){
-        $cols = array("pnt.id_tpo", "pnt.id_proveedor id", "pnt.id_pnt", "con.descripcion_justificacion", 
+        $cols = array("pnt.id_tpo", "pnt.id_proveedor id", "f.id_factura", "con.descripcion_justificacion", 
                       "e.ejercicio", "proc.nombre_procedimiento", "con.fundamento_juridico", 
                       "prov.nombre_razon_social", "prov.nombres", "prov.primer_apellido", 
                       "prov.segundo_apellido", "prov.nombre_comercial", "prov.rfc", "pnt.estatus_pnt");
