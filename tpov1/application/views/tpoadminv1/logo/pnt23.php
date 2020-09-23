@@ -68,7 +68,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				<td> Fecha de término de los servicios contratados</td>
 				<td> Número de factura</td>
 				<td> Hipervínculo a la factura</td>
-				<td> Estatus</td>
+				<!--td> Estatus</td-->
 	        </tr>
 	    </thead>
 	    <tbody> <tr> </tr> </tbody>
@@ -126,8 +126,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'Fecha de inicio de los servicios contratados' },
 				{ data: 'Fecha de término de los servicios contratados' },
 				{ data: 'numeros_factura' },
-				{ data: 'files_factura_pdf' },
-				{ data: 'estatus_pnt' }
+				{ data: 'files_factura_pdf' }/*,
+				{ data: 'estatus_pnt' }*/
 			],
 			columnDefs: [ 
 				{
@@ -138,7 +138,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				      	return data
 				    }
 				},
-				{
+				/*{
 				    targets: 15,
 				    data: "data",
    				    render: function ( data, type, row, meta ) {
@@ -165,7 +165,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				      	}
 				      	return response
 					}
-				},
+				},*/
 				{
 				    targets: [3,4,5,6,7,8,9,10,11,12,13,14],
 				    data: "data",
