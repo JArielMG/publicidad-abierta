@@ -111,11 +111,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
     		scrollY: true,
 	    	scrollX: true,
 			columns: [
-				{ data: 'id_tpo' },
-				{ data: 'id_pnt' },
+				{ data: 'id_factura' },
 				{ data: 'id' },
+				{ data: 'id_tpo' },
 				{ data: 'ejercicio' },
-				{ data: 'descripcion_justificacion' },
 				{ data: 'nombre_razon_social' },
 				{ data: 'nombres' },
 				{ data: 'primer_apellido' },
@@ -123,8 +122,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'nombre_comercial' },
 				{ data: 'rfc' },
 				{ data: 'nombre_procedimiento' },
-				{ data: 'fundamento_juridico' }/*,
-				{ data: 'estatus_pnt' }*/
+				{ data: 'fundamento_juridico' },
+				{ data: 'descripcion_justificacion' }
+				/*, { data: 'estatus_pnt' }*/
 			],
 			columnDefs: [ 
 				{
@@ -179,6 +179,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    targets: [3,4,5,6,7,8,9,10,11,12],
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
+		      			_row = JSON.stringify(row) 
+		      			//_row = HtmlSanitizer.SanitizeHtml(_row)
+
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 				      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
 				        	return data
