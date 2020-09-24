@@ -290,6 +290,13 @@
                         <?php $class = "form-control"; if($error_cm) $class = "form-control has-error";
                                     echo form_input(array('type' => 'number', 'step'=>'0.01', 'name' => 'monto_contrato', 'value' => $registro['monto_contrato'], 'class' => $class)); ?>
                     </div>
+                    <div class="form-group <?php if($error_dj) echo 'has-error' ?>">
+                        <label>Hipervínculo al contrato firmado 
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_contrato']?>"></i>
+                        </label>
+                        <?php $class = "form-control"; 
+                        echo form_input(array('type' => 'text', 'name' => 'url_contrato', 'value' => $registro['url_contrato'], 'class' => $class)); ?>
+                    </div>
                     <div class="form-group">
                         <label class="custom-file-label"> Archivo del contrato en PDF
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_contrato']?>"></i>

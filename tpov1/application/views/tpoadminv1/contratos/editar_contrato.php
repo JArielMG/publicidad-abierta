@@ -292,6 +292,13 @@
                                                     <?php $class = "form-control"; if($error_cm) $class = "form-control has-error";
                                                         echo form_input(array('type' => 'number', 'step'=>'0.01', 'name' => 'monto_contrato', 'value' => $registro['monto_contrato'], 'class' => $class)); ?>
                                             </div>
+						                    <div class="form-group <?php if($error_dj) echo 'has-error' ?>">
+                                                <label>Hipervínculo al contrato firmado 
+                                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_contrato']?>"></i>
+                                                </label>
+                                                <?php $class = "form-control";
+                                                    echo form_input(array('type' => 'text', 'name' => 'url_contrato', 'value' => $registro['url_contrato'], 'class' => $class)); ?>                                                
+                                            </div>
                                             <div class="form-group">
                                                 <label class="custom-file-label"> Archivo del contrato en PDF
                                                     <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_contrato']?>"></i>
@@ -514,7 +521,14 @@
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
                         </td>
                         <td class="col-sm-8" id="item_8"></td>
-                    </tr>   
+                    </tr>
+                    <tr class="form-group">
+                        <td class="control-label col-sm-4">
+                            <b>Hipervínculo Al Convenio Modificatorio, en su Caso</b>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_convenio']?>"></i>
+                        </td>
+                        <td class="col-sm-8" id="item_15"></td>
+                    </tr> 
                     <tr class="form-group">
                         <td class="control-label col-sm-4">
                             <b>Archivo del convenio en PDF</b>
@@ -637,6 +651,7 @@
                     $('#myModal').find('#item_6').html(response.fecha_celebracion);
                     $('#myModal').find('#item_7').html(response.monto_convenio_format);
                     $('#myModal').find('#item_8').html(response.estatus);
+                    $('#myModal').find('#item_15').html(response.url_convenio);
                     $('#myModal').find('#item_10').html(response.fecha_validacion);
                     $('#myModal').find('#item_11').html(response.area_responsable);
                     $('#myModal').find('#item_12').html(response.periodo);

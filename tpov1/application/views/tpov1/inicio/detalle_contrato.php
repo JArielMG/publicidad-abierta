@@ -101,6 +101,10 @@ if($disponible == true){ /* se muestra la info*/
                         <td width="80%"><?php echo $contrato['fecha_fin']?></td>
                     </tr>
                     <tr>
+                        <td class="text-right">Hipervínculo al contrato firmado <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_contrato']?>"></i>: </td>
+                        <td width="80%"> <a href="<?php echo $contrato['url_contrato']?>" target="_blank"><?php echo $contrato['url_contrato']?></a> </td>
+                    </tr>
+                    <tr>
                         <td class="text-right">Vinculo al archivo del contrato <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_contrato']?>"></i>: </td>
                         <td width="80%"><?php echo $link_file?></td>
                     </tr>

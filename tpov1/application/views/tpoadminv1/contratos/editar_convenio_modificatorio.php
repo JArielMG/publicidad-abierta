@@ -191,6 +191,13 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>Hipervínculo Al Convenio Modificatorio, en su Caso
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_convenio']?>"></i>
+                        </label>
+                        <?php $class = "form-control";
+                            echo form_input(array('type' => 'text', 'name' => 'url_convenio', 'value' => $registro['url_convenio'], 'class' => $class)); ?>
+                    </div>
+                    <div class="form-group">
                         <label class="custom-file-label"> Archivo del convenio modificatorio en PDF
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_convenio']?>"></i>
                         </label>

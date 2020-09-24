@@ -162,6 +162,7 @@ class Generales_vp_model extends CI_Model
             'monto_total' => 'Suma del monto original del contrato, más el monto modificado.',
             'monto_pagado' => 'Monto pagado al periodo publicado.',
             'monto_factura' => 'Indica el monto total correspondiente a la factura.',
+            'url_contrato' => 'Hipervínculo al contrato firmado.',
             'file_contrato' => 'Archivo del contrato en PDF',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',

@@ -238,6 +238,13 @@
                     </tr>
                     <tr class="form-group">
                         <td class="control-label col-sm-4">
+                            <b>Hipervínculo al contrato firmado</b>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_contrato']?>"></i>
+                        </td>
+                        <td class="col-sm-8" id="item_25"></td>
+                    </tr>
+                    <tr class="form-group">
+                        <td class="control-label col-sm-4">
                             <b>Archivo del contrato en PDF</b>
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_contrato']?>"></i>
                         </td>
@@ -390,6 +397,7 @@
                     $('#myModal').find('#item_12').html(response.fecha_inicio);
                     $('#myModal').find('#item_13').html(response.fecha_fin);
                     $('#myModal').find('#item_14').html(response.monto_contrato_formato);
+                    $('#myModal').find('#item_25').html(response.url_contrato);
                     $('#myModal').find('#item_16').html(response.fecha_validacion);
                     $('#myModal').find('#item_17').html(response.area_responsable);
                     $('#myModal').find('#item_18').html(response.periodo);
