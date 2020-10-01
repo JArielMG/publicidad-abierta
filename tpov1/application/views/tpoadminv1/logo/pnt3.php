@@ -175,6 +175,17 @@ $(document).ready(function(){
             }
         },
         {
+            targets: [5, 6, 26, 27, 30, 31 ],
+            data: "data",
+            render: function ( data, type, row, meta ) {
+                try{
+                  return data.split("-").reverse().join("/")
+                } catch(e){ return data}
+
+                return data
+            }
+        },
+        {
             targets: 33,
             data: "data",
             render: function ( data, type, row, meta ) {
@@ -211,7 +222,7 @@ $(document).ready(function(){
           }
         },
         {
-            targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,32],
+            targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],
             data: "data",
             render: function ( data, type, row, meta ) {
               if( !(row.id_pnt) || row.id_pnt === ""){ 
