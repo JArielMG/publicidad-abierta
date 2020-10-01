@@ -123,6 +123,17 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				      	return data
 				    }
 				},
+                {
+                    targets: [4, 5, 8, 9],
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                        try{
+                          return data.split("-").reverse().join("/")
+                        } catch(e){ return data}
+
+                        return data
+                    }
+                },
 				{
 				    targets: 12,
 				    data: "data",
