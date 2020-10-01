@@ -118,6 +118,7 @@ class Contratos extends CI_Controller
             'monto_modificado' => 'Suma de los  montos de los convenios modificatorios.',
             'monto_total' => 'Suma del monto original del contrato, más el monto modificado.',
             'monto_pagado_a_la_fecha' => 'Monto pagado al periodo publicado.',
+            'url_contrato' => 'Hipervínculo al contrato firmado.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -210,6 +211,7 @@ class Contratos extends CI_Controller
             'fecha_inicio' => '',
             'fecha_fin' => '',
             'monto_contrato' => '0.00',
+            'url_contrato' => '',
             'file_contrato' => '',
             'fecha_validacion' => '',
             'area_responsable' => '',
@@ -241,6 +243,7 @@ class Contratos extends CI_Controller
             'monto_modificado' => 'Suma de los  montos de los convenios modificatorios.',
             'monto_total' => 'Suma del monto original del contrato, más el monto modificado.',
             'monto_pagado_a_la_fecha' => 'Monto pagado al periodo publicado.',
+            'url_contrato' => 'Hipervínculo al contrato firmado.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -352,7 +355,9 @@ class Contratos extends CI_Controller
             'monto_modificado' => 'Suma de los  montos de los convenios modificatorios.',
             'monto_total' => 'Suma del monto original del contrato, más el monto modificado.',
             'monto_pagado_a_la_fecha' => 'Monto pagado al periodo publicado.',
+            'url_contrato' => 'Hipervínculo al contrato firmado.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
+            'url_convenio' => 'Hipervínculo al convenio modificatorio, en su caso',
             'file_convenio' => 'Archivo del convenio modificatorio en PDF',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -384,7 +389,7 @@ class Contratos extends CI_Controller
             );
         }
 
-        /* Datos para tabla de convenios modificatorios */
+        /* Datos para tabla de convenios modificatorios  */
         $print_url = base_url() . "index.php/tpoadminv1/print_ci/print_convenios_modificatorios/".$this->uri->segment(5);
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         $data['registros'] = $this->Contratos_model->dame_todos_convenios_modificatorios($this->uri->segment(5));
@@ -518,6 +523,7 @@ class Contratos extends CI_Controller
             'fecha_inicio' => $this->input->post('fecha_inicio'),
             'fecha_fin' => $this->input->post('fecha_fin'),
             'monto_contrato' => $this->input->post('monto_contrato'),
+            'url_contrato' => $this->input->post('url_contrato'),
             'file_contrato' => $this->input->post('file_contrato'),
             'fecha_validacion' => $this->input->post('fecha_validacion'),
             'area_responsable' => $this->input->post('area_responsable'),
@@ -549,6 +555,7 @@ class Contratos extends CI_Controller
             'monto_modificado' => 'Suma de los  montos de los convenios modificatorios.',
             'monto_total' => 'Suma del monto original del contrato, más el monto modificado.',
             'monto_pagado_a_la_fecha' => 'Monto pagado al periodo publicado.',
+            'url_contrato' => 'Hipervínculo al contrato firmado.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -703,6 +710,7 @@ class Contratos extends CI_Controller
             'fecha_inicio' => $this->input->post('fecha_inicio'),
             'fecha_fin' => $this->input->post('fecha_fin'),
             'monto_contrato' => $this->input->post('monto_contrato'),
+            'url_contrato' => $this->input->post('url_contrato'),
             'file_contrato' => $this->input->post('file_contrato'),
             'fecha_validacion' => $this->input->post('fecha_validacion'),
             'area_responsable' => $this->input->post('area_responsable'),
@@ -737,7 +745,9 @@ class Contratos extends CI_Controller
             'monto_modificado' => 'Suma de los  montos de los convenios modificatorios.',
             'monto_total' => 'Suma del monto original del contrato, más el monto modificado.',
             'monto_pagado_a_la_fecha' => 'Monto pagado al periodo publicado.',
+            'url_contrato' => 'Hipervínculo al contrato firmado.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
+            'url_convenio' => 'Hipervínculo al convenio modificatorio, en su caso',
             'file_convenio' => 'Archivo del convenio modificatorio en PDF',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -969,6 +979,7 @@ class Contratos extends CI_Controller
             'fundamento_juridico' => '',
             'fecha_celebracion' => '',
             'monto_convenio' => '0.00',
+            'url_convenio' => '',
             'file_convenio' => '',
             'fecha_validacion' => '',
             'area_responsable' => '',
@@ -989,6 +1000,7 @@ class Contratos extends CI_Controller
             'fecha_celebracion' => 'Indica la fecha del convenio, con el formato dd/mm/aaaa (por ej. 31/03/2016)',
             'monto_convenio' => 'Indica el monto total del convenio modificatorio con I.V.A. incluido.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
+            'url_convenio' => 'Hipervínculo al convenio modificatorio, en su caso',
             'file_convenio' => 'Archivo del convenio modificatorio en PDF',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -1082,6 +1094,7 @@ class Contratos extends CI_Controller
             'fundamento_juridico' => $this->input->post('fundamento_juridico'),
             'fecha_celebracion' => $this->input->post('fecha_celebracion'),
             'monto_convenio' => $this->input->post('monto_convenio'),
+            'url_convenio' => $this->input->post('url_convenio'),
             'file_convenio' => $this->input->post('file_convenio'),
             'fecha_validacion' => $this->input->post('fecha_validacion'),
             'area_responsable' => $this->input->post('area_responsable'),
@@ -1102,6 +1115,7 @@ class Contratos extends CI_Controller
             'fecha_celebracion' => 'Indica la fecha del convenio, con el formato dd/mm/aaaa (por ej. 31/03/2016)',
             'monto_convenio' => 'Indica el monto total del convenio modificatorio con I.V.A. incluido.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
+            'url_convenio' => 'Hipervínculo al convenio modificatorio, en su caso',
             'file_convenio' => 'Archivo del convenio modificatorio en PDF',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -1221,6 +1235,7 @@ class Contratos extends CI_Controller
             'fecha_celebracion' => 'Indica la fecha del convenio, con el formato dd/mm/aaaa (por ej. 31/03/2016)',
             'monto_convenio' => 'Indica el monto total del convenio modificatorio con I.V.A. incluido.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
+            'url_convenio' => 'Hipervínculo al convenio modificatorio, en su caso',
             'file_convenio' => 'Archivo del convenio modificatorio en PDF',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -1325,6 +1340,7 @@ class Contratos extends CI_Controller
             'fundamento_juridico' => $this->input->post('fundamento_juridico'),
             'fecha_celebracion' => $this->input->post('fecha_celebracion'),
             'monto_convenio' => $this->input->post('monto_convenio'),
+            'url_convenio' => $this->input->post('url_convenio'),
             'file_convenio' => $this->input->post('file_convenio'),
             'fecha_validacion' => $this->input->post('fecha_validacion'),
             'area_responsable' => $this->input->post('area_responsable'),
@@ -1345,6 +1361,7 @@ class Contratos extends CI_Controller
             'fecha_celebracion' => 'Indica la fecha del convenio, con el formato dd/mm/aaaa (por ej. 31/03/2016)',
             'monto_convenio' => 'Indica el monto total del convenio modificatorio con I.V.A. incluido.',
             'file_contrato' => 'Archivo de la versi&oacute;n p&uacute;blica del contrato en formato PDF.',
+            'url_convenio' => 'Hipervínculo al convenio modificatorio, en su caso',
             'file_convenio' => 'Archivo del convenio modificatorio en PDF',
             'fecha_validacion' => 'Fecha de validaci&oacute;n',
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
@@ -1475,7 +1492,6 @@ class Contratos extends CI_Controller
         
         header('Content-type: application/json');
         
-        //echo json_encode( $array_items);
         echo json_encode($registros);
     }
 

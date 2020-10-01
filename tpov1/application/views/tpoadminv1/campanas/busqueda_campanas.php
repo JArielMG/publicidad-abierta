@@ -1,15 +1,3 @@
-<?php
-    $sel_ejercicios = '<option value="">Todos</option>';
-    for($z = 0; $z < sizeof($ejercicios); $z++)
-    {
-        if($ejercicios == $ejercicios[$z]['id_ejercicio']){
-            $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'" selected>' . $ejercicios[$z]['ejercicio'] . '</option>';
-        }else{
-            $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'">' . $ejercicios[$z]['ejercicio'] . '</option>';
-        }
-    }
-?>
-
 <style>
     .tooltip.top .tooltip-inner {
         background-color: #fff;
@@ -67,28 +55,7 @@
         <div class="col-xs-12">
             <div class="box table-responsive no-padding">
                 <div class="box-header">
-                    <?php echo anchor("tpoadminv1/campanas/campanas/alta_campanas_avisos", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
-                    <div class="pull-right">
-                    	<br><br><br>
-                    	<input type="submit" value="Aplicar">
-                    </div>
-                    <div class="pull-right col-md-2">
-		                <h4>Cambiar estatus:</h4>
-		                <form action="../../form-result.php" method="post">
-						  <div style="padding-left: 3em;">
-						    <input type="checkbox" name="estatus" value="true"> Activo
-						  </div>
-						  <div style="padding-left: 3em;">
-						    <input type="checkbox" name="estatus" value="false"> Inactivo
-						  </div>
-						</form>
-		            </div>
-                    <div class="pull-right col-md-1">
-		                <h4>Ejercicio:</h4>
-		                <select id="id_ejercicio" name="id_ejercicio">
-		                    <?php echo $sel_ejercicios; ?>
-		                </select>
-		            </div>
+                    <?php echo anchor("tpoadminv1/campanas/campanas/alta_campanas_avisos", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>                   
                     <div class="pull-right">
                         <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
                         <a id="descargabtn" class="btn btn-default" onclick="descargar_archivo()" <?php //echo $print_onclick_exp   ?>><i class="fa fa-file"></i> Exportar a Excel</a>

@@ -331,6 +331,7 @@ class Contratos_Model extends CI_Model
                     $montos['monto_modificado'],
                     $montos['monto_total'],
                     $montos['monto_pagado'],
+                    utf8_decode($row['url_contrato']),
                     utf8_decode( empty($row['file_contrato']) ? 'No hay archivo' :  $row['file_contrato']),
                     utf8_decode($row['area_responsable']),
                     utf8_decode($this->Generales_model->dateToString($row['fecha_validacion'])),
@@ -389,7 +390,7 @@ class Contratos_Model extends CI_Model
             $this->db->where('id_proveedor', $id_proveedor);
         }
 
-        $this->db->where('active', '1');
+        // $this->db->where('active', '1'); //Muestra solo los registros con estatus activos
         $this->db->order_by('numero_contrato', 'ASC');
         $query = $this->db->get('tab_contratos');
 
@@ -457,6 +458,7 @@ class Contratos_Model extends CI_Model
                     'fecha_fin' => $this->dateToString($row['fecha_fin']),
                     'monto_contrato' => $row['monto_contrato'],
                     'monto_contrato_formato' => $this->Generales_model->money_format("%.2n",$row['monto_contrato']),
+                    'url_contrato' => $row['url_contrato'],
                     'file_contrato' => $row['file_contrato'],
                     'name_file_contrato' => $row['file_contrato'],
                     'name_file_contrato_vista' => empty($row['file_contrato']) ? 'No hay archivo' : $row['file_contrato'] ,
@@ -522,6 +524,7 @@ class Contratos_Model extends CI_Model
                 'fecha_inicio' => $this->stringToDate($this->input->post('fecha_inicio')),
                 'fecha_fin' => $this->stringToDate($this->input->post('fecha_fin')),
                 'monto_contrato' => $this->input->post('monto_contrato'),
+                'url_contrato' => $this->input->post('url_contrato'),
                 'file_contrato' => $this->input->post('name_file_contrato'),
                 'fecha_validacion' => $this->stringToDate($this->input->post('fecha_validacion')),
                 'area_responsable' => $this->input->post('area_responsable'),
@@ -569,6 +572,7 @@ class Contratos_Model extends CI_Model
                 'fecha_inicio' => $this->stringToDate($this->input->post('fecha_inicio')),
                 'fecha_fin' => $this->stringToDate($this->input->post('fecha_fin')),
                 'monto_contrato' => $this->input->post('monto_contrato'),
+                'url_contrato' => $this->input->post('url_contrato'),
                 'file_contrato' => $this->input->post('name_file_contrato'),
                 'fecha_validacion' => $this->stringToDate($this->input->post('fecha_validacion')),
                 'area_responsable' => $this->input->post('area_responsable'),
@@ -621,7 +625,7 @@ class Contratos_Model extends CI_Model
         return $response;
     }
 
-    /** Convenios modificatorios **/
+    /** Convenios modificatorios  **/
     function dame_todos_convenios_modificatorios($id_contrato)
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
@@ -674,6 +678,7 @@ class Contratos_Model extends CI_Model
                         utf8_decode('Fundamento jurídico'),
                         utf8_decode('Fecha de celebración'),
                         utf8_decode('Monto'),
+                        utf8_decode('Hipervínculo al convenio modificatorio, en su caso'),
                         utf8_decode('Archivo del convenio en PDF'),
                         utf8_decode('Fecha de validación'),
                         utf8_decode('Área responsable de la información'),
@@ -700,6 +705,7 @@ class Contratos_Model extends CI_Model
                         utf8_decode($this->Generales_model->clear_html_tags($row['fundamento_juridico'])),
                         utf8_decode($this->dateToString($row['fecha_celebracion'])),
                         utf8_decode($this->Generales_model->money_format("%.2n", $row['monto_convenio'])),
+                        utf8_decode($row['url_convenio']),
                         utf8_decode($row['file_convenio']),
                         utf8_decode($this->dateToString($row['fecha_validacion'])),
                         utf8_decode($row['area_responsable']),
@@ -764,6 +770,7 @@ class Contratos_Model extends CI_Model
                 'fundamento_juridico' => $this->input->post('fundamento_juridico'),
                 'fecha_celebracion' =>  $this->stringToDate($this->input->post('fecha_celebracion')),
                 'monto_convenio' => $this->input->post('monto_convenio'),
+                'url_convenio' => $this->input->post('url_convenio'),
                 'file_convenio' => $this->input->post('name_file_convenio'),
                 'fecha_validacion' =>  $this->stringToDate($this->input->post('fecha_validacion')),
                 'area_responsable' => $this->input->post('area_responsable'),
@@ -805,6 +812,7 @@ class Contratos_Model extends CI_Model
                 'fundamento_juridico' => $this->input->post('fundamento_juridico'),
                 'fecha_celebracion' =>  $this->stringToDate($this->input->post('fecha_celebracion')),
                 'monto_convenio' => $this->input->post('monto_convenio'),
+                'url_convenio' => $this->input->post('url_convenio'),
                 'file_convenio' => $this->input->post('name_file_convenio'),
                 'fecha_validacion' =>  $this->stringToDate($this->input->post('fecha_validacion')),
                 'area_responsable' => $this->input->post('area_responsable'),
@@ -860,6 +868,7 @@ class Contratos_Model extends CI_Model
                     'fecha_celebracion' =>   $this->dateToString($row['fecha_celebracion']),
                     'monto_convenio' => $row['monto_convenio'],
                     'monto_convenio_format' => $this->Generales_model->money_format("%.2n", $row['monto_convenio']),
+                    'url_convenio' => $row['url_convenio'],
                     'file_convenio' => $row['file_convenio'],
                     'fecha_validacion' =>  $this->dateToString($row['fecha_validacion']),
                     'area_responsable' =>$row['area_responsable'],
