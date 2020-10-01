@@ -1022,7 +1022,7 @@ class Logo extends CI_Controller
 
     function registros22(){
         $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
-                       "pcon.partida", "pcon.concepto", "pcon.nombre_concepto", "total.presupuesto", 
+                       "pcon.partida", "pcon.capitulo", "pcon.nombre_concepto", "total.presupuesto", 
                        "total.modificado", "pcon.denominacion_partida", "pdes.monto_presupuesto", 
                        "pdes.monto_modificacion", "fact.total_ejercido", "pnt.estatus_pnt");
 
@@ -1037,13 +1037,13 @@ class Logo extends CI_Controller
         $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_presupuestos_desglose pdes 
                     JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
                     JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
-                    JOIN (SELECT p.id_presupesto_concepto, c.concepto, c.denominacion 'nombre_concepto', 
+                    JOIN (SELECT p.id_presupesto_concepto, c.capitulo, c.denominacion 'nombre_concepto', 
                                p.partida, p.denominacion 'denominacion_partida'
-                          FROM (SELECT id_presupesto_concepto, concepto, partida, denominacion FROM cat_presupuesto_conceptos pc
-                              WHERE trim(coalesce(concepto, '')) <> '' AND trim(coalesce(partida, '')) <> '' ) p 
-                          JOIN (SELECT concepto, denominacion FROM cat_presupuesto_conceptos
-                              WHERE trim(coalesce(concepto, '')) <>'' AND trim(coalesce(partida, '')) = '') c
-                          ON c.concepto = p.concepto) pcon 
+                          FROM (SELECT id_presupesto_concepto, capitulo, partida, denominacion FROM cat_presupuesto_conceptos pc
+                              WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) <> '' ) p 
+                          JOIN (SELECT capitulo, denominacion FROM cat_presupuesto_conceptos
+                              WHERE trim(coalesce(capitulo, '')) <>'' AND trim(coalesce(partida, '')) = '') c
+                          ON c.capitulo = p.capitulo) pcon 
                     ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
                     JOIN (
                         ( SELECT pcon.id_presupesto_concepto, pcon.concepto, 
