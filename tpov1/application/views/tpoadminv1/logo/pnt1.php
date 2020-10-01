@@ -134,6 +134,17 @@ $(document).ready(function(){
 			      	return data
 			    }
 			},
+	        {
+	            targets: [4, 5, 7, 8, 10, 11 ],
+	            data: "data",
+	            render: function ( data, type, row, meta ) {
+	                try{
+	                  return data.split("-").reverse().join("/")
+	                } catch(e){ return data}
+
+	                return data
+	            }
+	        },
 			{
 			    targets: 6,
 			    data: "data",

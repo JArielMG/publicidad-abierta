@@ -868,8 +868,8 @@ class Logo extends CI_Controller
 
         $stm = "SELECT " . join(", ", $cols) . " FROM tab_presupuestos p "
              . "JOIN cat_ejercicios e ON p.id_ejercicio = e.id_ejercicio "
-             . "LEFT JOIN rel_pnt_presupuesto pnt ON p.id_presupuesto = pnt.id_presupuesto "
-             . $cond;
+             . "LEFT JOIN rel_pnt_presupuesto pnt ON p.id_presupuesto = pnt.id_presupuesto ";
+             //. $cond;
         
 
         $query = $this->db->query($stm);
