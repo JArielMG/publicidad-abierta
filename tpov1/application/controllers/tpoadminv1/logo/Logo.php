@@ -1112,7 +1112,7 @@ class Logo extends CI_Controller
                       "ctip.nombre_campana_tipoTO", "cscat.nombre_servicio_categoria", "cam.clave_campana", 
                       "csun.nombre_servicio_unidad", "cam.nombre_campana_aviso", "cam.campana_ambito_geo", 
                       "ccob.nombre_campana_cobertura", "sex.nombre_poblacion_sexo", "lug.poblacion_lugar", 
-                      "edu.nombre_poblacion_nivel_educativo", "eda.nombre_poblacion_grupo_edad", 
+                      "edu.id_poblacion_nivel_educativo", "eda.nombre_poblacion_grupo_edad", 
                       "niv.nombre_poblacion_nivel", "prov.nombre_razon_social", "prov.nombre_comercial", 
                       "ord.descripcion_justificacion", "cam.monto_tiempo", "cam.area_responsable", 
                       "cam.fecha_inicio", "cam.fecha_termino", "fac.id_factura", "fac.numero_factura", "fac.area_responsable", 
@@ -1146,7 +1146,7 @@ class Logo extends CI_Controller
                         FROM rel_campana_lugar clug
                         JOIN cat_poblacion_lugar lug ON lug.id_poblacion_lugar = clug.id_campana_lugar) lug
                   ON lug.id_campana_aviso = cam.id_campana_aviso
-                  LEFT JOIN (SELECT cedu.id_campana_aviso, edu.nombre_poblacion_nivel_educativo
+                  LEFT JOIN (SELECT cedu.id_campana_aviso, edu.id_poblacion_nivel_educativo
                         FROM rel_campana_nivel_educativo cedu
                         JOIN cat_poblacion_nivel_educativo edu ON edu.id_poblacion_nivel_educativo = cedu.id_rel_campana_nivel_educativo) edu
                   ON edu.id_campana_aviso = cam.id_campana_aviso
