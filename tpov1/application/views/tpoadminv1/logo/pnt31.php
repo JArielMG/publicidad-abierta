@@ -107,7 +107,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	    		{ data: 'id' },
 	    		{ data: 'ejercicio' },
 				{ data: 'denominacion_partida' },
-				{ data: 'monto_presupuesto' },
+				{ data: 'total_monto_presupuesto' },
 				{ data: 'total_ejercido' }/*,
 				{ data: 'estatus_pnt' }*/
 			],

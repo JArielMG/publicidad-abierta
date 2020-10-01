@@ -1168,7 +1168,7 @@ class Logo extends CI_Controller
 
     function registros31(){
         $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
-                      "pcon.denominacion_partida", "pdes.monto_presupuesto", "fact.total_ejercido", 
+                      "pcon.denominacion_partida", "fact2.total_monto_presupuesto", "fact.total_ejercido", 
                       "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
@@ -1191,6 +1191,9 @@ class Logo extends CI_Controller
                 LEFT JOIN (SELECT numero_partida, SUM(cantidad) total_ejercido 
                            FROM tab_facturas_desglose GROUP BY numero_partida
                 ) fact ON fact.numero_partida = pcon.partida
+                LEFT JOIN (SELECT numero_partida, SUM(monto_desglose) total_monto_presupuesto
+                           FROM tab_facturas_desglose GROUP BY numero_partida
+                ) fact2 ON fact2.numero_partida = pcon.partida
                 JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
                 JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
                 LEFT JOIN rel_pnt_presupuesto_desglose2 pnt 
