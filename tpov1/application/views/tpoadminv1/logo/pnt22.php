@@ -119,7 +119,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'capitulo' }, //concepto
 				{ data: 'nombre_concepto' },
 				{ data: 'presupuesto' },
-				{ data: 'modificado' },
+				{ data: 'total_modificado' },
 				{ data: 'denominacion_partida' },
 				{ data: 'monto_presupuesto' },
 				{ data: 'monto_modificacion' },
