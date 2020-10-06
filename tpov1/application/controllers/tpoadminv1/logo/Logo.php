@@ -1114,7 +1114,7 @@ class Logo extends CI_Controller
                       "ccob.nombre_campana_cobertura", "sex.nombre_poblacion_sexo", "lug.poblacion_lugar", 
                       "edu.id_poblacion_nivel_educativo", "eda.nombre_poblacion_grupo_edad", 
                       "niv.nombre_poblacion_nivel", "prov.nombre_razon_social", "prov.nombre_comercial", 
-                      "ord.descripcion_justificacion", "cam.monto_tiempo", "cam.area_responsable area_responsable1", 
+                      "cam.descripcion_unidad", "cam.monto_tiempo", "cam.area_responsable area_responsable1", 
                       "cam.fecha_inicio", "cam.fecha_termino", "fac.id_factura", "fac.numero_factura", "fac.area_responsable area_responsable2", 
                       "cam.fecha_validacion", "cam.fecha_actualizacion", "pnt.estatus_pnt", "cam.nota");
 
@@ -1132,7 +1132,7 @@ class Logo extends CI_Controller
                   JOIN tab_facturas_desglose fdes ON fdes.id_campana_aviso = cam.id_campana_aviso
                   JOIN tab_facturas fac ON fac.id_factura = fdes.id_factura
                   JOIN tab_proveedores prov ON prov.id_proveedor = fac.id_proveedor
-                  JOIN tab_ordenes_compra ord ON ord.id_proveedor = fac.id_proveedor
+                    -- JOIN tab_ordenes_compra ord ON ord.id_proveedor = fac.id_proveedor
                   JOIN cat_servicios_categorias cscat ON cscat.id_servicio_categoria = fdes.id_servicio_categoria
                   JOIN cat_servicios_unidades csun ON csun.id_servicio_unidad = fdes.id_servicio_unidad
                   JOIN tab_sujetos_obligados so ON so.id_sujeto_obligado = cam.id_so_solicitante

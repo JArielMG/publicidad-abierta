@@ -153,7 +153,7 @@ $(document).ready(function(){
           { data: 'nombre_poblacion_nivel' },
           { data: 'nombre_razon_social' },
           { data: 'nombre_comercial' },
-          { data: 'descripcion_justificacion' },
+          { data: 'descripcion_unidad' },
           { data: 'monto_tiempo' },
           { data: 'area_responsable1' },
           { data: 'fecha_inicio' },
