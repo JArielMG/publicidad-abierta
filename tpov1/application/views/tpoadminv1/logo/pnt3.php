@@ -140,7 +140,7 @@ $(document).ready(function(){
           { data: 'nombre_sujeto_obligado' },
           { data: 'nombre_campana_tipoTO' },
           { data: 'nombre_servicio_categoria' },
-          { data: 'nombre_servicio_unidad' },
+          { data: 'descripcion_unidad' },
           { data: 'nombre_campana_aviso' },
           { data: 'clave_campana' },
           { data: 'autoridad' },
