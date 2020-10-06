@@ -77,11 +77,11 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
               <th> Distintivo y/o nombre comercial del concesionario responsable de publicar la campaña o comunicación </th>
               <th> Descripción breve de las razones que justifican la elección del proveedor </th>
               <th> Monto total del tiempo de Estado o tiempo fiscal consumidos </th>
-              <th> Área administrativa encargada de solicitar la difusión del mensaje o producto en  </th>su caso
+              <th> Área administrativa encargada de solicitar la difusión del mensaje o producto en su caso </th>
               <th> Fecha de inicio de difusión del concepto o campaña </th>
               <th> Fecha de término de difusión del concepto o campaña </th>
               <th> Número de factura en su caso </th>
-              <th> Área(s) responsable(s) que genera(n) posee(n) publica(n) y actualizan la  </th>información
+              <th> Área(s) responsable(s) que genera(n) posee(n) publica(n) y actualizan la información </th>
               <th> Fecha de validación </th>
               <th> Fecha de Actualización </th>
               <th> Nota </th>
@@ -155,11 +155,11 @@ $(document).ready(function(){
           { data: 'nombre_comercial' },
           { data: 'descripcion_justificacion' },
           { data: 'monto_tiempo' },
-          { data: 'area_responsable' },
+          { data: 'area_responsable1' },
           { data: 'fecha_inicio' },
           { data: 'fecha_termino' },
           { data: 'numero_factura' },
-          { data: 'area_responsable' },
+          { data: 'area_responsable2' },
           { data: 'fecha_validacion' },
           { data: 'fecha_actualizacion' },
           { data: 'nota' },
