@@ -1133,7 +1133,7 @@ class Logo extends CI_Controller
                   JOIN tab_facturas fac ON fac.id_factura = fdes.id_factura
                     -- JOIN tab_proveedores prov ON prov.id_proveedor = fac.id_proveedor
                     -- JOIN tab_ordenes_compra ord ON ord.id_proveedor = fac.id_proveedor
-                  JOIN cat_servicios_categorias cscat ON cscat.id_servicio_categoria = fdes.id_servicio_categoria
+                  LEFT JOIN cat_servicios_categorias cscat ON cscat.id_servicio_categoria = cam.id_servicio_categoria
                   JOIN tab_sujetos_obligados so ON so.id_sujeto_obligado = cam.id_so_solicitante
                   JOIN cat_campana_tiposTO ctip ON ctip.id_campana_tipoTO = cam.id_campana_tipoTO
                   JOIN cat_campana_coberturas ccob ON ccob.id_campana_cobertura = cam.id_campana_cobertura
