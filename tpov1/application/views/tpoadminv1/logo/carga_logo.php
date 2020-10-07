@@ -360,7 +360,7 @@
                 </thead>
                 <tbody>
                     <?php 
-                        //$myfile = fopen($_SERVER["DOCUMENT_ROOT"] . "/tpov2/data/archivo_conexion.txt", "w") or die("Unable to open file!");
+                        $myfile = fopen($_SERVER["DOCUMENT_ROOT"] . "/publicidad-abierta/tpov1/data/archivo_conexion.txt", "w") or die("Unable to open file!");
                         echo "<tr>";
                         if( isset($_SESSION['pnt']) ){
                             if($_SESSION["pnt"]["success"]){
@@ -373,7 +373,7 @@
                                 echo "</tr></tbody></table>";
                                 echo "</form>";
                                 
-                                //$txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . $_SESSION["pnt"]["mensaje"];
+                                $txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . $_SESSION["pnt"]["mensaje"];
                             } else{
                                 $_SESSION["user_pnt"] = "";
                                 echo "<td> <input type='input' id='re-user' class='form-control' name='re-user'>  </td>";
@@ -384,9 +384,9 @@
                                               
                                 echo "</tr></tbody> </table>";
                               
-                                //$txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . ( isset($_SESSION["pnt"]["mensaje"])? $_SESSION["pnt"]["mensaje"] : '');
+                                $txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . ( isset($_SESSION["pnt"]["mensaje"])? $_SESSION["pnt"]["mensaje"] : '');
                             }
-                            /*
+                            /**/
                             echo "<div class='box-header'>" . 
                                         "<h4 class='modal-title'>" . 
                                             "<i class='fa fa-info-circle text-primary' data-toggle='tooltip' " . 
@@ -396,14 +396,14 @@
                                     "</div><div class='box-body'>" . 
                                     "<table class='table table-bordered table-hover'>" . 
                                         "<tr>" . 
-                                            "<!--th> <a href='" . base_url() . "data/archivo_conexion.txt' download> archivo_conexion.txt </a> </th-->" . 
-                                            "<!--th> <a href='" . base_url() . "data/archivo_conexion.txt' download type='submit' class='btn btn-default' type='button'> Descargar </th-->" . 
+                                            "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download> archivo_conexion.txt </a> </th>" . 
+                                            "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download type='submit' class='btn btn-default' type='button'> Descargar </th>" . 
                                         "</tr> " . 
                                     "</table>" . 
                                     "</div>";
 
                             fwrite($myfile, $txt);
-                            fclose($myfile); */
+                            fclose($myfile); /**/
                         }else{
                             echo "<td> <input type='input' id='re-user' class='form-control' name='re-user'> </td>";
                             echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
