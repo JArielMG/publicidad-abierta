@@ -215,7 +215,7 @@ $(document).ready(function(){
                   response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
                 }
 
-                response += "<a class='tpo_btn ver_mas' href='#' data='" + row.id_factura_desglose + "'>" 
+                response += "<a class='tpo_btn ver_mas' href='#' data='" + row.id + "'>" 
                 response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  Ver más información </span></a>"
 
                 return response
