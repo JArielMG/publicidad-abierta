@@ -158,7 +158,7 @@ $(document).ready(function(){
           { data: 'difusion_mensaje' },
           { data: 'fecha_inicio' },
           { data: 'fecha_termino' },
-          { data: 'numero_factura' },
+          { data: 'num_factura' },
           { data: 'area_responsable' },
           { data: 'fecha_validacion' },
           { data: 'fecha_actualizacion' },

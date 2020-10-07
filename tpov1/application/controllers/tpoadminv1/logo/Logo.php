@@ -1115,7 +1115,7 @@ class Logo extends CI_Controller
                       "edu.id_poblacion_nivel_educativo", "eda.nombre_poblacion_grupo_edad", 
                       "niv.nombre_poblacion_nivel", "cam.responsable_publisher", "cam.name_comercial", 
                       "cam.razones_supplier", "cam.monto_tiempo", "cam.difusion_mensaje", 
-                      "cam.fecha_inicio", "cam.fecha_termino", "fac.id_factura", "fac.numero_factura", "fac.area_responsable", 
+                      "cam.fecha_inicio", "cam.fecha_termino", "fac.id_factura", "cam.num_factura", "fac.area_responsable", 
                       "cam.fecha_validacion", "cam.fecha_actualizacion", "pnt.estatus_pnt", "cam.nota");
 
         foreach ($cols as &$col) {
