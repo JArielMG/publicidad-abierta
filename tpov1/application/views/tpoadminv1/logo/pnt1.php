@@ -38,10 +38,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	<h4>Formatos</h4>
 
 	<ul class="items-formato">
-		<li> <a class="btn-group btn btn-info btn-sm <?php echo ($formato == 1)? 'here': '' ?>" id="formato_1" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=1"> 70FXXIIIA </a> </li>
-		<li> <a class="btn-group btn btn-info btn-sm <?php echo ($formato == 2)? 'here': '' ?>" id="formato_2" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=2"> 70FXXIIIB </a> </li>
-		<li> <a class="btn-group btn btn-info btn-sm <?php echo ($formato == 3)? 'here': '' ?>" id="formato_3" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=3"> 70FXXIIIC </a> </li>
-		<li> <a class="btn-group btn btn-info btn-sm <?php echo ($formato == 4)? 'here': '' ?>" id="formato_4" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=4"> 70FXXIIID </a> </li>
+		<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 1)? 'here': '' ?>" id="formato_1" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=1"> 70FXXIIIA </a> </li>
+		<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 2)? 'here': '' ?>" id="formato_2" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=2"> 70FXXIIIB </a> </li>
+		<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 3)? 'here': '' ?>" id="formato_3" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=3"> 70FXXIIIC </a> </li>
+		<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 4)? 'here': '' ?>" id="formato_4" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=4"> 70FXXIIID </a> </li>
 	</ul>
 
 	<br><br><br>
@@ -101,6 +101,19 @@ $(document).ready(function(){
     	if (year == "") return true
         return (year == ejercicio);
     });
+
+     $('#year').on("change", function() { 
+            year = $(this).val()
+            console.log(year)
+            if (year != ""){
+                $("a.formato_lnk").each( function(i, e){  
+                    link = $(e).attr("href").split("#y")[0] 
+                    link += "#y" + year
+                    $(e).attr("href", link)
+                })
+            }
+            table.draw(); 
+        });
 
     var table = $('#grid1').DataTable({
     	ajax: {
@@ -202,13 +215,17 @@ $(document).ready(function(){
 		]
     });
 
-    $('#year').change( function() { table.draw(); });
 
     function validURL(str) {
 	 	try { new URL(string) } catch (_){ return false } 
   		return true
 	}
 
+	 setTimeout(function(){ 
+            var year = window.location.href.split("#y")[1] 
+            if(year) $('#year').val(year).trigger('change');
+        }, 1500);
+	 
 	$(document).on("click","a.crear",function(e){
 
 

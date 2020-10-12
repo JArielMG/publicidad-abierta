@@ -323,8 +323,7 @@
     </div>
 
 
-    <div class="row">
-        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
+w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
         <div class="box box-info">
             <div class="box-header">
                <h4 class="modal-title">
