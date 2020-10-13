@@ -38,9 +38,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 		<li> 
 			<a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 2)? 'here': '' ?>" id="formato_2" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=2"> 70FXXIIIB </a> 
 			<ul class="subitems">
-				<li> <a class="formato_lnk sbtn-group btn btn-info btn-sm <?php echo ($formato == 21)? 'here': '' ?>" id="formato_21" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=21"> 70FXXIIIB1 </a> </li>
-				<li> <a class="formato_lnk sbtn-group btn btn-info btn-sm <?php echo ($formato == 22)? 'here': '' ?>" id="formato_22" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=22"> 70FXXIIIB2 </a> </li>
-				<li> <a class="formato_lnk sbtn-group btn btn-info btn-sm <?php echo ($formato == 23)? 'here': '' ?>" id="formato_23" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=23"> 70FXXIIIB3 </a> </li>
+				<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 21)? 'here': '' ?>" id="formato_21" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=21"> 70FXXIIIB1 </a> </li>
+				<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 22)? 'here': '' ?>" id="formato_22" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=22"> 70FXXIIIB2 </a> </li>
+				<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 23)? 'here': '' ?>" id="formato_23" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=23"> 70FXXIIIB3 </a> </li>
 				
 			</ul>
 		</li>
