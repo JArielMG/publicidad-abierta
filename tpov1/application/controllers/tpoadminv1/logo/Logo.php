@@ -850,7 +850,7 @@ class Logo extends CI_Controller
         $cols = array("pnt.id_tpo", "pnt.id_pnt", "p.id_presupuesto", "e.ejercicio", 
                       "p.fecha_inicio_periodo", "p.id_sujeto_obligado", "p.fecha_termino_periodo", "p.denominacion", 
                       "p.fecha_publicacion", "p.file_programa_anual", "p.area_responsable", 
-                      "p.fecha_validacion", "p.fecha_actualizacion", "p.nota", "pnt.estatus_pnt");
+                      "p.fecha_validacion", "p.fecha_actualizacion", "p.nota_planeacion", "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
             $tag = $col;
@@ -1040,9 +1040,9 @@ class Logo extends CI_Controller
                     JOIN (SELECT p.id_presupesto_concepto, c.capitulo, c.denominacion 'nombre_concepto', 
                                p.partida, p.denominacion 'denominacion_partida'
                           FROM (SELECT id_presupesto_concepto, capitulo, partida, denominacion FROM cat_presupuesto_conceptos pc
-                              WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) <> '' ) p 
-                          JOIN (SELECT capitulo, denominacion FROM cat_presupuesto_conceptos
-                              WHERE trim(coalesce(capitulo, '')) <>'' AND trim(coalesce(partida, '')) = '') c
+                              WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) <> '' AND trim(coalesce(concepto, '')) <> '' ) p 
+                          JOIN (SELECT capitulo, denominacion FROM cat_presupuesto_conceptos 
+                              WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) = '' AND trim(coalesce(concepto, '')) = '') c
                           ON c.capitulo = p.capitulo) pcon 
                     ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
                     JOIN (
