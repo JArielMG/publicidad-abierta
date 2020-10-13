@@ -131,7 +131,7 @@ $(document).ready(function(){
 	        { data: 'fecha_termino_periodo' },
 	        { data: 'denominacion' },
 	        { data: 'fecha_publicacion' },
-	        { data: 'file_programa_anual' },
+	        { data: 'file_programa_anual' }, // 
 	        { data: 'area_responsable' },
 	        { data: 'fecha_validacion' },
 	        { data: 'fecha_actualizacion' },
@@ -148,7 +148,14 @@ $(document).ready(function(){
 			    }
 			},
 	        {
-	            targets: [4, 5, 7, 8, 10, 11 ],
+	            targets: 8,
+	            data: "data",
+	            render: function ( data, type, row, meta ) {
+	            	if(data != "") return "<?php echo base_url(); ?>data/archivos/" + data
+	            }
+	        },
+	        {
+	            targets: [4, 5, 7, 10, 11 ],
 	            data: "data",
 	            render: function ( data, type, row, meta ) {
 	                try{
