@@ -1058,7 +1058,7 @@ class Logo extends CI_Controller
                            ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
                            GROUP BY pcon.concepto, pcon.id_presupesto_concepto)
                     ) total ON total.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                    LEFT JOIN (SELECT numero_partida, SUM(cantidad) total_ejercido 
+                    LEFT JOIN (SELECT numero_partida, SUM(monto_desglose) total_ejercido 
                                FROM tab_facturas_desglose GROUP BY numero_partida) fact 
                          ON fact.numero_partida = pcon.partida 
                     LEFT JOIN rel_pnt_presupuesto_desglose pnt ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose");
