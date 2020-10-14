@@ -1042,7 +1042,7 @@ class Logo extends CI_Controller
                           FROM (SELECT id_presupesto_concepto, capitulo, partida, denominacion FROM cat_presupuesto_conceptos pc
                               WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) <> '' AND trim(coalesce(concepto, '')) <> '' ) p 
                           JOIN (SELECT capitulo, denominacion FROM cat_presupuesto_conceptos 
-                              WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) = '' AND trim(coalesce(concepto, '')) = '') c
+                              WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) = '') c
                           ON c.capitulo = p.capitulo) pcon 
                     ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
                     JOIN (
@@ -1051,7 +1051,7 @@ class Logo extends CI_Controller
                            FROM tab_presupuestos_desglose pdes
                            JOIN (SELECT id_presupesto_concepto, p.concepto
                                  FROM (SELECT id_presupesto_concepto, concepto FROM cat_presupuesto_conceptos pc
-                                     WHERE trim(coalesce(concepto, '')) <> '' AND trim(coalesce(partida, '')) <> '' ) p 
+                                     WHERE trim(coalesce(concepto, '')) <> '' AND trim(coalesce(partida, '')) <> '' AND trim(coalesce(concepto, '')) <> '' ) p 
                                  JOIN (SELECT concepto FROM cat_presupuesto_conceptos
                                      WHERE trim(coalesce(concepto, '')) <>'' AND trim(coalesce(partida, '')) = '') c
                                  ON c.concepto = p.concepto) pcon 
