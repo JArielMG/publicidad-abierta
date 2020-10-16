@@ -1,0 +1,9 @@
+.DS_Store
+.htaccess
+*.htaccess
+
+tpov1/application/config/autoload.php
+tpov1/application/config/config.php
+tpov1/application/config/database.php
+
+
