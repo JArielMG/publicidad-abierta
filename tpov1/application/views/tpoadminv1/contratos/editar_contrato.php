@@ -297,7 +297,7 @@
                                                     <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_contrato']?>"></i>
                                                 </label>
                                                 <?php $class = "form-control";
-                                                    echo form_input(array('type' => 'text', 'name' => 'url_contrato', 'value' => $registro['url_contrato'], 'class' => $class)); ?>                                                
+                                                    echo form_input(array('type' => 'url', 'name' => 'url_contrato', 'value' => $registro['url_contrato'], 'class' => $class)); ?>                                                
                                             </div>
                                             <div class="form-group">
                                                 <label class="custom-file-label"> Archivo del contrato en PDF
