@@ -372,7 +372,7 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                                 echo "</tr></tbody></table>";
                                 echo "</form>";
                                 
-                                $txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . $_SESSION["pnt"]["mensaje"];
+                                $txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . ( isset($_SESSION["pnt"]["mensaje"])? $_SESSION["pnt"]["mensaje"] : '');
                             } else{
                                 $_SESSION["user_pnt"] = "";
                                 echo "<td> <input type='input' id='re-user' class='form-control' name='re-user'>  </td>";
@@ -411,6 +411,26 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                                           href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a></td>";
                                           
                             echo "</tr></tbody> </table>";
+
+                             echo "<div class='box-header'>" . 
+                                        "<h4 class='modal-title'>" . 
+                                            "<i class='fa fa-info-circle text-primary' data-toggle='tooltip' " . 
+                                            "title='En este documento puedes ver los el detalle de tu conexión.'></i>" . 
+                                            "Logs de conexión" . 
+                                        "</h4>" . 
+                                    "</div><div class='box-body'>" . 
+                                    "<table class='table table-bordered table-hover'>" . 
+                                        "<tr>" . 
+                                            "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download> archivo_conexion.txt </a> </th>" . 
+                                            "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download type='submit' class='btn btn-default' type='button'> Descargar </th>" . 
+                                        "</tr> " . 
+                                    "</table>" . 
+                                    "</div>";
+
+                            $txt = "mensaje: No se logró hacer la conexión, verifique que usuario y contraseña estén correctos o contacto con el administrador del sitio";
+
+                            fwrite($myfile, $txt);
+                            fclose($myfile); /**/
                         }
                     ?>
                 </tbody>
