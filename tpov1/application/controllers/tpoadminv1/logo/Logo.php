@@ -1023,7 +1023,7 @@ class Logo extends CI_Controller
     function registros22(){
         $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
                        "pcon.partida", "pcon.capitulo", "pcon.nombre_concepto", "total.presupuesto", 
-                       "total.modificado total_modificado", "pcon.denominacion_partida", "pdes.monto_presupuesto", 
+                       "total.modificado total_modificado", "pdes.monto_presupuesto", 
                        "pdes.monto_modificacion", "fact.total_ejercido", "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
@@ -1034,11 +1034,12 @@ class Logo extends CI_Controller
             $col = "IFNULL(" . $col . ", '') AS $tag";
         }
 
-        $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_presupuestos_desglose pdes 
+        $query = $this->db->query("SELECT " . join(", ", $cols) .  
+                  " FROM tab_presupuestos_desglose pdes 
                     JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
                     JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
                     JOIN (SELECT p.id_presupesto_concepto, c.capitulo, c.denominacion 'nombre_concepto', 
-                               p.partida, p.denominacion 'denominacion_partida'
+                               p.partida, p.id_presupesto_concepto 'denominacion_partida'
                           FROM (SELECT id_presupesto_concepto, capitulo, partida, denominacion FROM cat_presupuesto_conceptos pc
                               WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) <> '' AND trim(coalesce(concepto, '')) <> '' ) p 
                           JOIN (SELECT capitulo, denominacion FROM cat_presupuesto_conceptos 
@@ -1302,7 +1303,7 @@ class Logo extends CI_Controller
     function alta_carga_logo(){
 
         //Validamos que el usuario tenga acceso
-        $this->permiso_administrador();
+        //$this->permiso_administrador();
 
         $this->load->model('tpoadminv1/logo/Logo_model');
 
