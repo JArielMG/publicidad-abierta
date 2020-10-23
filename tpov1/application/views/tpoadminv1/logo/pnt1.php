@@ -234,9 +234,9 @@ $(document).ready(function(){
         }, 1500);
 	 
 	$(document).on("click","a.crear",function(e){
-
-
     	e.preventDefault();
+    	if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+
 	    var data = JSON.parse( $(this).attr("data") )
 		  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/agregar_pnt";
 		
@@ -300,7 +300,7 @@ $(document).ready(function(){
 
 	$(document).on("click","a.eliminar",function(e){
    		e.preventDefault();
-
+   		if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
     	var a = $(this)
 	      , tr = a.parents("tr")
 	      , td = a.parents("td")
@@ -311,7 +311,7 @@ $(document).ready(function(){
 
 	$(document).on("click","a.eliminar",function(e){
     	e.preventDefault();
-
+    	if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
     	var a = $(this)
 	      , tr = a.parents("tr")
 	      , td = a.parents("td")

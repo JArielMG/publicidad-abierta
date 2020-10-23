@@ -208,7 +208,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
         }, 1500);
 
 		$(document).on("click","a.crear",function(e){ 
-	    	e.preventDefault();
+	    	e.preventDefault(); 
+				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 		    var data = JSON.parse( $(this).attr("data") )
 			  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/agregar_pnt";
 			
@@ -258,7 +259,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	    });
 
 		$(document).on("click","a.eliminar",function(e){ 
-	    	e.preventDefault();
+	    	e.preventDefault(); 
+				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 
 	    	var a = $(this)
 		      , tr = a.parents("tr")
