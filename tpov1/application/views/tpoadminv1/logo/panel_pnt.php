@@ -18,7 +18,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$.post("http://localhost/tpov2/index.php/tpoadminv1/logo/logo/traer_formatos", {}, function(data){
+		$.post("http://localhost/tpov2/index.php/tpoadminv1/logo/pnt/traer_formatos", {}, function(data){
 			/*
 			console.log(data.mensaje[0].codigo);
 			console.log(data.mensaje[0].id);
@@ -43,7 +43,7 @@
 		})
 
 		$("#traer_campos").on("submit", function(){
-			$.post("http://localhost/tpov2/index.php/tpoadminv1/logo/logo/traer_campos", {"idFormato": 43344}, function(data){
+			$.post("http://localhost/tpov2/index.php/tpoadminv1/logo/pnt/traer_campos", {"idFormato": 43344}, function(data){
 				console.log(data)
 			})
 			return false;

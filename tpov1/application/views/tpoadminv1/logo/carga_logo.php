@@ -323,7 +323,7 @@
     </div>
 
 
-w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
+        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
         <div class="box box-info">
             <div class="box-header">
                <h4 class="modal-title">
@@ -367,8 +367,8 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                                 echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
                                 echo "<td class='active'> <span class='circle' style='background: #3f3'>  </span> Activo </td>";
                                 
-                                echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a> &nbsp;&nbsp;&nbsp;"; 
-                                echo      "<a type='submit' class='btn-group btn btn-danger btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/logo/salir_pnt'  id='desconectar'> Desconectar </a> </td>";
+                                echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/pnt/entrar_pnt' id='re-conectar'> Conectar </a> &nbsp;&nbsp;&nbsp;"; 
+                                echo      "<a type='submit' class='btn-group btn btn-danger btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/pnt/salir_pnt'  id='desconectar'> Desconectar </a> </td>";
                                 echo "</tr></tbody></table>";
                                 echo "</form>";
                                 
@@ -379,7 +379,7 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                                 echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
                                 echo "<td class='inactive'> <span class='circle' style='background: #f33'> </span> Inactivo </td>";
                                 echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' 
-                                              href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a></td>";
+                                              href='" . base_url() . "index.php/tpoadminv1/logo/pnt/entrar_pnt' id='re-conectar'> Conectar </a></td>";
                                               
                                 echo "</tr></tbody> </table>";
                               
@@ -408,7 +408,7 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                             echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
                             echo "<td class='inactive'> <span class='circle' style='background: #f33'> </span> Inactivo </td>";
                             echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' 
-                                          href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a></td>";
+                                          href='" . base_url() . "index.php/tpoadminv1/logo/pnt/entrar_pnt' id='re-conectar'> Conectar </a></td>";
                                           
                             echo "</tr></tbody> </table>";
 
@@ -461,7 +461,7 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                         echo "    <form>";
                         echo "    <td> <input type='input' id='unidad_administrativa' class='form-control' name='unidad_administrativa' value='" . ( ( isset($_SESSION['unidad_administrativa']) )? $_SESSION["unidad_administrativa"] : '' ) . "'> </td>";
                         echo "    <td> <input type='input' id='sujeto_obligado' class='form-control' name='sujeto_obligado' value='" . ( ( isset($_SESSION['sujeto_obligado']) )? $_SESSION["sujeto_obligado"] : '' ) . "'> </td>";
-                        echo "    <td> <a type='button' id='modificar_sujeto' href='" . base_url() . "index.php/tpoadminv1/logo/logo/modificar_sujeto' 
+                        echo "    <td> <a type='button' id='modificar_sujeto' href='" . base_url() . "index.php/tpoadminv1/logo/pnt/modificar_sujeto' 
                                             class='btn-group btn btn-primary btn-sm'> <i class='fa fa-edit'></i> Actualizar datos de Sujeto Obligado </a> </td>"; 
                         echo "    </form>";
                         echo "  </tr>";
@@ -579,7 +579,7 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                 <div class="modal-body">
                     <span>Se deben agregar los datos correctos de la conexión exitosa al WEB services del PNT.</span>
 
-                    <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/entrar_pnt">
+                    <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/entrar_pnt">
                         <input type="hidden" name="id_settings" id="id_settings" value="" />
                         <div class="box-body">
                             <div class="form-group">

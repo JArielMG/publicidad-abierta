@@ -432,7 +432,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             e.preventDefault(); 
 				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var data = JSON.parse( $(this).attr("data") )
-              , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/agregar_pnt";
+              , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/agregar_pnt";
             
             var a = $(this)
               , tr = a.parents("tr")
