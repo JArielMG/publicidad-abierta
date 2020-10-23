@@ -87,6 +87,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 <th> Grupos de Edad </th>
                 <th> Nivel Socioeconómico </th>
                 <th> Respecto a los proveedores y su contratación </th>
+
+                <th> Respecto a los recursos y el presupuesto </th>
+                <th> Respecto a los nontos y su contratos </th>
+
                 <th> Área(s) Responsable(s) que generan(n) posee(n), Publica(n) y Actualiza(n) la información </th>
                 <th> Fecha de Validación </th>
                 <th> Fecha de Actualización </th>
@@ -212,6 +216,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 { data: 'rangos_edad' },
                 { data: 'poblacion_nivel' },
                 { data: 'resp_pro_con' },
+                
+                { data: 'resp_rec_pre' },
+                { data: 'resp_con_mon' },
+
                 { data: 'area_responsable' },
                 { data: 'fecha_validacion' },
                 { data: 'fecha_actualizacion' },
@@ -368,7 +376,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     }
                 },
                 {
-                    targets: 35,
+                    targets: 37,
                     data: "data",
                     render: function ( data, type, row, meta ) {
                         var response = ""
@@ -402,7 +410,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     }
                 },
                 {
-                    targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34],
+                    targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34, 35, 36],
                     data: "data",
                     render: function ( data, type, row, meta ) {
                         if( !(row.id_pnt) || row.id_pnt === ""){ 
