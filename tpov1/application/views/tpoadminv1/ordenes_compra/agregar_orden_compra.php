@@ -320,6 +320,13 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>Hipervínculo a la orden de compra
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_orden']?>"></i>
+                        </label>
+                        <?php $class = "form-control"; 
+                        echo form_input(array('type' => 'url', 'name' => 'url_orden', 'value' => $registro['url_orden'], 'class' => $class)); ?>
+                    </div>
+                    <div class="form-group">
                         <label class="custom-file-label"> Archivo de la orden de compra en PDF
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_orden']?>"></i>
                         </label>
