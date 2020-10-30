@@ -186,7 +186,7 @@ $(document).ready(function(){
           { data: 'campana_ambito_geo' },
           { data: 'nombre_poblacion_sexo' },
           { data: 'poblacion_lugar' },
-          { data: 'id_poblacion_nivel_educativo' },
+          { data: 'nombre_poblacion_nivel_educativo' },
           { data: 'nombre_poblacion_grupo_edad' },
           { data: 'nombre_poblacion_nivel' },
           { data: 'responsable_publisher' },
