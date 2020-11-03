@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/(carpeta_ejemplo)/';
-$config['base_url'] = 'http://localhost:8888/publicidad-abierta/tpov1/';
+$config['base_url'] = 'http://localhost/publicidad-abierta/tpov1/';
 
 //$config['base_dir'] = '/Applications/MAMP/htdocs/publicidad_abierta';
 $config['base_dir'] = '/Applications/MAMP/htdocs/publicidad_abierta/tpov1/';

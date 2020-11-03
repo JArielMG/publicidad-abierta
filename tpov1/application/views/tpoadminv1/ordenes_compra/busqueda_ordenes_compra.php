@@ -221,6 +221,13 @@
                     </tr>
                     <tr class="form-group">
                         <td class="control-label col-sm-4">
+                            <b>Hipervínculo a la orden de compra</b>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_orden']?>"></i>
+                        </td>
+                        <td class="col-sm-8" id="item_20"></td>
+                    </tr>
+                    <tr class="form-group">
+                        <td class="control-label col-sm-4">
                             <b>Archivo de la orden de compra en PDF</b>
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_orden']?>"></i>
                         </td>
@@ -345,6 +352,7 @@
                     $('#myModal').find('#item_17').html(response.periodo);
                     $('#myModal').find('#item_18').html(response.fecha_actualizacion);
                     $('#myModal').find('#item_19').html(response.nota);
+                    $('#myModal').find('#item_20').html(response.url_orden);
 
                     if(response.name_file_orden){
                         var html = '<a href="' + response.path_file_orden + '" download>'+ response.name_file_orden +'</a>' 

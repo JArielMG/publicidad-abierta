@@ -280,6 +280,13 @@
                                         echo form_input(array('type' => 'text', 'name' => 'conjunto_campanas', 'value' => $registro['conjunto_campanas'], 'class' => $class)); ?>
                                 </div>
                                 <div class="form-group">
+                                    <label> Hipervínculo al programa anual
+                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_programa_anual']?>"></i>
+                                    </label>
+                                    <?php $class = "form-control";
+                                        echo form_input(array('type' => 'url', 'name' => 'url_programa_anual', 'value' => $registro['url_programa_anual'], 'class' => $class)); ?>
+                                </div>
+                                <div class="form-group">
                                     <label class="custom-file-label"> Archivo del programa anual
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_programa_anual']?>"></i>
                                     </label>

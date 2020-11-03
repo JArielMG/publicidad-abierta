@@ -110,6 +110,7 @@ class Generales_model extends CI_Model
             'id_presupuesto' => '',
             'id_ejercicio' => 'Indica el a&ntilde;o del ejercicio presupuestario.',
             'id_sujeto_obligado' => 'Sujeto obligado con presupuesto asignado.',
+            'url_programa_anual' => 'Hipervínculo al programa anual',
             'file_programa_anual' => 'Archivo con el programa de presupuesto anual.',
             'monto_presupuesto' => 'Monto presupuestado originalmente.',
             'monto_modificacion' => 'Monto de modificaci&oacute;n de la partida, puede ser un n&uacute;mero negativo o positivo.',
