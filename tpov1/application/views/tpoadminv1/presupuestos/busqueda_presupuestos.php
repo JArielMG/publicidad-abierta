@@ -254,7 +254,15 @@
                         </td>
                         <td class="col-sm-8" id="item_14">
                         </td>
-                    </tr> 
+                    </tr>
+                    <tr class="form-group">
+                        <td class="control-label col-sm-4">
+                            <b>Hipervínculo al programa anual </b>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_programa_anual']?>"></i>
+                        </td>
+                        <td class="col-sm-8" id="item_25">
+                        </td>
+                    </tr>   
                     <tr class="form-group">
                         <td class="control-label col-sm-4">
                             <b>Archivo del programa anual </b>
@@ -400,6 +408,7 @@
                     $('#myModal').find('#item_18').html(response.monto_presupuesto);
                     $('#myModal').find('#item_19').html(response.monto_modificacion);
                     $('#myModal').find('#item_20').html(response.presupuesto_modificado);
+                    $('#myModal').find('#item_25').html(response.url_programa_anual);
                     $('#myModal').find('#item_21').html(response.estatus);
                     if(response.file_programa_anual){
                         var html = '<a href="<?php echo  base_url() . 'data/programas/'; ?>'+ response.file_programa_anual +'" download>'+ response.file_programa_anual +'</a>' 

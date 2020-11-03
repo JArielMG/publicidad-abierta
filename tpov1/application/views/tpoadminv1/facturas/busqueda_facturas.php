@@ -188,10 +188,24 @@
                     </tr>
                     <tr class="form-group">
                         <td class="control-label col-sm-4">
+                            <b>Hipervínculo a la factura en formato PDF</b>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_factura_pdf']?>"></i>
+                        </td>
+                        <td class="col-sm-8" id="item_19"></td>
+                    </tr>
+                    <tr class="form-group">
+                        <td class="control-label col-sm-4">
                             <b>Archivo de la factura en PDF</b>
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_factura_pdf']?>"></i>
                         </td>
                         <td class="col-sm-8" id="item_10"></td>
+                    </tr>
+                    <tr class="form-group">
+                        <td class="control-label col-sm-4">
+                            <b>Hipervínculo a la factura en formato XML</b>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_factura_xml']?>"></i>
+                        </td>
+                        <td class="col-sm-8" id="item_20"></td>
                     </tr>
                     <tr class="form-group">
                         <td class="control-label col-sm-4">
@@ -329,6 +343,8 @@
                     $('#myModal').find('#item_16').html(response.periodo);
                     $('#myModal').find('#item_17').html(response.fecha_actualizacion);
                     $('#myModal').find('#item_18').html(response.nota);
+                    $('#myModal').find('#item_19').html(response.url_factura_pdf);
+                    $('#myModal').find('#item_20').html(response.url_factura_xml);
 
                     if(response.name_file_factura_pdf){
                         var html = '<a href="' + response.path_file_factura_pdf + '" download>'+ response.name_file_factura_pdf +'</a>' 

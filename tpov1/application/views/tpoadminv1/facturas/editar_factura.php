@@ -246,6 +246,13 @@
                                         <?php echo $sel_estatus; ?>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label>Hipervínculo a la factura en formato PDF
+                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_factura_pdf']?>"></i>
+                                    </label>
+                                    <?php $class = "form-control";
+                                    	echo form_input(array('type' => 'url', 'name' => 'url_factura_pdf', 'value' => $registro['url_factura_pdf'], 'class' => $class)); ?>                                                
+                                </div>                                
                                 <div class="form-group"><!-- Inicio de input para el cargado de pdf-->
                                     <label class="custom-file-label"> Archivo de la factura en PDF
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_factura_pdf']?>"></i>
@@ -272,6 +279,13 @@
                                 <div class="form-group">
                                     <p class="help-block" id="result_upload"><?php echo $control_update['mensaje_file']; ?> </p>
                                 </div><!-- fin de input de pdf-->
+                                <div class="form-group">
+                                    <label>Hipervínculo a la factura en formato XML
+                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_factura_xml']?>"></i>
+                                    </label>
+                                    <?php $class = "form-control";
+                                    	echo form_input(array('type' => 'url', 'name' => 'url_factura_xml', 'value' => $registro['url_factura_xml'], 'class' => $class)); ?>                                                
+                                </div>
                                 <div class="form-group"><!-- Inicio de input para el cargado de xml-->
                                     <label class="custom-file-label"> Archivo de la factura en XML
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_factura_xml']?>"></i>

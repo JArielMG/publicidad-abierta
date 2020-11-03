@@ -557,10 +557,6 @@
         initDataTable();
     }
 	
-	var inicializar_componentes = function(){
-        set_valores_tabla();
-    }
-	
     var set_valores_tabla = function(response, container){
         $('#campanas').find('tbody').empty();
         if(Array.isArray(response)){
@@ -588,8 +584,6 @@
 
     var initDataTable = function(){        
         $('#campanas').dataTable({
-
-        	'retrieve': true, //aqui
             'bPaginate': true,
             'bLengthChange': true,
             'bFilter': true,

@@ -74,8 +74,16 @@ if($disponible == true){ /* se muestra la info*/
                         <td width="80%"><?php echo $factura['trimestre']?></td>
                     </tr>
                     <tr>
+                        <td class="text-right">Hipervínculo a la factura en formato PDF <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_factura_pdf']?>"></i>: </td>
+                        <td width="80%"> <a href="<?php echo $factura['url_factura_pdf']?>" target="_blank"><?php echo $factura['url_factura_pdf']?></a> </td>
+                    </tr>
+                    <tr>
                         <td class="text-right">Archivo de la factura en PDF <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_factura_pdf']?>"></i>: </td>
                         <td width="80%"><?php echo $link_pdf?></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Hipervínculo a la factura en formato XML<i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_factura_xml']?>"></i>: </td>
+                        <td width="80%"> <a href="<?php echo $factura['url_factura_xml']?>" target="_blank"><?php echo $factura['url_factura_xml']?></a> </td>
                     </tr>
                     <tr>
                         <td class="text-right">Archivo de la factura en XML <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['file_factura_xml']?>"></i>: </td>
