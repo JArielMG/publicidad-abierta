@@ -104,6 +104,26 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
         });
 	    
 	    table = $('#grid').DataTable({
+	    	 language: {
+		        "decimal": "",
+		        "emptyTable": "No hay información",
+		        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+		        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+		        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+		        "infoPostFix": "",
+		        "thousands": ",",
+		        "lengthMenu": "Mostrar _MENU_ Entradas",
+		        "loadingRecords": "Cargando...",
+		        "processing": "Procesando...",
+		        "search": "Buscar:",
+		        "zeroRecords": "Sin resultados encontrados",
+		        "paginate": {
+		            "first": "Primero",
+		            "last": "Ultimo",
+		            "next": "Siguiente",
+		            "previous": "Anterior"
+		        }
+	    	},
 	    	ajax: {
 	    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros4",
 	    		dataSrc: ''
@@ -195,9 +215,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
         }, 1500);
 
 		$(document).on("click","a.crear",function(e){ 
-	    	e.preventDefault();
+	    	e.preventDefault(); 
+				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 		    var data = JSON.parse( $(this).attr("data") )
-			  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/agregar_pnt";
+			  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/agregar_pnt";
 			
 			var a = $(this)
 		      , tr = a.parents("tr")
@@ -255,7 +276,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 		
 
 		$(document).on("click","a.eliminar",function(e){ 
-	    	e.preventDefault();
+	    	e.preventDefault(); 
+				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 
 	    	var a = $(this)
 		      , tr = a.parents("tr")
@@ -280,7 +302,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				"_id_interno": data.id_pnt || id_pnt,
 			}
 
-			var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/eliminar_pnt"
+			var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/eliminar_pnt"
 
 	    	$.post(url, formato, function(res, error){
 	    		//if(res.success) location.reload(); 

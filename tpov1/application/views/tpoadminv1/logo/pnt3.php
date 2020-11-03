@@ -55,7 +55,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
               <th> ID TPO </th>
               <th> ID PNT </th>
               <th> ID </th>
-              <th> Id Factura </th>
+              <!--th> Id Factura </th-->
               <th> Ejercicio </th>
               <th> Fecha de inicio del periodo que se informa </th>
               <th> Fecha de termino del periodo que se informa </th>
@@ -140,6 +140,27 @@ $(document).ready(function(){
 
     
     var table = $('#grid').DataTable({
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        },
+        
       ajax: {
         url: "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros3",
         dataSrc: ''
@@ -150,7 +171,7 @@ $(document).ready(function(){
           { data: 'id_tpo' },
           { data: 'id_pnt' },
           { data: 'id' },
-          { data: 'id_factura' },
+          //{ data: 'id_factura' },
           { data: 'ejercicio' },
           { data: 'fecha_inicio_periodo' },
           { data: 'fecha_termino_periodo' },
@@ -165,7 +186,7 @@ $(document).ready(function(){
           { data: 'campana_ambito_geo' },
           { data: 'nombre_poblacion_sexo' },
           { data: 'poblacion_lugar' },
-          { data: 'id_poblacion_nivel_educativo' },
+          { data: 'nombre_poblacion_nivel_educativo' },
           { data: 'nombre_poblacion_grupo_edad' },
           { data: 'nombre_poblacion_nivel' },
           { data: 'responsable_publisher' },
@@ -192,7 +213,7 @@ $(document).ready(function(){
             }
         },
         {
-            targets: [5, 6, 26, 27, 30, 31 ],
+            targets: [4, 5, 25, 26, 29, 30 ],
             data: "data",
             render: function ( data, type, row, meta ) {
                 try{
@@ -203,7 +224,7 @@ $(document).ready(function(){
             }
         },
         {
-            targets: 33,
+            targets: 32,
             data: "data",
             render: function ( data, type, row, meta ) {
                 var response = ""
@@ -239,7 +260,8 @@ $(document).ready(function(){
           }
         },
         {
-            targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],
+            targets: [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            //targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],
             data: "data",
             render: function ( data, type, row, meta ) {
               if( !(row.id_pnt) || row.id_pnt === ""){ 
@@ -253,7 +275,8 @@ $(document).ready(function(){
     });
 
     $(document).on("click","a.ver_mas",function(e){ 
-        e.preventDefault();
+        e.preventDefault(); 
+				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
         var id = $(this).attr("data")
         var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros51";
         
@@ -288,9 +311,10 @@ $(document).ready(function(){
         }, 1500);
 
     $(document).on("click","a.crear",function(e){ 
-      e.preventDefault();
+      e.preventDefault(); 
+				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
       var data = JSON.parse( $(this).attr("data") )
-      , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/agregar_pnt";
+      , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/agregar_pnt";
     
       var a = $(this)
          , tr = a.parents("tr")
@@ -351,7 +375,8 @@ $(document).ready(function(){
     });
 
   $(document).on("click","a.eliminar",function(e){ 
-      e.preventDefault();
+      e.preventDefault(); 
+				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 
       var a = $(this)
         , tr = a.parents("tr")
@@ -375,7 +400,7 @@ $(document).ready(function(){
       "id_pnt": data.id_pnt || id_pnt
     }
 
-    var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/eliminar_pnt"
+    var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/eliminar_pnt"
 
       $.post(url, formato, function(res, error){
         //if(res.success) location.reload(); 

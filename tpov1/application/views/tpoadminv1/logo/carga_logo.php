@@ -323,7 +323,7 @@
     </div>
 
 
-w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
+        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
         <div class="box box-info">
             <div class="box-header">
                <h4 class="modal-title">
@@ -367,19 +367,19 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                                 echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
                                 echo "<td class='active'> <span class='circle' style='background: #3f3'>  </span> Activo </td>";
                                 
-                                echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a> &nbsp;&nbsp;&nbsp;"; 
-                                echo      "<a type='submit' class='btn-group btn btn-danger btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/logo/salir_pnt'  id='desconectar'> Desconectar </a> </td>";
+                                echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/pnt/entrar_pnt' id='re-conectar'> Conectar </a> &nbsp;&nbsp;&nbsp;"; 
+                                echo      "<a type='submit' class='btn-group btn btn-danger btn-sm' href='" . base_url() . "index.php/tpoadminv1/logo/pnt/salir_pnt'  id='desconectar'> Desconectar </a> </td>";
                                 echo "</tr></tbody></table>";
                                 echo "</form>";
                                 
-                                $txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . $_SESSION["pnt"]["mensaje"];
+                                $txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . ( isset($_SESSION["pnt"]["mensaje"])? $_SESSION["pnt"]["mensaje"] : '');
                             } else{
                                 $_SESSION["user_pnt"] = "";
                                 echo "<td> <input type='input' id='re-user' class='form-control' name='re-user'>  </td>";
                                 echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
                                 echo "<td class='inactive'> <span class='circle' style='background: #f33'> </span> Inactivo </td>";
                                 echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' 
-                                              href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a></td>";
+                                              href='" . base_url() . "index.php/tpoadminv1/logo/pnt/entrar_pnt' id='re-conectar'> Conectar </a></td>";
                                               
                                 echo "</tr></tbody> </table>";
                               
@@ -408,9 +408,29 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                             echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
                             echo "<td class='inactive'> <span class='circle' style='background: #f33'> </span> Inactivo </td>";
                             echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' 
-                                          href='" . base_url() . "index.php/tpoadminv1/logo/logo/entrar_pnt' id='re-conectar'> Conectar </a></td>";
+                                          href='" . base_url() . "index.php/tpoadminv1/logo/pnt/entrar_pnt' id='re-conectar'> Conectar </a></td>";
                                           
                             echo "</tr></tbody> </table>";
+
+                             echo "<div class='box-header'>" . 
+                                        "<h4 class='modal-title'>" . 
+                                            "<i class='fa fa-info-circle text-primary' data-toggle='tooltip' " . 
+                                            "title='En este documento puedes ver los el detalle de tu conexión.'></i>" . 
+                                            "Logs de conexión" . 
+                                        "</h4>" . 
+                                    "</div><div class='box-body'>" . 
+                                    "<table class='table table-bordered table-hover'>" . 
+                                        "<tr>" . 
+                                            "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download> archivo_conexion.txt </a> </th>" . 
+                                            "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download type='submit' class='btn btn-default' type='button'> Descargar </th>" . 
+                                        "</tr> " . 
+                                    "</table>" . 
+                                    "</div>";
+
+                            $txt = "mensaje: No se logró hacer la conexión, verifique que usuario y contraseña estén correctos o contacto con el administrador del sitio";
+
+                            fwrite($myfile, $txt);
+                            fclose($myfile); /**/
                         }
                     ?>
                 </tbody>
@@ -441,7 +461,7 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                         echo "    <form>";
                         echo "    <td> <input type='input' id='unidad_administrativa' class='form-control' name='unidad_administrativa' value='" . ( ( isset($_SESSION['unidad_administrativa']) )? $_SESSION["unidad_administrativa"] : '' ) . "'> </td>";
                         echo "    <td> <input type='input' id='sujeto_obligado' class='form-control' name='sujeto_obligado' value='" . ( ( isset($_SESSION['sujeto_obligado']) )? $_SESSION["sujeto_obligado"] : '' ) . "'> </td>";
-                        echo "    <td> <a type='button' id='modificar_sujeto' href='" . base_url() . "index.php/tpoadminv1/logo/logo/modificar_sujeto' 
+                        echo "    <td> <a type='button' id='modificar_sujeto' href='" . base_url() . "index.php/tpoadminv1/logo/pnt/modificar_sujeto' 
                                             class='btn-group btn btn-primary btn-sm'> <i class='fa fa-edit'></i> Actualizar datos de Sujeto Obligado </a> </td>"; 
                         echo "    </form>";
                         echo "  </tr>";
@@ -559,7 +579,7 @@ w        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
                 <div class="modal-body">
                     <span>Se deben agregar los datos correctos de la conexión exitosa al WEB services del PNT.</span>
 
-                    <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/entrar_pnt">
+                    <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/entrar_pnt">
                         <input type="hidden" name="id_settings" id="id_settings" value="" />
                         <div class="box-body">
                             <div class="form-group">
