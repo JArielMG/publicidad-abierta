@@ -657,4 +657,34 @@ class PNT extends CI_Controller
         echo json_encode( $data["formatos"] ); 
     }
 
+    function registros21(){
+        $cols = array("pnt.id_tpo", "pnt.id_proveedor id", "f.id_factura", "con.descripcion_justificacion", 
+                      "e.ejercicio", "proc.nombre_procedimiento", "con.fundamento_juridico", 
+                      "prov.nombre_razon_social", "prov.nombres", "prov.primer_apellido", 
+                      "prov.segundo_apellido", "prov.nombre_comercial", "prov.rfc", "pnt.estatus_pnt");
+
+        foreach ($cols as &$col) {
+            $tag = $col;
+            if( strpos($col, " ") ) {
+                $col_arr = explode(" ", $col); $col = $col_arr[0]; $tag = $col_arr[1];
+            } else if ( strpos($col, ".") ) $tag = explode(".", $col)[1];
+            $col = "IFNULL(" . $col . ", '') AS $tag";
+        }
+
+
+        $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_facturas f
+                    JOIN tab_facturas_desglose fd ON fd.id_factura = f.id_factura
+                    JOIN tab_campana_aviso cam ON cam.id_campana_aviso = fd.id_campana_aviso
+                    JOIN cat_ejercicios e ON e.id_ejercicio = cam.id_ejercicio 
+                    JOIN tab_proveedores prov ON prov.id_proveedor = f.id_proveedor
+                    LEFT JOIN tab_contratos con ON con.id_proveedor = prov.id_proveedor
+                    LEFT JOIN cat_procedimientos proc ON proc.id_procedimiento = con.id_procedimiento
+                    LEFT JOIN rel_pnt_proveedor pnt ON pnt.id_proveedor = prov.id_proveedor;");
+
+        $rows = $query->result_array();
+
+        header('Content-Type: application/json');
+        echo json_encode( $rows ); 
+    }
+
 }
