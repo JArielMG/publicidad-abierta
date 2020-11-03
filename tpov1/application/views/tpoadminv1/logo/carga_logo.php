@@ -650,6 +650,7 @@
             function(data, error){
                 $("td.inactive").children(".loading").remove()
                 location.reload(); 
+                //
                 console.log(data)
             }
         );
