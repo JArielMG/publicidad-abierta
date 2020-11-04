@@ -258,7 +258,7 @@ $(document).ready(function(){
     	if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 
 	    var data = JSON.parse( $(this).attr("data") )
-		  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/agregar_pnt";
+		  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/agregar_pnt";
 		
 		var a = $(this)
 	      , tr = a.parents("tr")
@@ -354,7 +354,7 @@ $(document).ready(function(){
 			"id_pnt": data.id_pnt || id_pnt
 		}
 
-		var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/eliminar_pnt"
+		var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/eliminar_pnt"
 
     	$.post(url, formato, function(res, error){
     		if(!res || !('success' in res) ) {
