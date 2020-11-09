@@ -364,6 +364,8 @@ $(document).ready(function(){
           tr.children("td").eq(34).children("a.eliminar").removeClass("invisible")
           tr.children("td").eq(34).children("img.check").removeClass("invisible")
           tr.children("td").eq(34).children("a.crear").addClass("invisible")
+          table.draw(); 
+          location.reload(); 
         }
 
       td.children("img.loading").remove("")

@@ -264,6 +264,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	    			tr.children("td").eq(10).children("a.eliminar").removeClass("invisible")
 	    			tr.children("td").eq(10).children("img.check").removeClass("invisible")
 	    			tr.children("td").eq(10).children("a.crear").addClass("invisible")
+	    			location.reload(); 
 	    		}
 
     			td.children("img.loading").remove("")

@@ -295,6 +295,8 @@ $(document).ready(function(){
 		if ( validURL(data.file_programa_anual) ){
 			formato.registros[0].campos.push( { "idCampo": 333995, "valor": data.file_programa_anual } )
 		}
+    		console.log("ola k ase")
+
 
     	$.post(url, formato, function(res, error){
     		console.log(res)
@@ -310,6 +312,7 @@ $(document).ready(function(){
     			tr.children("td").eq(13).children("img.check").removeClass("invisible")
     			tr.children("td").eq(13).children("a.crear").addClass("invisible")
 				table.draw(); 
+    			location.reload(); 
     		}
 
 			td.children("img.loading").remove("")
