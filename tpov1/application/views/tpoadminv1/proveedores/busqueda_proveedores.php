@@ -174,7 +174,14 @@
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['nombres']?>"></i>
                         </td>
                         <td class="col-sm-8" id="item_7"></td>
-                    </tr>   
+                    </tr>
+                    <tr class="form-group">
+                        <td class="control-label col-sm-4">
+                            <b>Descripci&oacute;n de sus servicios </b>
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['descripcion_servicios']?>"></i>
+                        </td>
+                        <td class="col-sm-8" id="item_12"></td>
+                    </tr>
                     <tr class="form-group">
                         <td class="control-label col-sm-4">
                             <b>Fecha de validaci&oacute;n </b>
@@ -202,14 +209,7 @@
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_actualizacion']?>"></i>
                         </td>
                         <td class="col-sm-8" id="item_11"></td>
-                    </tr>   
-                    <tr class="form-group">
-                        <td class="control-label col-sm-4">
-                            <b>Descripci&oacute;n de sus servicios </b>
-                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['descripcion_servicios']?>"></i>
-                        </td>
-                        <td class="col-sm-8" id="item_12"></td>
-                    </tr> 
+                    </tr>
                     <tr class="form-group">
                         <td class="control-label col-sm-4">
                             <b>Nota </b>
