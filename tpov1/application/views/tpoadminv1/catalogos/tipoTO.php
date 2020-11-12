@@ -49,7 +49,7 @@
     
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="box-header">
                     <?php echo anchor("tpoadminv1/catalogos/campanas_avisos/agregar_tipoTO", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
                     <div class="pull-right">
@@ -81,18 +81,7 @@
                                     echo '<td>' . $tiposTO[$z]['active'] . '</td>';
                                     echo "<td> <span class='btn-group btn btn-info btn-sm' onclick=\"abrirModal(" . $tiposTO[$z]['id_campana_tipoTO'] . ", '". str_replace($c_replace, "", $tiposTO[$z]['nombre_campana_tipoTO']) . "', '" .  $tiposTO[$z]['active'] . "')\"> <i class='fa fa-search'></i></span></td>";
                                     echo '<td>' . anchor("tpoadminv1/catalogos/campanas_avisos/editar_tipoTO/".$tiposTO[$z]['id_campana_tipoTO'], "<button class='btn btn-warning btn-sm' title='Editar'><i class=\"fa fa-edit\"></i></button></td>");
-                                    echo "<td> <span class='btn-group btn btn-danger btn-sm' onclick=\"eliminarModal(" . $tiposTO[$z]['id_campana_tipoTO'] . ", '". str_replace($c_replace, "", $tiposTO[$z]['nombre_campana_tipoTO']) . "')\"> <i class='fa fa-close'></i></span></td>";
-                                         
-									/*
-                                    if(strpos($this->session->userdata('usuario_permisos'), 'usuario_edicion') !== false)
-                                    {
-                                        echo '<td>' . anchor("cms/usuarios/usuarios/edita_usuario/".$usuarios[$z]['usuario_id'], "<i class=\"fa fa-edit\"></i>Edit</td>");
-                                    }
-                                    else
-                                    {
-                                        echo '<td><i class="fa fa-ban"></i></td>';
-                                    }*/
-									
+                                    echo "<td> <span class='btn-group btn btn-danger btn-sm' onclick=\"eliminarModal(" . $tiposTO[$z]['id_campana_tipoTO'] . ", '". str_replace($c_replace, "", $tiposTO[$z]['nombre_campana_tipoTO']) . "')\"> <i class='fa fa-close'></i></span></td>";									
                                     echo '</tr>';
                                 }
                             ?>
@@ -178,31 +167,6 @@
         $('#myModal').find('#item_1').html(name);
         $('#myModal').find('#item_2').html(active);
         $('#myModal').modal('show'); 
-
-        //utlizar cuando haya más campos
-        /*$.ajax({
-            url: '/index.php/tpoadminv1/catalogos/campanas_avisos/get_tipoTO/'+id,
-            data: {action: 'test'},
-            dataType:'JSON',
-            beforeSend: function () {
-                //Loading('Buscando');
-                $('#myModal').find('#loading_modal').html('<span><i class="fa fa-spinner"><i> Cargando...</span>'); 
-            },
-            complete: function () {
-                //Loading();
-                //$('#myModal').find('#loading_modal').html(''); 
-            },
-            error:function () {
-                $('#myModal').modal('hide');
-            },
-            success: function (response) {
-                if(response){
-                    $('#myModal').find('#item_1').html(response.nombre_campana_tipoTO);
-                    $('#myModal').find('#item_2').html(response.active);
-                    $('#myModal').modal('show'); 
-                }
-            }
-        });*/
     }
     
 </script>

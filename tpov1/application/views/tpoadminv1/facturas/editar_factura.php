@@ -355,7 +355,7 @@
                     </form>
                 </div>
                 <div class="tab-pane <?php if($this->session->flashdata('tab_flag')) echo 'active' ?>" id="tab_2">
-                    <div class="box box">
+                    <div class="box box table-responsive">
                         <div class="box-header">
                             <?php echo anchor("tpoadminv1/capturista/facturas/agregar_factura_desglose/". $registro['id_factura'] , "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
                             <?php echo anchor("tpoadminv1/capturista/facturas/busqueda_facturas", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>
