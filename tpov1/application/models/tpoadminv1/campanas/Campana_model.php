@@ -986,18 +986,48 @@ class Campana_Model extends CI_Model
         $query = $this->db->get('tab_campana_aviso');
 
         $csv_header = array('#',
-                            'Tipo',
-                            'Subtipo',
-                            'Nombre',
-                            'Ejercicio',
-                            'Trimestre',
-                            'Fecha de inicio del periodo que se informa',
-                            'Fecha de termino del periodo que se informa',
-                            'Sujeto Obligado Solicitante',
-                            'Sujeto Obligado Contratante',
-                            'Estatus'
-                        );
-        
+                    utf8_decode('Tipo'),
+                    utf8_decode('Subtipo'),
+                    utf8_decode('Nombre'),
+                    utf8_decode('Clave de campaña o aviso institucional'),
+                    utf8_decode('Autoridad que proporcionó la clave'),
+                    utf8_decode('Ejercicio'),
+                    utf8_decode('Trimestre'),
+                    utf8_decode('Fecha de inicio del periodo que se informa'),
+                    utf8_decode('Fecha de término del periodo que se informa'),
+                    utf8_decode('Sujeto Obligado Solicitante'),
+                    utf8_decode('Sujeto Obligado Contratante'),
+                    utf8_decode('Tema'),
+                    utf8_decode('Objetivo institucional'),
+                    utf8_decode('Objetivo de comunicación'),
+                    utf8_decode('Cobertura'),
+                    utf8_decode('Ámbito geográfico'),
+                    utf8_decode('Fecha de inicio'),
+                    utf8_decode('Fecha de término'),
+                    utf8_decode('Tiempo oficial'),
+                    utf8_decode('Monto total del tiempo de estado o tiempo fiscal consumidos'),
+                    utf8_decode('Tipo de tiempo oficial'),
+                    utf8_decode('Mensaje sobre el tiempo oficial'),
+                    utf8_decode('Fecha inicio tiempo oficial'),
+                    utf8_decode('Fecha término tiempo oficial'),
+                    utf8_decode('Medio de comunicación'),
+                    utf8_decode('Descripción de unidad, por ejemplo: spot de 30 segundos (radio); mensaje en TV 20 segundos'),
+                    utf8_decode('Concesionario responsable de publicar la campaña o la comunicación correspondiente (razón social)'),
+                    utf8_decode('Distintivo y/o nombre comercial del concesionario responsable de publicar la campaña o comunicación'),
+                    utf8_decode('Descripción breve de las razones que justifican la elección del proveedor'),
+                    utf8_decode('Área administrativa encargada de solicitar la difusión del mensaje o producto, en su caso'),
+                    utf8_decode('Número de factura, en su caso'),
+                    utf8_decode('Publicación SEGOB.'),
+                    utf8_decode('Documento del PACS'),
+                    utf8_decode('Fecha publicación'),
+                    utf8_decode('Evaluación'),
+                    utf8_decode('Documento de evaluación'),
+                    utf8_decode('Fecha de validación'),
+                    utf8_decode('Año'),
+                    utf8_decode('Fecha de actualización'),
+                    utf8_decode('Nota'),
+                    utf8_decode('Estatus')
+                        );       
         fputcsv($myfile, $csv_header);
 
         $csv = [];
@@ -1014,12 +1044,43 @@ class Campana_Model extends CI_Model
                     utf8_decode($this->dame_camp_tipo_nombre($row['id_campana_tipo'])),
                     utf8_decode($this->dame_camp_subtipo_nombre($row['id_campana_subtipo'])),
                     utf8_decode($row['nombre_campana_aviso']),
+                    utf8_decode($row['clave_campana']),
+                    utf8_decode($row['autoridad']),
                     utf8_decode($this->dame_ejercicio_nombre($row['id_ejercicio'])),
                     utf8_decode($this->dame_trimestre_nombre($row['id_trimestre'])),
                     utf8_decode($row['fecha_inicio_periodo']),
                     utf8_decode($row['fecha_termino_periodo']),
                     utf8_decode($this->dame_nombre_solicitante($row['id_so_solicitante'])),
                     utf8_decode($this->dame_nombre_contratante($row['id_so_contratante'])),
+                    utf8_decode($this->dame_tema_nombre($row['id_campana_tema'])),
+                    utf8_decode($this->dame_objetivo_nombre($row['id_campana_objetivo'])),
+                    utf8_decode($row['objetivo_comunicacion']),
+                    utf8_decode($this->dame_cobertura_nombre($row['id_campana_cobertura'])),
+                    utf8_decode($row['campana_ambito_geo']),
+                    utf8_decode($row['fecha_inicio']),
+                    utf8_decode($row['fecha_termino']),
+                    utf8_decode($this->dame_tiempo_oficial_nombre($row['id_tiempo_oficial'])),
+                    utf8_decode($row['monto_tiempo']),
+                    utf8_decode($this->dame_tipoTO_nombre($row['id_campana_tipoTO'])),
+                    utf8_decode($row['mensajeTO']),
+                    utf8_decode($row['fecha_inicio_to']),
+                    utf8_decode($row['fecha_termino_to']),
+                    utf8_decode($this->dame_medioComunicacion_nombre($row['id_servicio_categoria'])),
+                    utf8_decode($row['descripcion_unidad']),
+                    utf8_decode($row['responsable_publisher']),
+                    utf8_decode($row['name_comercial']),
+                    utf8_decode($row['razones_supplier']),
+                    utf8_decode($row['difusion_mensaje']),
+                    utf8_decode($row['num_factura']),
+                    utf8_decode($row['publicacion_segob']),
+                    utf8_decode($row['plan_acs']),
+                    utf8_decode($row['fecha_dof']),
+                    utf8_decode($row['evaluacion']),
+                    utf8_decode($row['evaluacion_documento']),
+                    utf8_decode($row['fecha_validacion']),
+                    utf8_decode($row['periodo'] == '0' ? '' : $row['periodo']),
+                    utf8_decode($row['fecha_actualizacion']),
+                    utf8_decode($row['nota']),
                     utf8_decode($this->get_estatus_name($row['active']))
                 );
                 fputcsv($myfile, $csv);
@@ -1717,10 +1778,8 @@ class Campana_Model extends CI_Model
                 $camp_aviso['nombre_tipoTO'] = $this->dame_tipoTO_nombre($row['id_campana_tipoTO']);
 				$camp_aviso['denominacion'] = $this->dame_docs_nombre($row['id_presupuesto']);
 				$camp_aviso['id_presupuesto'] = $row['id_presupuesto'];
-				
 				$camp_aviso['nombre_servicioCat'] = $this->dame_medioComunicacion_nombre($row['id_servicio_categoria']);
 				$camp_aviso['id_servicio_categoria'] = $row['id_servicio_categoria'];
-				
                 $camp_aviso['nombre_campana_aviso'] = $row['nombre_campana_aviso'];
                 $camp_aviso['objetivo_comunicacion'] = $row['objetivo_comunicacion'];
                 $camp_aviso['monto_tiempo'] = $row['monto_tiempo'];
