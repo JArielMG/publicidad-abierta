@@ -80,20 +80,20 @@ class Generales_model extends CI_Model
         $fin = '';
         switch($id_trimestre){
             case 1:
-                $inicio = '01-Enero-' . substr($ejercicio, -2);
-                $fin = '31-Marzo-' . substr($ejercicio, -2);
+                $inicio = '01/01/' . substr($ejercicio, -2);
+                $fin = '31/03/' . substr($ejercicio, -2);
                 break;
             case 2:
-                $inicio = '01-Abril-' . substr($ejercicio, -2);
-                $fin = '30-Junio-' . substr($ejercicio, -2);
+                $inicio = '01/04/' . substr($ejercicio, -2);
+                $fin = '30/06/' . substr($ejercicio, -2);
                 break;
             case 3:
-                $inicio = '01-Julio-' . substr($ejercicio, -2);
-                $fin = '30-Septiembre-' . substr($ejercicio, -2);
+                $inicio = '01/07/' . substr($ejercicio, -2);
+                $fin = '30/09/' . substr($ejercicio, -2);
                 break;
             case 4:
-                $inicio = '01-Octubre-' . substr($ejercicio, -2);
-                $fin = '31-Diciembre-' . substr($ejercicio, -2);
+                $inicio = '01/10/' . substr($ejercicio, -2);
+                $fin = '31/12/' . substr($ejercicio, -2);
                 break;
         }
 
