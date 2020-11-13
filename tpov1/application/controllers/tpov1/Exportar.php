@@ -780,7 +780,7 @@ class Exportar extends CI_Controller
         $myfile = fopen(FCPATH . $filename, 'w');
         
         $registros = $this->Tablas_model->F70FXXIIIB();
-        $csv_header = array(
+        $csv_header = array('#',
                     utf8_decode('Ejercicio'),
                     utf8_decode('Fecha de Inicio Del periodo Que Se Informa'),
                     utf8_decode('Fecha de Término Del periodo Que Se Informa'),
@@ -824,6 +824,7 @@ class Exportar extends CI_Controller
             foreach ($registros as $row) 
             {
                 $csv = array(
+                    utf8_decode($count),
                     utf8_decode($row['ejercicio']),
                     utf8_decode($this->Generales_model->set_fecha_termino_trimestre($row['id_trimestre'], $row['ejercicio'], true)),
                     utf8_decode($this->Generales_model->set_fecha_termino_trimestre($row['id_trimestre'], $row['ejercicio'], false)),
