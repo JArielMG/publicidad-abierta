@@ -272,6 +272,7 @@ header('Expires: 0'); // Proxies.
                             <i class="fa fa-users"></i> Proveedores
                         </a>
                     </li>
+                    <?php } if($this->session->userdata('usuario_rol') != '1' ){ ?>
                     <li class=" <?php if($active == 'presupuestos') { echo ' active'; } ?>">
                         <a href="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/presupuestos/busqueda_presupuestos">
                             <i class="fa fa-line-chart"></i> Planeaci&oacute;n y presupuestos
