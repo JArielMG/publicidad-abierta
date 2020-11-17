@@ -58,7 +58,7 @@
                     <div class="box-body">
                     <div class="form-group">
                             <label for="fname">Nombre</label>
-                            <input type="text" placeholder="Ingrese Nombre" name="nombre_rol" value="<?php echo $rol['nombre_rol']; ?>" class="form-control">
+                            <input type="text" placeholder="Ingrese Nombre" name="nombre_rol" value="<?php echo $rol['nombre_rol']; ?>" class="form-control" readonly>
                         </div>
                         <div class="form-group">
                             <label for="lname">Descripci&oacute;n</label>

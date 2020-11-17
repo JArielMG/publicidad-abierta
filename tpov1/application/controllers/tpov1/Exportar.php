@@ -246,6 +246,7 @@ class Exportar extends CI_Controller
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/Generales_model');
+
         $filename = $path . $namefile;
         $myfile = fopen(FCPATH . $filename, 'w');
         
@@ -718,7 +719,7 @@ class Exportar extends CI_Controller
         return $filename;
     }
 
-    private function F70FXXIIIA($path, $namefile)
+    private function F70FXXIIIA($path, $namefile) //Formato A
     {
 
         $this->load->model('tpov1/graficas/Tablas_model');
@@ -729,7 +730,6 @@ class Exportar extends CI_Controller
         
         $registros = $this->Tablas_model->F70FXXIIIA();
         $csv_header = array('#',
-                    utf8_decode('Sujeto Obligado'),
                     utf8_decode('Ejercicio'),
                     utf8_decode('Fecha de inicio del periodo que se informa'),
                     utf8_decode('Fecha de término del periodo que se informa'),
@@ -750,10 +750,9 @@ class Exportar extends CI_Controller
             {
                 $csv = array(
                     utf8_decode($count),
-                    utf8_decode($row['nombre_sujeto_obligado']),
                     utf8_decode($row['ejercicio']),
-					utf8_decode($row['fecha_inicio_periodo']),
-					utf8_decode($row['fecha_termino_periodo']),
+					utf8_decode($this->Generales_model->clear_date($row['fecha_inicio_periodo'])),
+					utf8_decode($this->Generales_model->clear_date($row['fecha_termino_periodo'])),
                     utf8_decode($this->Generales_model->clear_html_tags($row['denominacion'])),
                     utf8_decode($this->Generales_model->clear_date($row['publicacion'])),
                     utf8_decode($this->Generales_model->ruta_descarga_archivos($row['hipervinculo'],  'data/programas/')),
@@ -772,7 +771,7 @@ class Exportar extends CI_Controller
         return $filename;
      }  
      
-     function F70FXXIIIB($path, $namefile)
+     function F70FXXIIIB($path, $namefile)  //Formato B
      {
         $this->load->model('tpov1/graficas/Tablas_model');
         $this->load->model('tpoadminv1/Generales_model');
@@ -781,8 +780,7 @@ class Exportar extends CI_Controller
         $myfile = fopen(FCPATH . $filename, 'w');
         
         $registros = $this->Tablas_model->F70FXXIIIB();
-        $csv_header = array(
-                    utf8_decode('Sujeto Obligado'),
+        $csv_header = array('#',
                     utf8_decode('Ejercicio'),
                     utf8_decode('Fecha de Inicio Del periodo Que Se Informa'),
                     utf8_decode('Fecha de Término Del periodo Que Se Informa'),
@@ -826,7 +824,7 @@ class Exportar extends CI_Controller
             foreach ($registros as $row) 
             {
                 $csv = array(
-                    utf8_decode($row['nombre_sujeto_obligado']),
+                    utf8_decode($count),
                     utf8_decode($row['ejercicio']),
                     utf8_decode($this->Generales_model->set_fecha_termino_trimestre($row['id_trimestre'], $row['ejercicio'], true)),
                     utf8_decode($this->Generales_model->set_fecha_termino_trimestre($row['id_trimestre'], $row['ejercicio'], false)),
@@ -1028,7 +1026,7 @@ class Exportar extends CI_Controller
         return $filename;
     }
 
-    private function F70FXXIIIC($path, $namefile)
+    private function F70FXXIIIC($path, $namefile)   //Formato C
     {
 
         $this->load->model('tpov1/graficas/Tablas_model');
@@ -1063,7 +1061,6 @@ class Exportar extends CI_Controller
                     utf8_decode('Área administrativa Encargada de Solicitar la Difusión del Mensaje o Producto'),
                     utf8_decode('Fecha de Inicio de Difusión del Concepto o Campaña'),
                     utf8_decode('Fecha de Término de Difusión del Concepto o Campaña'),
-                    utf8_decode('Presupuesto Total Asignado y Ejercido de Cada Partida'),
                     utf8_decode('Número de Factura'),
                     utf8_decode('Área(s) Responsable(s) Que Genera(n), Posee(n), Publica(n) y Actualizan la Información'),
                     utf8_decode('Fecha de Validación'),
@@ -1080,8 +1077,8 @@ class Exportar extends CI_Controller
                 $csv = array(
                     utf8_decode($count),
                     utf8_decode($row['ejercicio']),
-                    utf8_decode($row['fecha_inicio_periodo']),
-                    utf8_decode($row['fecha_termino_periodo']),
+                    utf8_decode($this->Generales_model->set_fecha_termino_trimestre($row['id_trimestre'], $row['ejercicio'], true)),
+                    utf8_decode($this->Generales_model->set_fecha_termino_trimestre($row['id_trimestre'], $row['ejercicio'], false)),
                     utf8_decode($row['nombre_sujeto_obligado']),
                     utf8_decode($row['id_campana_tipoTO']),
                     utf8_decode($row['id_servicio_categoria']),
@@ -1103,7 +1100,6 @@ class Exportar extends CI_Controller
                     utf8_decode($row['Area 2']),
                     utf8_decode($row['fecha_inicio']),
                     utf8_decode($row['fecha_termino']),
-					utf8_decode($row['id_respecto_presupuesto']),
                     utf8_decode($row['numero_factura']),
                     utf8_decode($row['Area 1']),
                     utf8_decode($this->Generales_model->clear_date($row['fecha_validacion'])),
@@ -1158,7 +1154,7 @@ class Exportar extends CI_Controller
         return $filename;
     }
 	
-    private function F70FXXIIID($path, $namefile)
+    private function F70FXXIIID($path, $namefile)   //Formato D
     {
 
         $this->load->model('tpov1/graficas/Tablas_model');
@@ -1189,8 +1185,8 @@ class Exportar extends CI_Controller
                 $csv = array(
                     utf8_decode($count),
                     utf8_decode($row['ejercicio']),
-                    utf8_decode($row['fecha_inicio_periodo']),
-                    utf8_decode($row['fecha_termino_periodo']),
+                    utf8_decode($this->Generales_model->set_fecha_termino_trimestre($row['id_trimestre'], $row['ejercicio'], true)),
+                    utf8_decode($this->Generales_model->set_fecha_termino_trimestre($row['id_trimestre'], $row['ejercicio'], false)),
 					utf8_decode($this->Generales_model->clear_html_tags($row['mensajeTO'])),
                     utf8_decode($row['publicacion_segob']),
                     utf8_decode($row['area_responsable']),

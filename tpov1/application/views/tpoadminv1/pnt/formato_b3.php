@@ -1,6 +1,6 @@
 <?php  
 if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !( $_SESSION["pnt"]["success"] ) ){
-	header("Location: " . base_url() ."index.php/tpoadminv1/logo/logo/alta_carga_logo");
+	header("Location: " . base_url() ."index.php/tpoadminv1/pnt/formato_a/alta_carga_logo");
 	die();
 }
 ?>
@@ -34,40 +34,40 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	<h4>Formatos</h4>
 
 	<ul class="items-formato">
-		<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 1)? 'here': '' ?>" id="formato_1" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=1"> 70FXXIIIA </a> </li>
-		<li> 
-			<a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 2)? 'here': '' ?>" id="formato_2" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=2"> 70FXXIIIB </a> 
-			<ul class="subitems">
-				<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 21)? 'here': '' ?>" id="formato_21" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=21"> 70FXXIIIB1 </a> </li>
-				<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 22)? 'here': '' ?>" id="formato_22" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=22"> 70FXXIIIB2 </a> </li>
-				<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 23)? 'here': '' ?>" id="formato_23" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=23"> 70FXXIIIB3 </a> </li>
-				
-			</ul>
-		</li>
-		<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 3)? 'here': '' ?>" id="formato_3" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=3"> 70FXXIIIC </a> </li>
-		<li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 4)? 'here': '' ?>" id="formato_4" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=4"> 70FXXIIID </a> </li>
-	</ul>
+        <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "a")? 'here': '' ?>" id="formato_a" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=a"> 70FXXIIIA </a> </li>
+        <li> 
+            <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "b")? 'here': '' ?>" id="formato_b" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=b"> 70FXXIIIB </a> 
+            <ul class="subitems">
+                <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "b1")? 'here': '' ?>" id="formato_b1" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=b1"> 70FXXIIIB1 </a> </li>
+                <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "b2")? 'here': '' ?>" id="formato_b2" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=b2"> 70FXXIIIB2 </a> </li>
+                <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "b3")? 'here': '' ?>" id="formato_b3" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=b3"> 70FXXIIIB3 </a> </li>
+            </ul>
+        </li>
+        <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "c")? 'here': '' ?>" id="formato_c" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=c"> 70FXXIIIC </a> </li>
+        <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "d")? 'here': '' ?>" id="formato_d" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=d"> 70FXXIIID </a> </li>
+    </ul>
 
 	<br><br><br>
-	<h2> Respecto a los recursos y el presupuesto </h2>
+	<h2> Respecto al contrato y los montos </h2>
 	<table id="grid" class="dataTable stripe hover order-column row-border cell-border compact">
 		<thead>
 	        <tr>
-	           	<th>ID TPO/th>
-	           	<th>ID PNT</th>
-	           	<th>ID</th>
-	           	<th>Ejercicio</th>
-				<th>Partida genérica</th>
-				<th>Clave del concepto</th>
-				<th>Nombre del concepto</th>
-				<th>Presupuesto asignado por concepto</th>
-				<th>Presupuesto modificado por concepto</th>
-				<!--th>Presupuesto total ejercido por concepto</th-->
-				<th>Denominación de cada partida</th>
-				<th>Presupuesto total asignado a cada partida</th>
-				<th>Presupuesto modificado por partida</th>
-				<th>Presupuesto ejercido al periodo reportado de cada partida</th>
-				<!--th>Estatus</th-->
+				<td> ID TPO </td>
+				<td> ID PNT </td>
+				<td> ID </td>
+				<td> Ejercicio </td>
+				<td> Fecha de firma del contrato</td>
+				<td> Número o referencia de identificación del contrato</td>
+				<td> Objeto del contrato</td>
+				<td> Hipervínculo al contrato firmado</td>
+				<td> Hipervínculo al convenio modificatorio en su caso</td>
+				<td> Monto total del contrato</td>
+				<td> Monto pagado al periodo publicado</td>
+				<td> Fecha de inicio de los servicios contratados</td>
+				<td> Fecha de término de los servicios contratados</td>
+				<td> Número de factura</td>
+				<td> Hipervínculo a la factura</td>
+				<!--td> Estatus</td-->
 	        </tr>
 	    </thead>
 	    <tbody> <tr> </tr> </tbody>
@@ -82,7 +82,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/ejercicios"
+		var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/ejercicios"
 	
 	$.post(ejercicios_url, function(res, error){
     	if(res) {
@@ -93,7 +93,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
 	$("#formato_<?php echo $formato?>").css("background-color:", "#0277bd")
 
-	    $.fn.dataTable.ext.search.push( function( settings, data, dataIndex ){
+	     $.fn.dataTable.ext.search.push( function( settings, data, dataIndex ){
 	        var year = $('#year').val()
 	        var ejercicio = parseInt( data[3] ) || 0; 
 
@@ -136,7 +136,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 		        }
 	    	},
 	    	ajax: {
-	    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros22",
+	    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/registros23",
 	    		dataSrc: ''
 	    	},
     		scrollY: true,
@@ -146,16 +146,18 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'id_pnt' },
 				{ data: 'id' },
 				{ data: 'ejercicio' },
-				{ data: 'partida' },
-				{ data: 'capitulo' }, //concepto
-				{ data: 'nombre_concepto' },
-				{ data: 'presupuesto' },
-				{ data: 'total_modificado' },
-				{ data: 'denominacion_partida' },
-				{ data: 'monto_presupuesto' },
-				{ data: 'monto_modificacion' },
-				{ data: 'total_ejercido' }/*,
-				{ data: 'estatus_pnt'}*/
+				{ data: 'fecha_celebracion' },
+				{ data: 'numero_contrato' },
+				{ data: 'objeto_contrato' },
+				{ data: 'Hipervínculo al contrato firmado' },
+				{ data: 'file_convenio' }, //{ data: 'Hipervínculo al convenio modificatorio en su caso' },
+				{ data: 'Monto total del contrato' },
+				{ data: 'Monto pagado al periodo publicado' },
+				{ data: 'Fecha de inicio de los servicios contratados' },
+				{ data: 'Fecha de término de los servicios contratados' },
+				{ data: 'numeros_factura' },
+				{ data: 'files_factura_pdf' }/*,
+				{ data: 'estatus_pnt' }*/
 			],
 			columnDefs: [ 
 				{
@@ -166,10 +168,21 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				      	return data
 				    }
 				},
+                {
+                    targets: [4, 11, 12],
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                        try{
+                          return data.split("-").reverse().join("/")
+                        } catch(e){ return data}
+
+                        return data
+                    }
+                },
 				/*{
-				    targets: 13,
+				    targets: 15,
 				    data: "data",
-				    render: function ( data, type, row, meta ) {
+   				    render: function ( data, type, row, meta ) {
 				      	var response = ""
 			      		_row = row //HtmlSanitizer.SanitizeHtml(JSON.stringify(row)) 
 				      	if( !(row.id_pnt) || row.id_pnt === ""){ 
@@ -195,7 +208,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 					}
 				},*/
 				{
-				    targets: [3,4,5,6,7,8,9,10,11,12],
+				    targets: [3,4,5,6,7,8,9,10,11,12,13,14],
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 
@@ -217,7 +230,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	    	e.preventDefault(); 
 				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 		    var data = JSON.parse( $(this).attr("data") )
-			  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/agregar_pnt";
+			  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/agregar_pnt";
 			
 			var a = $(this)
 		      , tr = a.parents("tr")
@@ -248,11 +261,12 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
     			if(!res || !('success' in res) ) {
 	    			console.log("No se pudo insertar el elemento correctamente")
 	    			a.css("display", "block")
+	    			a.siblings().css("display", "block")
 	    		} else {
 	    			tr.children("td").eq(1).text(res.id_pnt)
-	    			tr.children("td").eq(12).children("a.eliminar").removeClass("invisible")
-	    			tr.children("td").eq(12).children("img.check").removeClass("invisible")
-	    			tr.children("td").eq(12).children("a.crear").addClass("invisible")
+	    			tr.children("td").eq(17).children("a.eliminar").removeClass("invisible")
+	    			tr.children("td").eq(17).children("img.check").removeClass("invisible")
+	    			tr.children("td").eq(17).children("a.crear").addClass("invisible")
 	    		}
 
     			td.children("img.loading").remove("")
@@ -289,19 +303,18 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				"id_pnt": data.id_pnt || id_pnt
 			}
 
-			var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/eliminar_pnt"
+			var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/eliminar_pnt"
 
 	    	$.post(url, formato, function(res, error){
-	    		//if(res.success) location.reload(); 
     			if(!res || !('success' in res) ) {
 	    			console.log("No se pudo eliminar el elemento correctamente")
 	    			a.css("display", "block")
 	    			a.siblings().css("display", "block")
 	    		} else {
 	    			tr.children("td").eq(1).html("<label class='btn'> <small> SIN SUBIR </small></label>")
-	    			tr.children("td").eq(12).children("a.eliminar").addClass("invisible")
-	    			tr.children("td").eq(12).children("img.check").addClass("invisible")
-	    			tr.children("td").eq(12).children("a.crear").css("display", "block")
+	    			tr.children("td").eq(17).children("a.eliminar").addClass("invisible")
+	    			tr.children("td").eq(17).children("img.check").addClass("invisible")
+	    			tr.children("td").eq(17).children("a.crear").css("display", "block")
 	    		}
 
     			td.children("img.loading").remove("")

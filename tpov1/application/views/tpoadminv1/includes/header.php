@@ -272,6 +272,7 @@ header('Expires: 0'); // Proxies.
                             <i class="fa fa-users"></i> Proveedores
                         </a>
                     </li>
+                    <?php } if($this->session->userdata('usuario_rol') != '1' ){ ?>
                     <li class=" <?php if($active == 'presupuestos') { echo ' active'; } ?>">
                         <a href="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/presupuestos/busqueda_presupuestos">
                             <i class="fa fa-line-chart"></i> Planeaci&oacute;n y presupuestos
@@ -353,7 +354,7 @@ header('Expires: 0'); // Proxies.
                     <?php if(isset($_SESSION['pnt']) AND isset($_SESSION["pnt"]["success"]) AND $_SESSION["pnt"]["success"] ){?>
                         <!--li class=" <?php if($active == 'pnt') { echo ' active'; } ?>"-->
                         <li class="">
-                            <a href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt">
+                            <a href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=a">
                                  <i class="fa fa-database"></i> SIPOT
                             </a>
                         </li>

@@ -167,7 +167,11 @@ class Cms extends CI_Controller
                         {
                             redirect('tpoadminv1/usuarios/usuarios/busqueda_usuario');
                         }
-                        else
+                        else if($data['usuario_rol_nombre'] == 'Financiero')
+                        {
+                            redirect('tpoadminv1/capturista/presupuestos/busqueda_presupuestos');
+                        }
+                        else 
                         {
                             //dependiendo el id de atribucion de redirije
                             if($data['usuario_id_so_atribucion'] == 1){

@@ -23,5 +23,6 @@ CREATE TABLE `cat_roles_administracion` (
 INSERT INTO `cat_roles_administracion` (`id_rol`, `nombre_rol`, `descripcion_rol`, `active`, `fecha_rol`) VALUES
 (1, 'Administrador', 'Rol encargado de supervisar todo.', 'a', '2018-12-03'),
 (2, 'Capturista', 'Rol encargado de alimentar la Base de Datos', 'a', '2018-12-04');
+(3, 'Financiero', 'Rol encargado de registrar el presupuesto anual.', 'a', '2020-11-13');
 
 -- --------------------------------------------------------

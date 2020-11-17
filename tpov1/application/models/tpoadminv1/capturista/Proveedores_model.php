@@ -226,11 +226,11 @@ class Proveedores_Model extends CI_Model
                     utf8_decode('Primer apellido'),
                     utf8_decode('Segundo apellido'),
                     utf8_decode('Nombres'),
+                    utf8_decode('Descripción de sus servicios'),
                     utf8_decode('Fecha de validación'),
                     utf8_decode('Área responsable de la información'),
                     utf8_decode('Año'),
                     utf8_decode('Fecha de actualización'),
-                    utf8_decode('Descripción de sus servicios'),
                     utf8_decode('Nota'),
                     'Estatus');
         fputcsv($myfile, $csv_header);
@@ -250,11 +250,11 @@ class Proveedores_Model extends CI_Model
                     utf8_decode($row['primer_apellido']),
                     utf8_decode($row['segundo_apellido']),
                     utf8_decode($row['nombres']),
+                    utf8_decode($this->Generales_model->clear_html_tags($row['descripcion_servicios'])),
                     utf8_decode($this->dateToString($row['fecha_validacion'])),
                     utf8_decode($row['area_responsable']),
                     utf8_decode($row['periodo'] == '0' ? '' : $row['periodo']),
                     utf8_decode($this->dateToString($row['fecha_actualizacion'])),
-                    utf8_decode($this->Generales_model->clear_html_tags($row['descripcion_servicios'])),
                     utf8_decode($this->Generales_model->clear_html_tags($row['nota'])),
                     utf8_decode($this->get_estatus_name($row['active']))
                 );

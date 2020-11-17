@@ -397,7 +397,7 @@
                                 </form>
                             </div>
                             <div class="tab-pane <?php if($this->session->flashdata('tab_flag')) echo 'active' ?>" id="tab_2">
-                                <div class="box">
+                                <div class="box table-responsive">
                                     <div class="box-header">
                                         <?php echo anchor("tpoadminv1/capturista/contratos/agregar_convenio_modificatorio/" . $registro['id_contrato'] , "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
                                         <?php echo anchor("tpoadminv1/capturista/contratos/busqueda_contratos", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>

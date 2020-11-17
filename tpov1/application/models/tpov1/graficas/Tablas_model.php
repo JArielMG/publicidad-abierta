@@ -443,11 +443,10 @@ class Tablas_model extends CI_Model
 
     /* Consultas para la descarga de archivos PNT */
 
-    function F70FXXIIIA()
+    function F70FXXIIIA()   //Formato A
     {
         $sqltext = "select 
             (select c.ejercicio from cat_ejercicios as c where c.id_ejercicio= a.id_ejercicio) as ejercicio,
-            (select s.nombre_sujeto_obligado from tab_sujetos_obligados as s where s.id_sujeto_obligado= a.id_sujeto_obligado) as nombre_sujeto_obligado,
             a.fecha_inicio_periodo,
 			a.fecha_termino_periodo,
 			a.denominacion as denominacion,
@@ -465,10 +464,9 @@ class Tablas_model extends CI_Model
         return $query->result_array();
     }
     
-    function F70FXXIIIB()
+    function F70FXXIIIB()   //Formato B
     {
-        $sqltext = 'select 
-            c.nombre_sujeto_obligado, 
+        $sqltext = 'select
 			(select h.ejercicio from cat_ejercicios as h where a.id_ejercicio=h.id_ejercicio)  as ejercicio,
 			(select i.trimestre from cat_trimestres as i where a.id_trimestre=i.id_trimestre)  as trimestre, 
             a.id_trimestre,
@@ -661,12 +659,12 @@ class Tablas_model extends CI_Model
         return $query->result_array();
     }
 	
-	function F70FXXIIIC()
+	function F70FXXIIIC()   //Formato C
     {
         $sqltext = "select
             (select c.ejercicio from cat_ejercicios as c where c.id_ejercicio= b.id_ejercicio) as ejercicio,
-      	    b.fecha_inicio_periodo,
-        	b.fecha_termino_periodo,
+            (select i.trimestre from cat_trimestres as i where a.id_trimestre=i.id_trimestre)  as trimestre, 
+            a.id_trimestre,
            	(select s.nombre_sujeto_obligado from tab_sujetos_obligados as s where s.id_sujeto_obligado= b.id_so_contratante) as nombre_sujeto_obligado,
             (select h.nombre_campana_tipoTO from cat_campana_tiposTO as h where h.id_campana_tipoTO = b.id_campana_tipoTO) as id_campana_tipoTO,
             (select j.nombre_servicio_categoria from cat_servicios_categorias as j where j.id_servicio_categoria=d.id_servicio_categoria) as id_servicio_categoria,
@@ -695,7 +693,6 @@ class Tablas_model extends CI_Model
             b.area_responsable as 'Area 2',
             b.fecha_inicio, 
             b.fecha_termino,
-  			a.periodo as id_respecto_presupuesto,
             a.numero_factura,
             a.area_responsable as 'Area 1',
             b.fecha_validacion,
@@ -748,8 +745,8 @@ class Tablas_model extends CI_Model
     {
         $sqltext = "select
             (select c.ejercicio from cat_ejercicios as c where c.id_ejercicio= b.id_ejercicio) as ejercicio,
-      	    b.fecha_inicio_periodo,
-        	b.fecha_termino_periodo,
+            (select i.trimestre from cat_trimestres as i where a.id_trimestre=i.id_trimestre)  as trimestre, 
+            a.id_trimestre,
 			b.mensajeTO,
            	b.publicacion_segob,
             b.area_responsable,
@@ -757,7 +754,12 @@ class Tablas_model extends CI_Model
             b.fecha_actualizacion, 
             b.nota as nota
             from
-            tab_campana_aviso as b";
+            tab_facturas as a,
+            tab_campana_aviso as b,
+            tab_facturas_desglose as c
+            where
+            a.id_factura = c.id_factura and
+            b.id_campana_aviso = c.id_campana_aviso";
         $query = $this->db->query( $sqltext );
         return $query->result_array();
     }

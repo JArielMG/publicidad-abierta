@@ -1,6 +1,6 @@
 <?php 
 if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !( $_SESSION["pnt"]["success"] ) ){
-  header("Location: " . base_url() ."index.php/tpoadminv1/logo/logo/alta_carga_logo");
+  header("Location: " . base_url() ."index.php/tpoadminv1/pnt/formato_a/alta_carga_logo");
   die();
 }
 ?>
@@ -37,15 +37,16 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
   <h4>Formatos</h4>
 
   <ul class="items-formato">
-    <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 1)? 'here': '' ?>" id="formato_1" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=1"> 70FXXIIIA </a> </li>
-    <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 2)? 'here': '' ?>" id="formato_2" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=2"> 70FXXIIIB </a> </li>
+    <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "a")? 'here': '' ?>" id="formato_a" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=a"> 70FXXIIIA </a> </li>
+    <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "b")? 'here': '' ?>" id="formato_b" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=b"> 70FXXIIIB </a> </li>
     <li> 
-      <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 3)? 'here': '' ?>" id="formato_3" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=3"> 70FXXIIIC </a> 
+      <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "c")? 'here': '' ?>" id="formato_c" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=c"> 70FXXIIIC </a> 
       <ul class="subitems">
-        <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 31)? 'here': '' ?>" id="formato_31" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=31"> 70FXXIIIC1 </a> </li>
+        <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "c1")? 'here': '' ?>" id="formato_c1" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=c1"> 70FXXIIIC1 </a> </li>
       </ul>
     </li>
-    <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == 4)? 'here': '' ?>" id="formato_4" href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/pnt?formato=4"> 70FXXIIID </a> </li>
+    <li> <a class="formato_lnk btn-group btn btn-info btn-sm <?php echo ($formato == "d")? 'here': '' ?>" id="formato_d" href="<?php echo base_url(); ?>index.php/tpoadminv1/pnt/listado?formato=d"> 70FXXIIID </a> </li>
+  </ul>
 
   <br><br><br>
   <h2> Utilización de los tiempos oficiales en radio y tv </h2>
@@ -103,7 +104,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
 <script type="text/javascript">
 $(document).ready(function(){
-  var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/ejercicios"
+  var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/ejercicios"
   
   $.post(ejercicios_url, function(res, error){
       if(res) {
@@ -162,7 +163,7 @@ $(document).ready(function(){
         },
         
       ajax: {
-        url: "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros3",
+        url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/registros3",
         dataSrc: ''
       },
       scrollY: true,
@@ -278,7 +279,7 @@ $(document).ready(function(){
         e.preventDefault(); 
 				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
         var id = $(this).attr("data")
-        var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros51";
+        var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/registros51";
         
 
         $.get(url, { id_factura_desglose: id },  function(res, error){
@@ -314,7 +315,7 @@ $(document).ready(function(){
       e.preventDefault(); 
 				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
       var data = JSON.parse( $(this).attr("data") )
-      , url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/agregar_pnt";
+      , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/agregar_pnt";
     
       var a = $(this)
          , tr = a.parents("tr")
@@ -364,6 +365,8 @@ $(document).ready(function(){
           tr.children("td").eq(34).children("a.eliminar").removeClass("invisible")
           tr.children("td").eq(34).children("img.check").removeClass("invisible")
           tr.children("td").eq(34).children("a.crear").addClass("invisible")
+          table.draw(); 
+          location.reload(); 
         }
 
       td.children("img.loading").remove("")
@@ -400,7 +403,7 @@ $(document).ready(function(){
       "id_pnt": data.id_pnt || id_pnt
     }
 
-    var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/pnt/eliminar_pnt"
+    var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/eliminar_pnt"
 
       $.post(url, formato, function(res, error){
         //if(res.success) location.reload(); 

@@ -580,7 +580,7 @@
 			    }
 			}
 			
-			window.onload= toOnChange();
+			window.onload= toOnChange;
 		</script>						
 									                               
          <!--   F I N      T I E M P O        O F I C I A L   --> 

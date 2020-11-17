@@ -9,7 +9,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 }
 
-class PNT extends CI_Controller
+class Webservices extends CI_Controller
 {
      // Constructor que manda llamar la funcion is_logged_in
     function __construct()
@@ -74,6 +74,77 @@ class PNT extends CI_Controller
             // Error
             throw new Exception("Error loading '$url', $php_errormsg");
         }
+    }
+
+    function pnt(){
+        //Validamos que el usuario tenga acceso
+        $this->permiso_administrador();
+
+        $this->load->model('tpoadminv1/logo/Logo_model');
+
+        $data['title'] = "Plataforma Nacional de Transparencia";
+        $data['heading'] = $this->session->userdata('usuario_nombre');
+        $data['mensaje'] = "";
+        $data['job'] = $this->session->userdata('usuario_rol_nombre');
+        $data['active'] = 'pnt'; // solo active 
+        $data['subactive'] = 'carga_pnt'; // class="active"
+        $data['body_class'] = 'skin-blue';
+
+        $formato = 1;
+        $validpntformato = array(1,2,21,22,23,3,31,4,42, 46, 44);
+        if( isset($_GET["formato"]) and in_array( $_GET["formato"], $validpntformato) ){
+            $formato = $_GET["formato"];
+        }
+
+        $data['main_content'] = 'tpoadminv1/logo/pnt' . $formato;
+        $data['formato'] = $formato;
+
+        $data['url_logo'] = base_url() . "data/logo/logotop.png";
+        $data['fecha_act'] = $this->Logo_model->dame_fecha_act_manual();
+
+        $data['recaptcha'] = $this->Logo_model->get_registro_recaptcha();
+        $data['grafica'] = $this->Logo_model->get_registro_grafica_presupuesto();
+        
+        $data['registro'] = array(
+            'fecha_dof' => '',
+            'name_file_imagen' => '',
+        );
+
+        // poner true para ocultar los botones
+        $data['control_update'] = array (
+            'file_by_save' => false,
+            'file_saved' => true,
+            'file_see' => true,
+            'file_load' => true, 
+            "mensaje_file" => 'Formatos permitidos PNG.'
+        );
+
+        $data['scripts'] = "<script type='text/javascript'>" .
+                                "$(function () {" .
+                                    
+                                    "jQuery.datetimepicker.setLocale('es');". 
+                                    "jQuery('input[name=\"fecha_act\"]').datetimepicker({ " .
+                                        "timepicker:false," .
+                                        "format:'Y-m-d'," .
+                                        "scrollInput: false" .
+                                    "});" .
+                                    
+                                    "$.fn.datepicker.dates['es'] = {" .
+                                        "days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']," .
+                                        "daysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],".
+                                        "daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']," .
+                                        "months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],".
+                                        "monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],".
+                                        "today: 'Hoy'," .
+                                        "};" .
+                                    "setTimeout(function() { " .
+                                        "$('.alert').alert('close');" .
+                                    "}, 3000);" .
+                                    
+                                "});" .
+                            "</script>";
+        
+        $this->load->view('tpoadminv1/includes/template', $data);
     }
 
     function entrar_pnt(){
@@ -376,155 +447,6 @@ class PNT extends CI_Controller
         echo json_encode($response);
     }
 
-
-    function agregar_pnt1(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/mantenimiento/agrega";
-        
-        $table = "rel_pnt_presupuesto";
-        $nombre_id_interno = "id_presupuesto";
-        
-
-        switch ($_POST["idFormato"]) {
-            case 43322:
-                $table = "rel_pnt_presupuesto";
-                $nombre_id_interno = "id_presupuesto";
-                break;
-            case 43320:
-                $table = "rel_pnt_factura";
-                $nombre_id_interno = "id_factura";
-                $data2 = $this->_subtabla2($_POST["id_contrato"], $_POST["id_factura"]);
-                
-                $con = array(
-                    "idCampo" => "333959", 
-                    "valor" => array(
-                        array(
-                            "numeroRegistro" => 1,
-                            "IdRegistro" => "",
-                            "campos" => array(
-                                array("idCampo" => "43282", "valor" => $data2['contratos'][0]["Fecha de inicio de los servicios contratados"] ),
-                                array("idCampo" => "43283", "valor" => $data2['contratos'][0]["Fecha de término de los servicios contratados"] ),
-                                array("idCampo" => "43278", "valor" => $data2['contratos'][0]["Hipervínculo al contrato firmado"] ),
-                                array("idCampo" => "43279", "valor" => $data2['contratos'][0]["Hipervínculo al convenio modificatorio en su caso"] ),
-                                array("idCampo" => "43281", "valor" => $data2['contratos'][0]["Monto pagado al periodo publicado"] ),
-                                array("idCampo" => "43280", "valor" => $data2['contratos'][0]["Monto total del contrato"] ),
-                                array("idCampo" => "333967", "valor" => $data2['contratos'][0]["area_responsable"] ),
-                                array("idCampo" => "333961", "valor" => ($data2['contratos'][0]["fecha_actualizacion"] != null )? 
-                                    join("/", array_reverse( split('-', $data2['contratos'][0]["fecha_actualizacion"] ) ) ) : ""  ),
-                                //array("idCampo" => "333954", "valor" => $data2['contratos'][0]["fecha_validacion"] ),
-                                array("idCampo" => "333954", "valor" => ($data2['contratos'][0]["fecha_validacion"] != null )? 
-                                    join("/", array_reverse( split('-', $data2['contratos'][0]["fecha_validacion"] ) ) ) : ""  ),
-                                array("idCampo" => "43285", "valor" => $data2['contratos'][0]["files_factura_pdf"] ),
-                                array("idCampo" => "333966", "valor" => $data2['contratos'][0]["nota"] ),
-                                array("idCampo" => "43276", "valor" => $data2['contratos'][0]["numero_contrato"] ),
-                                array("idCampo" => "43284", "valor" => $data2['contratos'][0]["numeros_factura"] ),
-                                array("idCampo" => "43277", "valor" => $data2['contratos'][0]["objeto_contrato"] )
-                            ) 
-                        ) 
-                    ) 
-                );
-
-                $pro = array(
-                    "idCampo" => "333958", 
-                    "valor" => array(
-                        array(
-                            "numeroRegistro" => 1,
-                            "IdRegistro" => "",
-                            "campos" => array(
-                                array("idCampo" => "43265", "valor" => $data2['presupuestos'][0]['partida'] ), //Partida
-                                array("idCampo" => "43266", "valor" => $data2['presupuestos'][0]['concepto'] ), //Clave de Concepto
-                                array("idCampo" => "43267", "valor" => $data2['presupuestos'][0]['nombre_concepto'] ), //Nombre del concepto
-                                array("idCampo" => "43268", "valor" => $data2['presupuestos'][0]['presupuesto'] ), //Presupuesto asignado por concepto
-                                array("idCampo" => "43269", "valor" => $data2['presupuestos'][0]['total_ejercido'] ), //Presupuesto ejercido al periodo reportado de cada partida
-                                array("idCampo" => "43270", "valor" => $data2['presupuestos'][0]['modificado'] ), //presupuesto total ejercido por concepto
-                                array("idCampo" => "43271", "valor" => $data2['presupuestos'][0]['denominacion_partida'] ), //Denominación de cada partida
-                                array("idCampo" => "43272", "valor" => $data2['presupuestos'][0]['monto_presupuesto'] ), //Presupuesto total asignado a cada partida
-                                array("idCampo" => "43273", "valor" => $data2['presupuestos'][0]['monto_modificacion'] ), //Presupuesto modificado por partida
-                                array("idCampo" => "43274", "valor" => $data2['presupuestos'][0]['presupuesto'] ) //Presupuesto modificado por concepto
-                            ) 
-                        ) 
-                    ) 
-                );
-                            
-                $fac = array(
-                    "idCampo" => "333957", 
-                    "valor" => array(
-                        array(
-                            "numeroRegistro" => 1,
-                            "IdRegistro" => "",
-                            "campos" => array(
-                                array("idCampo" => "43256", "valor" => $data2['facturas'][0]['nombre_razon_social'] ),
-                                array("idCampo" => "43257", "valor" => $data2['facturas'][0]['nombres'] ),
-                                array("idCampo" => "43258", "valor" => $data2['facturas'][0]['primer_apellido'] ),
-                                array("idCampo" => "43259", "valor" => $data2['facturas'][0]['segundo_apellido'] ),
-                                array("idCampo" => "43260", "valor" => $data2['facturas'][0]['rfc'] ),
-                                array("idCampo" => "43261", "valor" => $data2['facturas'][0]['nombre_procedimiento'] ),
-                                array("idCampo" => "43262", "valor" => $data2['facturas'][0]['fundamento_juridico'] ),
-                                array("idCampo" => "43263", "valor" => $data2['facturas'][0]['descripcion_justificacion'] ),
-                                array("idCampo" => "43264", "valor" => $data2['facturas'][0]['nombre_comercial'] )
-                            ) 
-                        ) 
-                    ) 
-                );
-
-                array_push( $_POST["registros"][0]['campos'], $con, $pro, $fac );
-                break;
-
-            case 43360:
-                $table = "rel_pnt_campana_aviso2";
-                $nombre_id_interno = "id_campana_aviso";
-                break;
-
-            case 43321:
-                $table = "rel_pnt_campana_aviso";
-                $nombre_id_interno = "id_campana_aviso";
-                break;
-        }
-
-        $data = array(
-            'idFormato' => $_POST["idFormato"], 
-            'token' => $_POST["token"], 
-            'correoUnidadAdministrativa' => $_POST["correoUnidadAdministrativa"], 
-            'unidadAdministrativa' => $_POST["unidadAdministrativa"], 
-            'SujetoObligado' => $_POST["SujetoObligado"], 
-            'registros' => $_POST["registros"]
-        );
-
-        $options = array(
-            'http' => array(
-                'method'  => 'POST',
-                'content' => json_encode( $data ),
-                'header'=>  "Content-Type: application/json\r\n" .
-                            "Accept: application/json\r\n"
-            )
-        );
-
-
-        $context  = stream_context_create( $options );
-        $res = file_get_contents( $URL, false, $context );
-
-        $result = json_decode( $res, true, 4 );
-
-        if( $result["success"] ){
-            $pntid = $result["mensaje"]["registros"][0]["idRegistro"]; 
-            $post_data = array();
-
-            $post_data[ $nombre_id_interno ] = $_POST["_id_interno"];
-            $post_data['id_pnt'] = $pntid;
-            $post_data['estatus_pnt'] ='SUBIDO';
-
-            $this->db->insert($table, $post_data);
-            $result['id_tpo'] =  $this->db->insert_id();
-            $result['id_pnt'] =   $pntid;
-
-        }
-        
-        $response = json_encode($result);
-        //$response = json_encode($result);
-        header('Content-Type: application/json');
-        echo $response;
-    }
-
-
     function eliminar_pnt(){
         $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/mantenimiento/elimina";
         $data = array( 
@@ -657,34 +579,5 @@ class PNT extends CI_Controller
         echo json_encode( $data["formatos"] ); 
     }
 
-    function registros21(){
-        $cols = array("pnt.id_tpo", "pnt.id_proveedor id", "f.id_factura", "con.descripcion_justificacion", 
-                      "e.ejercicio", "proc.nombre_procedimiento", "con.fundamento_juridico", 
-                      "prov.nombre_razon_social", "prov.nombres", "prov.primer_apellido", 
-                      "prov.segundo_apellido", "prov.nombre_comercial", "prov.rfc", "pnt.estatus_pnt");
-
-        foreach ($cols as &$col) {
-            $tag = $col;
-            if( strpos($col, " ") ) {
-                $col_arr = explode(" ", $col); $col = $col_arr[0]; $tag = $col_arr[1];
-            } else if ( strpos($col, ".") ) $tag = explode(".", $col)[1];
-            $col = "IFNULL(" . $col . ", '') AS $tag";
-        }
-
-
-        $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_facturas f
-                    JOIN tab_facturas_desglose fd ON fd.id_factura = f.id_factura
-                    JOIN tab_campana_aviso cam ON cam.id_campana_aviso = fd.id_campana_aviso
-                    JOIN cat_ejercicios e ON e.id_ejercicio = cam.id_ejercicio 
-                    JOIN tab_proveedores prov ON prov.id_proveedor = f.id_proveedor
-                    LEFT JOIN tab_contratos con ON con.id_proveedor = prov.id_proveedor
-                    LEFT JOIN cat_procedimientos proc ON proc.id_procedimiento = con.id_procedimiento
-                    LEFT JOIN rel_pnt_proveedor pnt ON pnt.id_proveedor = prov.id_proveedor;");
-
-        $rows = $query->result_array();
-
-        header('Content-Type: application/json');
-        echo json_encode( $rows ); 
-    }
 
 }

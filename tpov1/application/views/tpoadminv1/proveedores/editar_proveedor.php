@@ -189,6 +189,12 @@
                         <?php echo form_input(array('type' => 'text', 'name' => 'nombres', 'id' => 'nombres', 'value' => $registro['nombres'], 'class' => 'form-control')); ?>
                     </div>
                     <div class="form-group">
+                        <label>Descripci&oacute;n de sus servicios
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['descripcion_servicios']?>"></i>
+                        </label>
+                        <textarea  class="form-control" name="descripcion_servicios" id="descripcion_servicios"><?php echo $registro['descripcion_servicios']; ?></textarea>
+                    </div>
+                    <div class="form-group">
                         <label>Fecha de validaci&oacute;n
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_validacion']?>"></i>
                         </label>
@@ -211,12 +217,6 @@
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_actualizacion']?>"></i>
                         </label>
                         <?php echo form_input(array('type' => 'text', 'name' => 'fecha_actualizacion', 'value' => $registro['fecha_actualizacion'], 'class' => 'form-control')); ?>
-                    </div>
-                    <div class="form-group">
-                        <label>Descripci&oacute;n de sus servicios
-                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['descripcion_servicios']?>"></i>
-                        </label>
-                        <?php echo form_input(array('type' => 'text', 'maxlength' => '250',  'name' => 'descripcion_servicios', 'value' => $registro['descripcion_servicios'], 'class' => 'form-control')); ?>
                     </div>
                     <div class="form-group">
                         <label>Nota

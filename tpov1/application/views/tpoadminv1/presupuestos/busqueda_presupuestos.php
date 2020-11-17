@@ -60,7 +60,7 @@
     ?>
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="box-header">
                     <?php echo anchor("tpoadminv1/capturista/presupuestos/agregar_presupuesto", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
                     <div class="pull-right">
