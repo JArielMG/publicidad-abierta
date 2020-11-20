@@ -72,7 +72,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 <script type="text/javascript">
 	$(document).ready(function(){
 
-	    var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/ejercicios"
+	    var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/webservices/ejercicios"
 	
 	$.post(ejercicios_url, function(res, error){
     	if(res) {
@@ -126,7 +126,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 		        }
 	    	},
 	    	ajax: {
-	    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/registros4",
+	    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_d",
 	    		dataSrc: ''
 	    	},
     		scrollY: true,
@@ -219,7 +219,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	    	e.preventDefault(); 
 				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 		    var data = JSON.parse( $(this).attr("data") )
-			  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/agregar_pnt";
+			  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_d/enviar_pnt";
 			
 			var a = $(this)
 		      , tr = a.parents("tr")
@@ -304,7 +304,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				"_id_interno": data.id_pnt || id_pnt,
 			}
 
-			var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/eliminar_pnt"
+			var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_d/eliminar_pnt"
 
 	    	$.post(url, formato, function(res, error){
 	    		//if(res.success) location.reload(); 

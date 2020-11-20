@@ -49,6 +49,7 @@ class Print_CI extends CI_Controller
         }
     }
 
+    function hola(){ echo "hola";}
     function permiso_administrador()
     {
         //Revisamos que el usuario sea administrador

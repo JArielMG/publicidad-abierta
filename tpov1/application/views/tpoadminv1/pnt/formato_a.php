@@ -83,7 +83,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
 $(document).ready(function(){
 	$.fn.dataTable.ext.errMode = 'none';
-	var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/ejercicios"
+	var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/ejercicios"
 	
 	$.post(ejercicios_url, function(res, error){
     	if(res) {
@@ -137,7 +137,7 @@ $(document).ready(function(){
 	        }
     	},
     	ajax: {
-    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/registros",
+    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a",
     		dataSrc: ''
     	},
 		scrollY: true,
@@ -258,7 +258,7 @@ $(document).ready(function(){
     	if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 
 	    var data = JSON.parse( $(this).attr("data") )
-		  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/agregar_pnt";
+		  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/enviar_pnt";
 		
 		var a = $(this)
 	      , tr = a.parents("tr")
@@ -293,8 +293,8 @@ $(document).ready(function(){
 		}
 
 		if ( validURL(data.file_programa_anual) ){
-			formato.registros[0].campos.push( { "idCampo": 333995, "valor": data.file_programa_anual } )
-		}
+					}
+formato.registros[0].campos.push( { "idCampo": 333995, "valor": data.file_programa_anual } )
     		console.log("ola k ase")
 
 
@@ -357,7 +357,7 @@ $(document).ready(function(){
 			"id_pnt": data.id_pnt || id_pnt
 		}
 
-		var url = "<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/eliminar_pnt"
+		var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/eliminar_pnt"
 
     	$.post(url, formato, function(res, error){
     		if(!res || !('success' in res) ) {
