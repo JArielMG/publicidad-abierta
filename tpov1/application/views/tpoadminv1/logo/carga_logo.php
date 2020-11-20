@@ -127,7 +127,7 @@
         ?>
         <!-- custom tabs-->
         <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/campanas/campanas/validate_alta_campanas_avisos" enctype="multipart/form-data" >
-            <div class="box box-info">
+            <div class="box table-responsive box-info">
                 <div class="box-header">
                     <h4>Actualiza Logo</h4>
                     <div  class="box-tools pull-right">
@@ -178,7 +178,7 @@
             ?>
                 <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
 
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="box-header">
                     <h4>Detalles fecha actualización</h4>
                 </div><!-- /.box-header -->
@@ -243,7 +243,7 @@
 
     <div class="row">
         <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
-        <div class="box box-info">
+        <div class="box table-responsive box-info">
             <div class="box-header">
                <h4 class="modal-title">
                <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Cuando se configure la url del sistema, &eacute;sta se debe ingresar a la configuraci&oacute;n de Google reCAPTCHA."></i>  
@@ -295,7 +295,7 @@
 
     <div class="row">
         <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
-        <div class="box box">
+        <div class="box table-responsive">
             <div class="box-header">
                <h4 class="modal-title">
                     <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Esta opci&oacute;n te permite habilitar o desahabilitar la gr&aacute;fica de la vista publica."></i>  
@@ -324,7 +324,7 @@
 
 
         <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
-        <div class="box box-info">
+        <div class="box table-responsive box-info">
             <div class="box-header">
                <h4 class="modal-title">
                <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Cuando se ingrese a los servicios del PNT se podrán agregar registros."></i>  

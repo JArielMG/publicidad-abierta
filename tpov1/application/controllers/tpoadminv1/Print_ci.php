@@ -40,7 +40,7 @@ class Print_CI extends CI_Controller
 
      function permiso_capturista()
     {
-        //Revisamos que el usuario sea administrador
+        //Revisamos que el usuario sea capturista
         if($this->session->userdata('usuario_rol') != '2')
         {
             redirect('tpoadminv1/securecms/sin_permiso');
@@ -48,8 +48,23 @@ class Print_CI extends CI_Controller
             redirect('tpoadminv1/securecms/sin_permiso');
         }
     }
+<<<<<<< HEAD
 
     function hola(){ echo "hola";}
+=======
+	
+	function permiso_financiero()
+    {
+        //Revisamos que el usuario sea financiero
+        if($this->session->userdata('usuario_rol') != '2' && $this->session->userdata('usuario_rol') != '3')
+        {
+            redirect('tpoadminv1/securecms/sin_permiso');
+        }else if($this->session->userdata('usuario_id_so_atribucion') != 1 && $this->session->userdata('usuario_id_so_atribucion') != 3 ){
+            redirect('tpoadminv1/securecms/sin_permiso');
+        }
+    }
+    
+>>>>>>> dba468a15cfeadd26dbeb346edc5b4c894052c5c
     function permiso_administrador()
     {
         //Revisamos que el usuario sea administrador
@@ -710,8 +725,8 @@ class Print_CI extends CI_Controller
     function print_planeacion_presupuestos(){
 
         //Validamos que el usuario tenga acceso
-        $this->permiso_capturista();
 
+		$this->permiso_financiero();
 
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
         
@@ -746,7 +761,8 @@ class Print_CI extends CI_Controller
     function print_presupuestos_partidas(){
 
         //Validamos que el usuario tenga acceso
-        $this->permiso_capturista();
+
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
         

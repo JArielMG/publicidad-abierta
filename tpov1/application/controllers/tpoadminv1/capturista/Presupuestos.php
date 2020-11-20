@@ -44,7 +44,18 @@ class Presupuestos extends CI_Controller
     function permiso_capturista()
     {
         //Revisamos que el usuario sea administrador
-        if($this->session->userdata('usuario_rol') != '2')
+        if($this->session->userdata('usuario_rol') != '2' && $this->session->userdata('usuario_rol') != '3')
+        {
+            redirect('tpoadminv1/securecms/sin_permiso');
+        }else if($this->session->userdata('usuario_id_so_atribucion') != 1 && $this->session->userdata('usuario_id_so_atribucion') != 3 ){
+            redirect('tpoadminv1/securecms/sin_permiso');
+        }
+    }
+    
+    function permiso_financiero()
+    {
+        //Revisamos que el usuario sea administrador
+        if($this->session->userdata('usuario_rol') != '2' && $this->session->userdata('usuario_rol') != '3')
         {
             redirect('tpoadminv1/securecms/sin_permiso');
         }else if($this->session->userdata('usuario_id_so_atribucion') != 1 && $this->session->userdata('usuario_id_so_atribucion') != 3 ){
@@ -81,6 +92,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
         $this->load->model('tpoadminv1/Generales_model');
@@ -150,6 +162,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
@@ -242,7 +255,15 @@ class Presupuestos extends CI_Controller
                                     "});" .
                                     "$('input:file').change(function (){" .
                                         "upload_file();" .
+                                     "});" .                                     
+                                     
+                                    "$('select[name=\"id_ejercicio\"]').change(function (){" .
+                                        "limitar_fecha('#fecha_termino_periodo');" .
+                                        "limitar_fecha('#fecha_inicio_periodo');" .
                                      "});" .
+                                    
+                                    "limitar_fecha('#fecha_termino_periodo');" .
+                                    "limitar_fecha('#fecha_inicio_periodo');" .
                                 "});" .
                             "</script>";
 
@@ -254,6 +275,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
@@ -366,6 +388,14 @@ class Presupuestos extends CI_Controller
                                     "$('input[type=\"file\"]').change(function(){" .
                                         "$(this).removeClass('has-error');" .
                                     "});" .
+                                    
+                                    "$('select[name=\"id_ejercicio\"]').change(function (){" .
+                                        "limitar_fecha('#fecha_termino_periodo');" .
+                                        "limitar_fecha('#fecha_inicio_periodo');" .
+                                     "});" .
+                                    
+                                    "limitar_fecha('#fecha_termino_periodo');" .
+                                    "limitar_fecha('#fecha_inicio_periodo');" .
                                 "});" .
                             "</script>";
 
@@ -405,6 +435,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
@@ -513,6 +544,14 @@ class Presupuestos extends CI_Controller
                                     "$('input:file').change(function (){" .
                                         "upload_file();" .
                                      "});" .
+                                     
+                                     "$('select[name=\"id_ejercicio\"]').change(function (){" .
+                                        "limitar_fecha('#fecha_termino_periodo');" .
+                                        "limitar_fecha('#fecha_inicio_periodo');" .
+                                     "});" .
+                                    
+                                    "limitar_fecha('#fecha_termino_periodo');" .
+                                    "limitar_fecha('#fecha_inicio_periodo');" .
                                 "});" .
                             "</script>";
 
@@ -523,6 +562,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
@@ -611,7 +651,7 @@ class Presupuestos extends CI_Controller
                                         "format:'d.m.Y'," .
                                         "scrollInput: false" .
                                     "});" .
-									"jQuery('input[name=\"fecha_inicio_periodo\"]').datetimepicker({ " .
+                                    "jQuery('input[name=\"fecha_inicio_periodo\"]').datetimepicker({ " .
                                         "timepicker:false," .
                                         "format:'d.m.Y'," .
                                         "scrollInput: false" .
@@ -685,6 +725,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
         $this->load->model('tpoadminv1/Generales_model');
 
         $name_file = $this->Generales_model->clean_file_name(basename($_FILES['file_programa_anual']['name']), false);
@@ -735,6 +776,7 @@ class Presupuestos extends CI_Controller
 
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
 
@@ -759,6 +801,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
         
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
         $registro = $this->Presupuestos_model->dame_presupuesto_id($this->uri->segment(5));
@@ -772,6 +815,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
 
@@ -866,6 +910,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
@@ -993,6 +1038,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
@@ -1071,6 +1117,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
@@ -1198,6 +1245,7 @@ class Presupuestos extends CI_Controller
 
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
 
@@ -1222,6 +1270,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
         
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
         $registro = $this->Presupuestos_model->dame_presupuestos_desglose_id($this->uri->segment(5));
@@ -1237,6 +1286,7 @@ class Presupuestos extends CI_Controller
 
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
 
         $id_ejercicio = $this->input->post('id_ejercicio');
         $id_so = $this->input->post('id_so');
@@ -1255,6 +1305,7 @@ class Presupuestos extends CI_Controller
     {
         //Validamos que el usuario tenga acceso
         $this->permiso_capturista();
+        $this->permiso_financiero();
         
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
         $path = $this->Presupuestos_model->descarga_presupuestos();

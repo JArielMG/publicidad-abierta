@@ -334,7 +334,7 @@
                     </form>
                 </div>
                 <div class="tab-pane <?php if($this->session->flashdata('tab_flag')) echo 'active' ?>" id="tab_2"> 
-                    <div class="box">
+                    <div class="box table-responsive">
                         <div class="box-header">
                             <?php echo anchor("tpoadminv1/capturista/presupuestos/agregar_presupuesto_partida/" . $registro['id_presupuesto'] , "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
                             <?php echo anchor("tpoadminv1/capturista/presupuestos/busqueda_presupuestos", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>
@@ -576,6 +576,53 @@
                 }
             }
         });
+    }
+    
+    // Limitar fechas
+    var limitar_fecha = function(container){
+        
+        var ejercicio = $('select[name="id_ejercicio"] option:selected').text();
+        var anio = anio_fecha(container);
+        
+        var inicio = $('select[name="id_ejercicio"] option:selected').text() +'/01/01';
+        var fin = $('select[name="id_ejercicio"] option:selected').text() +'/12/31';
+        var defaultDate = '01.01.' + $('select[name="id_ejercicio"] option:selected').text();
+
+        jQuery.datetimepicker.setLocale('es');
+        if(ejercicio != '' && ejercicio != null && ejercicio != '-Seleccione-' && ejercicio != '- Selecciona -'){
+            if(anio == ejercicio){
+                defaultDate = $(container).val();
+            }
+
+            $('#valor_ejercicio').val(ejercicio);
+
+            jQuery(container).datetimepicker({
+                timepicker:false,
+                defaultDate: defaultDate,
+                minDate: inicio,
+                maxDate: fin,
+                format:'d.m.Y',
+                scrollInput: false
+            });
+        }else{
+            jQuery(container).datetimepicker({
+                timepicker:false,
+                format:'d.m.Y',
+                scrollInput: false
+            });
+            $(container).val('');
+        }
+    }
+
+    var anio_fecha = function(container){
+        var fecha = $(container).val();
+        if(fecha != '' && fecha != null){
+            var aux = fecha.split('.');
+            if(aux.length == 3){
+                return aux[2];
+            }
+        }
+        return '';
     }
 
     var upload_file = function (){
