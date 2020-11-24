@@ -226,15 +226,24 @@ class Contratos_Model extends CI_Model
         }
     }
 
-    function dame_todos_contratos($activos)
+    function dame_todos_contratos($activos, $idEjercicio = "", $idStatus = "")
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Proveedores_model');
         $this->load->model('tpoadminv1/Generales_model');
 
-        if($activos){
-            $this->db->where('active', '1');
+        if ($idEjercicio != "" && $idEjercicio != "0"){
+            $this->db->where('id_ejercicio', $idEjercicio);
         }
+
+        if ($idStatus != "" && $idStatus != "0"){
+            $this->db->where('active', $idStatus);
+        }else{
+            if($activos){
+                $this->db->where('active', '1');
+            }
+        }
+        
         $this->db->where('id_contrato > ', '1');
 
         $query = $this->db->get('tab_contratos');

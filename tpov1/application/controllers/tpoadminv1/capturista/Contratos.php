@@ -80,6 +80,7 @@ class Contratos extends CI_Controller
         $this->permiso_capturista();
 
         $this->load->model('tpoadminv1/capturista/Contratos_model');
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
                 
         $data['title'] = "Contratos";
         $data['heading'] = $this->session->userdata('usuario_nombre');
@@ -92,7 +93,11 @@ class Contratos extends CI_Controller
         $print_url = base_url() . "index.php/tpoadminv1/print_ci/print_contratos";
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         
-        $data['registros'] = $this->Contratos_model->dame_todos_contratos(false);
+        $data['ejercicios'] = $this->Catalogos_model->dame_todos_ejercicios(true);
+        $data['registros'] = $this->Contratos_model->dame_todos_contratos(false, $this->uri->segment(5),$this->uri->segment(6));
+
+        $data['yearSelected'] = $this->uri->segment(5);
+        $data['statusSelected'] = $this->uri->segment(6);
         
         $data['link_descarga'] = base_url() . "index.php/tpoadminv1/capturista/contratos/preparar_exportacion_contratos";
         $data['path_file_csv'] = '';//$this->Contratos_model->descarga_contratos();

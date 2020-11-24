@@ -96,7 +96,9 @@ class Presupuestos extends CI_Controller
 
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
         $this->load->model('tpoadminv1/Generales_model');
-                
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        
         $data['title'] = "Planeaci&oacute;n y presupuestos";
         $data['heading'] = $this->session->userdata('usuario_nombre');
         $data['mensaje'] = "";
@@ -107,9 +109,10 @@ class Presupuestos extends CI_Controller
         $data['main_content'] = 'tpoadminv1/presupuestos/busqueda_presupuestos';
         $print_url = base_url() . "index.php/tpoadminv1/print_ci/print_planeacion_presupuestos";
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
-        
-        $data['registros'] = $this->Presupuestos_model->dame_todos_presupuestos();
-        
+        $data['ejercicios'] = $this->Catalogos_model->dame_todos_ejercicios(true);
+        $data['registros'] = $this->Presupuestos_model->dame_todos_presupuestos($this->uri->segment(5),$this->uri->segment(6));
+        $data['yearSelected'] = $this->uri->segment(5);
+        $data['statusSelected'] = $this->uri->segment(6);
         $data['link_descarga'] = base_url() . "index.php/tpoadminv1/capturista/presupuestos/preparar_exportacion_presupuestos";
         $data['path_file_csv'] = '';  //$this->Presupuestos_model->descarga_presupuestos();
         $data['name_file_csv'] = "presupuestos.csv";

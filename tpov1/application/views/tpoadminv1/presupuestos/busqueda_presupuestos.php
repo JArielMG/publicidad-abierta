@@ -8,6 +8,26 @@
 
 <?php
 
+        $sel_ejercicios = '';
+
+        $ejercicio['id_ejercicio'] = "0";
+        $ejercicio['ejercicio'] = "Todos";
+        $ejercicios[] = $ejercicio;
+
+
+
+        $ejercicios = array_reverse($ejercicios);
+        for($z = 0; $z < sizeof($ejercicios); $z++)
+        {
+            if ($ejercicios[$z]['id_ejercicio'] == $yearSelected){
+                $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'" selected>' . $ejercicios[$z]['ejercicio'] . '</option>';
+            }else{
+                $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'">' . $ejercicios[$z]['ejercicio'] . '</option>';
+            }
+            
+        }
+
+
         $sel_estatus = '';
         $lista_estatus = ['-Seleccione-','Activo','Inactivo'];
         $lista_estatus_ids = ['','1','2'];
@@ -21,6 +41,18 @@
                 }
             
             
+        }
+
+        $sel_estatus2 = '';
+        $lista_estatus2 = ['Todos','Activo','Inactivo'];
+        $lista_estatus_ids2 = ['0','1','2'];
+        for($z = 0; $z < sizeof($lista_estatus_ids2); $z++)
+        {
+            if ($lista_estatus_ids2[$z] == $statusSelected){
+                $sel_estatus2 .= '<option value="'.$lista_estatus_ids2[$z].'" selected>' . $lista_estatus2[$z] . '</option>';            
+            }else{
+                $sel_estatus2 .= '<option value="'.$lista_estatus_ids2[$z].'">' . $lista_estatus2[$z] . '</option>';            
+            }
         }
 
     ?>
@@ -101,10 +133,38 @@
                             </div> 
                         </form>
                     </div>
-                    <div class="pull-right">
-                        <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
-                        <a id="descargabtn" class="btn btn-default" onclick="descargar_archivo()"><i class="fa fa-file"></i> Exportar a Excel</a>
-                        <input type="hidden" id="link_descarga" value="<?php echo $link_descarga; ?>"/>
+                    
+                    <div class="pull-right">   
+                        <div class="col-xs-12">                     
+                            <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
+                            <a id="descargabtn" class="btn btn-default" onclick="descargar_archivo()"><i class="fa fa-file"></i> Exportar a Excel</a>
+                            <input type="hidden" id="link_descarga" value="<?php echo $link_descarga; ?>"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div>
+                            <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label>Ejercicio* 
+                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['id_ejercicio']?>"></i>
+                                        </label>
+                                        <select name="id_ejercicio" id="yearSelect" class="form-control <?php if($error_active) echo 'validation-error' ?>">
+                                            <?php echo $sel_ejercicios; ?>
+                                        </select>
+                                    </div>  
+                                
+                            </div>
+                            <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label style="margin-left: 25px;">Estatus
+                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                        </label>
+                                        <select class="form-control" id="statusSelect" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
+                                            <?php echo $sel_estatus2; ?>
+                                        </select>
+                                    </div> 
+                            </div>
+                        </div>
                     </div>
                 </div><!-- /.box-header -->
                 
@@ -127,23 +187,25 @@
                         <tbody>
                             <?php
                                 $c_replace = array('\'', '"');
-                                for($z = 0; $z < sizeof($registros); $z++)
-                                {
-                                    $nombre_pres = $registros[$z]['ejercicio'] . " - " . $registros[$z]['nombre_sujeto_obligado'];
-                                    echo '<tr>';
-                                    echo '<td>' . $registros[$z]['id'] . '</td>';
-                                    echo '<td>' . $registros[$z]['ejercicio'] . '</td>';
-                                    echo '<td>' . $registros[$z]['nombre_sujeto_obligado'] . '</td>';
-                                    echo '<td>' . $registros[$z]['monto_presupuesto'] . '</td>';
-                                    echo '<td>' . $registros[$z]['monto_modificacion'] . '</td>';
-                                    echo '<td>' . $registros[$z]['presupuesto_modificado'] . '</td>';
-                                    echo '<td>' . $registros[$z]['active'] . '</td>';
-                                    echo "<td> <span class='btn-group btn btn-info btn-sm' onclick=\"abrirModal(" . $registros[$z]['id_presupuesto'] . ")\"> <i class='fa fa-search'></i></span></td>";
-                                    echo '<td>' . anchor("tpoadminv1/capturista/presupuestos/editar_presupuesto/".$registros[$z]['id_presupuesto'], "<button class='btn btn-warning btn-sm' title='Editar'><i class=\"fa fa-edit\"></i></button></td>"); 
-                                    echo "<td> <span class='btn-group btn btn-danger btn-sm' onclick=\"eliminarModal(" . $registros[$z]['id_presupuesto'] . ", '". str_replace($c_replace, "", $nombre_pres ) . "')\"> <i class='fa fa-close'></i></span></td>";
-                                    
-									
-                                    echo '</tr>';
+                                if (is_array($registros)){
+                                    for($z = 0; $z < sizeof($registros); $z++)
+                                    {
+                                        $nombre_pres = $registros[$z]['ejercicio'] . " - " . $registros[$z]['nombre_sujeto_obligado'];
+                                        echo '<tr>';
+                                        echo '<td>' . $registros[$z]['id'] . '</td>';
+                                        echo '<td>' . $registros[$z]['ejercicio'] . '</td>';
+                                        echo '<td>' . $registros[$z]['nombre_sujeto_obligado'] . '</td>';
+                                        echo '<td>' . $registros[$z]['monto_presupuesto'] . '</td>';
+                                        echo '<td>' . $registros[$z]['monto_modificacion'] . '</td>';
+                                        echo '<td>' . $registros[$z]['presupuesto_modificado'] . '</td>';
+                                        echo '<td>' . $registros[$z]['active'] . '</td>';
+                                        echo "<td> <span class='btn-group btn btn-info btn-sm' onclick=\"abrirModal(" . $registros[$z]['id_presupuesto'] . ")\"> <i class='fa fa-search'></i></span></td>";
+                                        echo '<td>' . anchor("tpoadminv1/capturista/presupuestos/editar_presupuesto/".$registros[$z]['id_presupuesto'], "<button class='btn btn-warning btn-sm' title='Editar'><i class=\"fa fa-edit\"></i></button></td>"); 
+                                        echo "<td> <span class='btn-group btn btn-danger btn-sm' onclick=\"eliminarModal(" . $registros[$z]['id_presupuesto'] . ", '". str_replace($c_replace, "", $nombre_pres ) . "')\"> <i class='fa fa-close'></i></span></td>";
+                                        
+    									
+                                        echo '</tr>';
+                                    }
                                 }
                             ?>
                         </tbody>
@@ -392,6 +454,9 @@
 
 <script type="text/javascript">
     
+    var yearSelected = "<?php echo  $yearSelected;?>";
+    var statusSelect = "<?php echo  $statusSelected;?>";
+
     var eliminarModal = function(id, name){
         var html_btns = '<button type="button" class="btn btn-danger" onclick="eliminar('+id+')">Si</button>' +
                    '<button type="button" class="btn btn-default" data-dismiss="modal">No</button>';
@@ -399,6 +464,17 @@
         $('#myModalDelete').find('#mensaje_modal').html('¿Desea eliminar el presupuesto <b>' + name+ '</b>?');
         $('#myModalDelete').modal('show');
     }
+
+    $('#statusSelect').on('change', function(){
+        statusSelect = $(this).val();
+        window.location.href = "<?php echo  base_url() . 'index.php/tpoadminv1/capturista/presupuestos/busqueda_presupuestos/'; ?>" + yearSelected + "/" + statusSelect; 
+    });
+
+    $('#yearSelect').on('change', function(){
+        yearSelected = $(this).val();
+        //alert(selected);
+        window.location.href = "<?php echo  base_url() . 'index.php/tpoadminv1/capturista/presupuestos/busqueda_presupuestos/'; ?>" + yearSelected + "/" + statusSelect;
+    });
 
     var eliminar = function (id){
         window.location.href = "eliminar_presupuesto/" + id;

@@ -81,7 +81,7 @@ class Facturas_Model extends CI_Model
         return $output;
     }
 
-    function dame_todas_facturas($activos)
+    function dame_todas_facturas($activos, $idEjercicio = "", $idStatus = "")
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Proveedores_model');
@@ -91,15 +91,33 @@ class Facturas_Model extends CI_Model
         $this->load->model('tpoadminv1/capturista/Ordenes_compra_model');
 
         if ($this->db->table_exists('vlista_facturas')){
-            if($activos){
-                $this->db->where('active', 'Activo');
+            
+            if ($idEjercicio != "" && $idEjercicio != "0"){
+                $this->db->where('ejercicio', $this->Catalogos_model->dame_nombre_ejercicio($idEjercicio));
             }
+
+            if ($idStatus != "" && $idStatus != "0"){
+                $this->db->where('active', $this->Generales_model->get_estatus_name($idStatus));
+            }else{
+                if($activos){
+                    $this->db->where('active', '1');
+                }
+            }
+
             $query = $this->db->get('vlista_facturas');
             return $query->result_array();
         }else{
 
-            if($activos){
-                $this->db->where('active', '1');
+            if ($idEjercicio != "" && $idEjercicio != "0"){
+                $this->db->where('id_ejercicio', $idEjercicio);
+            }
+
+            if ($idStatus != "" && $idStatus != "0"){
+                $this->db->where('active', $idStatus);
+            }else{
+                if($activos){
+                    $this->db->where('active', '1');
+                }
             }
 
             $query = $this->db->get('tab_facturas');

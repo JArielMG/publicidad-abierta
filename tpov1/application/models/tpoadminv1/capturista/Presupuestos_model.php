@@ -93,9 +93,17 @@ class Presupuestos_Model extends CI_Model
         return $montos;
     }
 
-    function dame_todos_presupuestos()
+    function dame_todos_presupuestos($idEjercicio = "", $idStatus = "")
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+
+        if ($idEjercicio != "" && $idEjercicio != "0"){
+            $this->db->where('id_ejercicio', $idEjercicio);
+        }
+
+        if ($idStatus != "" && $idStatus != "0"){
+            $this->db->where('active', $idStatus);
+        }
 
         $query = $this->db->get('tab_presupuestos');
         

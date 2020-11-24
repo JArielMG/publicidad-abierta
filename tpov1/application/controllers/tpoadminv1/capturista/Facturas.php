@@ -133,10 +133,13 @@ class Facturas extends CI_Controller
         $this->Logo_model->actualizar_fecha_con_erogacion($format_date, $mensaje);
     }
 
-    function lista_facturas(){
+    function lista_facturas($yearSelected = "",$statusSelected = ""){
+
+        $yearSelected = $this->input->post('yearSelected');
+        $statusSelected = $this->input->post('statusSelected');
 
         $this->load->model('tpoadminv1/capturista/Facturas_model');
-        $data = $this->Facturas_model->dame_todas_facturas(false);
+        $data = $this->Facturas_model->dame_todas_facturas(false, $yearSelected, $statusSelected);
         
         header('Content-type: application/json');
         
@@ -162,6 +165,7 @@ class Facturas extends CI_Controller
         $this->permiso_capturista();
 
         $this->load->model('tpoadminv1/capturista/Facturas_model');
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
                 
         $data['title'] = "Facturas";
         $data['heading'] = $this->session->userdata('usuario_nombre');
@@ -178,8 +182,12 @@ class Facturas extends CI_Controller
 
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         $data['print_onclick_exp'] = "onclick=\"window.open('" . $print_url_exp . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
+
+        $data['ejercicios'] = $this->Catalogos_model->dame_todos_ejercicios(true);
         
         $data['registros'] = '';//$this->Facturas_model->dame_todas_facturas(false);
+        $data['yearSelected'] = $this->uri->segment(5);
+        $data['statusSelected'] = $this->uri->segment(6);
         
         $data['path_file_csv'] = ''; //$this->Facturas_model->descarga_facturas();
         $data['name_file_csv'] = "facturas.csv";

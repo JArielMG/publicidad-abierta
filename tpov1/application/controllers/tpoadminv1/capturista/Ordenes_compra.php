@@ -94,6 +94,7 @@ class Ordenes_compra extends CI_Controller
         $this->permiso_capturista();
 
         $this->load->model('tpoadminv1/capturista/Ordenes_compra_model');
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
                 
         $data['title'] = "&Oacute;rdenes de compra";
         $data['heading'] = $this->session->userdata('usuario_nombre');
@@ -106,7 +107,11 @@ class Ordenes_compra extends CI_Controller
         $print_url = base_url() . "index.php/tpoadminv1/print_ci/print_ordenes_compra";
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         
-        $data['registros'] = $this->Ordenes_compra_model->dame_todos_ordenes_compra(false);
+        $data['ejercicios'] = $this->Catalogos_model->dame_todos_ejercicios(true);
+        $data['registros'] = $this->Ordenes_compra_model->dame_todos_ordenes_compra(false, $this->uri->segment(5),$this->uri->segment(6));
+
+        $data['yearSelected'] = $this->uri->segment(5);
+        $data['statusSelected'] = $this->uri->segment(6);
         
         $data['link_descarga'] = base_url() . "index.php/tpoadminv1/capturista/ordenes_compra/preparar_exportacion_ordenes_compra";
         $data['path_file_csv'] = ''; //$this->Ordenes_compra_model->descarga_ordenes_compra();

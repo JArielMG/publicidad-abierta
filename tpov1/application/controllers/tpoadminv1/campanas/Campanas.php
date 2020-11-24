@@ -1092,6 +1092,8 @@ class Campanas extends CI_Controller
         $data['ejercicios'] = $this->Campana_model->dame_all_ejercicios(true);
         
         $data['registros'] = '';//$this->Facturas_model->dame_todas_facturas(false);
+        $data['yearSelected'] = $this->uri->segment(5);
+        $data['statusSelected'] = $this->uri->segment(6);
         
         $data['path_file_csv'] = ''; //$this->Facturas_model->descarga_facturas();
         $data['name_file_csv'] = "campanasyavisos.csv";
@@ -1142,7 +1144,8 @@ class Campanas extends CI_Controller
             'area_responsable' => '&Aacute;rea responsable de la informaci&oacute;n',
             'anio' => 'Año en que se lleva a cabo la difusión de la campaña.',
             'fecha_actualizacion' => 'Fecha de actualización',
-            'nota' => 'Nota'
+            'nota' => 'Nota',
+            'id_ejercicio' => 'Indica el año del ejercicio presupuestario.'
         );
        
         $data['scripts'] = "<script type='text/javascript'>" .
@@ -1164,10 +1167,13 @@ class Campanas extends CI_Controller
         $this->load->view('tpoadminv1/includes/template', $data);
     }
 
-    function lista_campanas(){
+    function lista_campanas($yearSelected = "",$statusSelected = ""){
+
+        $yearSelected = $this->input->post('yearSelected');
+        $statusSelected = $this->input->post('statusSelected');
 
         $this->load->model('tpoadminv1/campanas/Campana_model');
-        $data = $this->Campana_model->dame_todas_campanas();
+        $data = $this->Campana_model->dame_todas_campanas($yearSelected,$statusSelected);
         
         header('Content-type: application/json');
         
