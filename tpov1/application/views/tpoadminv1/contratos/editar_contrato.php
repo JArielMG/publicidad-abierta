@@ -80,6 +80,21 @@
             $sel_so_solicitantes .= '<option value="'.$so_solicitantes[$z]['id_sujeto_obligado'].'">' . $so_solicitantes[$z]['nombre_sujeto_obligado'] . '</option>';
         }
     }
+
+    $sel_estatus2 = '';
+    $lista_estatus2 = ['-Seleccione-','Activo','Inactivo'];
+    $lista_estatus_ids2 = ['','1','2'];
+    for($z = 0; $z < sizeof($lista_estatus_ids2); $z++)
+    {
+        
+            if($lista_estatus_ids2[$z] == '0' ){
+                $sel_estatus2 .= '<option value="'.$lista_estatus_ids2[$z].'" selected>' . $lista_estatus2[$z] . '</option>';
+            }else{
+                $sel_estatus2 .= '<option value="'.$lista_estatus_ids2[$z].'">' . $lista_estatus2[$z] . '</option>';
+            }
+        
+        
+    }
 ?>
 
 <style>
@@ -399,8 +414,28 @@
                             <div class="tab-pane <?php if($this->session->flashdata('tab_flag')) echo 'active' ?>" id="tab_2">
                                 <div class="box table-responsive">
                                     <div class="box-header">
-                                        <?php echo anchor("tpoadminv1/capturista/contratos/agregar_convenio_modificatorio/" . $registro['id_contrato'] , "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
-                                        <?php echo anchor("tpoadminv1/capturista/contratos/busqueda_contratos", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>
+
+
+                                        <div class="pull-left">
+                                            <?php echo anchor("tpoadminv1/capturista/contratos/agregar_convenio_modificatorio/" . $registro['id_contrato'] , "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
+                                            <?php echo anchor("tpoadminv1/capturista/contratos/busqueda_contratos", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>
+
+                                            <br/>
+                                            <br/>
+                                            <form role="form" method="post" autocomplete="off" action="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/contratos/validate_editar_status_convenio_modificatorio" enctype="multipart/form-data" >
+                                                <input type="hidden" value="<?php echo $registro['id_contrato']; ?>" class="form-control" name="id_contrato"/>
+                                                <div class="form-group">
+                                                    <label style="margin-left: 25px;">Estatus*
+                                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                                    </label>
+                                                    <select class="form-control" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
+                                                        <?php echo $sel_estatus2; ?>
+                                                    </select>
+                                                    <br/>
+                                                    <button class="btn btn-primary" type="submit">Guardar</button>
+                                                </div> 
+                                            </form>
+                                        </div>
                                         <div class="pull-right">
                                             <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
                                             <a class="btn btn-default" href="<?php echo base_url() . $path_file_csv ?>" download="<?php echo $name_file_csv ?>"><i class="fa fa-file"></i> Exportar a Excel</a>
@@ -425,20 +460,22 @@
                                             <tbody>
                                                 <?php
                                                     $c_replace = array('\'', '"');
-                                                    for($z = 0; $z < sizeof($registros); $z++)
-                                                    {
-                                                        echo '<tr>';
-                                                        echo '<td>' . $registros[$z]['id'] . '</td>';
-                                                        echo '<td>' . $registros[$z]['ejercicio'] . '</td>';
-                                                        echo '<td>' . $registros[$z]['trimestre'] . '</td>';
-                                                        echo '<td>' . $registros[$z]['numero_convenio'] . '</td>';
-                                                        echo '<td>' . $registros[$z]['monto_convenio'] . '</td>';
-                                                        echo '<td>' . $registros[$z]['active'] . '</td>';
-                                                        echo "<td> <span class='btn-group btn btn-info btn-sm' onclick=\"abrirModal(" . $registros[$z]['id_convenio_modificatorio'] . ")\"> <i class='fa fa-search'></i></span></td>";
-                                                        echo '<td>' . anchor("tpoadminv1/capturista/contratos/editar_convenio_modificatorio/".$registros[$z]['id_convenio_modificatorio'], "<button class='btn btn-warning btn-sm' title='Editar'><i class=\"fa fa-edit\"></i></button></td>"); 
-                                                        echo "<td> <span class='btn-group btn btn-danger btn-sm' onclick=\"eliminarModal(" . $registros[$z]['id_convenio_modificatorio'] . ", ". $registro['id_contrato'] . ", '". str_replace($c_replace, "", $registros[$z]['numero_convenio']) . "')\"> <i class='fa fa-close'></i></span></td>";
+                                                    if (is_array($registros)){
+                                                        for($z = 0; $z < sizeof($registros); $z++)
+                                                        {
+                                                            echo '<tr>';
+                                                            echo '<td>' . $registros[$z]['id'] . '</td>';
+                                                            echo '<td>' . $registros[$z]['ejercicio'] . '</td>';
+                                                            echo '<td>' . $registros[$z]['trimestre'] . '</td>';
+                                                            echo '<td>' . $registros[$z]['numero_convenio'] . '</td>';
+                                                            echo '<td>' . $registros[$z]['monto_convenio'] . '</td>';
+                                                            echo '<td>' . $registros[$z]['active'] . '</td>';
+                                                            echo "<td> <span class='btn-group btn btn-info btn-sm' onclick=\"abrirModal(" . $registros[$z]['id_convenio_modificatorio'] . ")\"> <i class='fa fa-search'></i></span></td>";
+                                                            echo '<td>' . anchor("tpoadminv1/capturista/contratos/editar_convenio_modificatorio/".$registros[$z]['id_convenio_modificatorio'], "<button class='btn btn-warning btn-sm' title='Editar'><i class=\"fa fa-edit\"></i></button></td>"); 
+                                                            echo "<td> <span class='btn-group btn btn-danger btn-sm' onclick=\"eliminarModal(" . $registros[$z]['id_convenio_modificatorio'] . ", ". $registro['id_contrato'] . ", '". str_replace($c_replace, "", $registros[$z]['numero_convenio']) . "')\"> <i class='fa fa-close'></i></span></td>";
 
-                                                        echo '</tr>';
+                                                            echo '</tr>';
+                                                        }
                                                     }
                                                 ?>
                                             </tbody>

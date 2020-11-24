@@ -393,6 +393,36 @@ class Proveedores_Model extends CI_Model
         }
     }
 
+    function editar_status_proveedor()
+    {
+        
+            
+            $data_update = array(
+                'active' => $this->input->post('active')
+            );
+            
+            //$this->db->where('id_proveedor', $this->input->post('id_proveedor'));
+            $this->db->update('tab_proveedores', $data_update);
+
+            
+           // echo  $this->db->last_query();
+            if($this->db->affected_rows() > 0)
+            {
+                $this->registro_bitacora('Proveedores', 'Edición de status todos los proveedores');
+                // numero, existe razon social, existe rfc
+                return array(1, false , false); // is correct
+            }else
+            {  
+                // any trans error?
+                if ($this->db->trans_status() === FALSE) {
+                    return array(0, false , false); // something is not correct
+                }else{
+                    return array(1, false , false); // is correct
+                }
+            }
+        
+    }
+
     function crear_archivo_proveedores($path, $namefile)
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');

@@ -550,6 +550,10 @@ class Contratos_Model extends CI_Model
 
     function editar_contrato()
     {
+
+        $idContrato = $this->input->post('id_contrato');
+        $regAnt = $this->dame_contrato_id($idContrato);
+
         $this->db->where('numero_contrato', $this->input->post('numero_contrato'));
         $this->db->where_not_in('id_contrato', $this->input->post('id_contrato'));
         $query = $this->db->get('tab_contratos');
@@ -557,50 +561,90 @@ class Contratos_Model extends CI_Model
         if($query->num_rows() > 0){
             return 2; // field is duplicated
         }else{
-            
-            $data_update = array(
-                'id_procedimiento' => $this->input->post('id_procedimiento'),
-                'id_proveedor' => $this->input->post('id_proveedor'),
-                'id_ejercicio' => $this->input->post('id_ejercicio'),
-                'id_trimestre' => $this->input->post('id_trimestre'),
-                'id_so_contratante' => $this->input->post('id_so_contratante'),
-                'id_so_solicitante' => $this->input->post('id_so_solicitante'),
-                'numero_contrato' => $this->input->post('numero_contrato'),
-                'objeto_contrato' => $this->input->post('objeto_contrato'),
-                'descripcion_justificacion' => $this->input->post('descripcion_justificacion'),
-                'fundamento_juridico' => $this->input->post('fundamento_juridico'),
-                'fecha_celebracion' => $this->stringToDate($this->input->post('fecha_celebracion')),
-                'fecha_inicio' => $this->stringToDate($this->input->post('fecha_inicio')),
-                'fecha_fin' => $this->stringToDate($this->input->post('fecha_fin')),
-                'monto_contrato' => $this->input->post('monto_contrato'),
-                'url_contrato' => $this->input->post('url_contrato'),
-                'file_contrato' => $this->input->post('name_file_contrato'),
-                'fecha_validacion' => $this->stringToDate($this->input->post('fecha_validacion')),
-                'area_responsable' => $this->input->post('area_responsable'),
-                'periodo' => $this->input->post('periodo'),
-                'fecha_actualizacion' => $this->stringToDate($this->input->post('fecha_actualizacion')),
-                'nota' => $this->input->post('nota'),
-                'active' => $this->input->post('active')
-            );
-            
-            $this->db->where('id_contrato', $this->input->post('id_contrato'));
-            $this->db->update('tab_contratos', $data_update);
-    
-            if($this->db->affected_rows() > 0)
-            {
-                $this->registro_bitacora('Contratos', 'Edición del contrato con número: ' . $data_update['numero_contrato']);
-                return 1; // is correct
-            }else
-            {
-                // any trans error?
-                if ($this->db->trans_status() === FALSE) {
-                    return 0; // sometime is wrong
-                }else{
-                    return 1;
+
+            $continueUpdate = true;
+
+            if ($regAnt['active'] != $this->input->post('active')){
+                if($this->editar_status_convenio_modificatorio($idContrato) == 0){
+                    $continueUpdate = false;
                 }
+            }
+
+            if ($continueUpdate){
+            
+                $data_update = array(
+                    'id_procedimiento' => $this->input->post('id_procedimiento'),
+                    'id_proveedor' => $this->input->post('id_proveedor'),
+                    'id_ejercicio' => $this->input->post('id_ejercicio'),
+                    'id_trimestre' => $this->input->post('id_trimestre'),
+                    'id_so_contratante' => $this->input->post('id_so_contratante'),
+                    'id_so_solicitante' => $this->input->post('id_so_solicitante'),
+                    'numero_contrato' => $this->input->post('numero_contrato'),
+                    'objeto_contrato' => $this->input->post('objeto_contrato'),
+                    'descripcion_justificacion' => $this->input->post('descripcion_justificacion'),
+                    'fundamento_juridico' => $this->input->post('fundamento_juridico'),
+                    'fecha_celebracion' => $this->stringToDate($this->input->post('fecha_celebracion')),
+                    'fecha_inicio' => $this->stringToDate($this->input->post('fecha_inicio')),
+                    'fecha_fin' => $this->stringToDate($this->input->post('fecha_fin')),
+                    'monto_contrato' => $this->input->post('monto_contrato'),
+                    'url_contrato' => $this->input->post('url_contrato'),
+                    'file_contrato' => $this->input->post('name_file_contrato'),
+                    'fecha_validacion' => $this->stringToDate($this->input->post('fecha_validacion')),
+                    'area_responsable' => $this->input->post('area_responsable'),
+                    'periodo' => $this->input->post('periodo'),
+                    'fecha_actualizacion' => $this->stringToDate($this->input->post('fecha_actualizacion')),
+                    'nota' => $this->input->post('nota'),
+                    'active' => $this->input->post('active')
+                );
+                
+                $this->db->where('id_contrato', $this->input->post('id_contrato'));
+                $this->db->update('tab_contratos', $data_update);
+        
+                if($this->db->affected_rows() > 0)
+                {
+                    $this->registro_bitacora('Contratos', 'Edición del contrato con número: ' . $data_update['numero_contrato']);
+                    return 1; // is correct
+                }else
+                {
+                    // any trans error?
+                    if ($this->db->trans_status() === FALSE) {
+                        return 0; // sometime is wrong
+                    }else{
+                        return 1;
+                    }
+                }
+            }else{
+                return 0;
             }
         }
     }
+
+
+    function editar_status_contrato()
+    {
+        $data_update = array(
+            'active' => $this->input->post('active')
+        );
+        
+        $this->db->update('tab_contratos', $data_update);
+
+        $this->editar_status_convenio_modificatorio("");
+
+        if($this->db->affected_rows() > 0)
+        {
+            $this->registro_bitacora('Contratos', 'Se editaron todos los contratos');
+            return 1; // is correct
+        }else
+        {
+            // any trans error?
+            if ($this->db->trans_status() === FALSE) {
+                return 0; // sometime is wrong
+            }else{
+                return 1;
+            }
+        }
+    }
+
 
     function tiene_contratos_dependencia($id_contrato)
     {
@@ -840,6 +884,40 @@ class Contratos_Model extends CI_Model
                 }
             }
         }
+    }
+
+
+    function editar_status_convenio_modificatorio($id = "")
+    {
+        
+        if ($id == ""){
+            $id = $this->input->post('id_contrato');
+        }
+
+        $data_update = array(
+            'active' => $this->input->post('active')
+        );
+
+        if ($id != ""){
+            $this->db->where('id_contrato', $id);
+        }
+
+        $this->db->update('tab_convenios_modificatorios', $data_update);
+
+        if($this->db->affected_rows() > 0)
+        {
+            $this->registro_bitacora('Contratos', 'Se editaron los convenios modificatorios');
+            return 1; // is correct
+        }else
+        {
+            // any trans error?
+            if ($this->db->trans_status() === FALSE) {
+                return 0; // sometime is wrong
+            }else{
+                return 1;
+            }
+        }
+        
     }
 
     function dame_convenio_modificatorio_id($id)

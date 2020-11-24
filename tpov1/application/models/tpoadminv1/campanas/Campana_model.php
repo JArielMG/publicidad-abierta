@@ -2308,6 +2308,25 @@ class Campana_Model extends CI_Model
         }
     }
 
+    function edita_status_campana()
+    {
+        
+        $data = array(
+            'active' => $this->input->post('active'),
+        );
+
+        $this->db->update('tab_campana_aviso', $data);
+        
+        if($this->db->affected_rows() > 0)
+        {
+            
+            $bitacora = $this->guardar_bitacora('Se modificaron todos los datos');
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
     //Guardamos los detalles de las pestañas
     function guarda_rel_camp()
     {

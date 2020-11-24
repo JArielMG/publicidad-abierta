@@ -58,11 +58,48 @@
         <?php
         }
     ?>
+    <?php
+
+        $sel_estatus = '';
+        $lista_estatus = ['-Seleccione-','Activo','Inactivo'];
+        $lista_estatus_ids = ['','1','2'];
+        for($z = 0; $z < sizeof($lista_estatus_ids); $z++)
+        {
+            
+                if($lista_estatus_ids[$z] == '0' ){
+                    $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'" selected>' . $lista_estatus[$z] . '</option>';
+                }else{
+                    $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'">' . $lista_estatus[$z] . '</option>';
+                }
+            
+            
+        }
+
+    ?>
     <div class="row">
         <div class="col-xs-12">
             <div class="box table-responsive">
                 <div class="box-header">
-                    <?php echo anchor("tpoadminv1/capturista/contratos/agregar_contrato", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
+                    <div class="pull-left">
+                        <?php echo anchor("tpoadminv1/capturista/contratos/agregar_contrato", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
+
+                        <br/>
+                        <br/>
+                        <form role="form" method="post" autocomplete="off" action="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/contratos/validate_editar_status_contrato/" enctype="multipart/form-data" >
+
+                            <div class="form-group">
+                                <label style="margin-left: 25px;">Estatus*
+                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                </label>
+                                <select class="form-control" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
+                                    <?php echo $sel_estatus; ?>
+                                </select>
+                                <br/>
+                                <button class="btn btn-primary" type="submit">Guardar</button>
+                            </div> 
+                        </form>
+                    </div>
+
                     <div class="pull-right">
                         <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
                         <a id="descargabtn" class="btn btn-default" onclick="descargar_archivo()"><i class="fa fa-file"></i> Exportar a Excel</a>

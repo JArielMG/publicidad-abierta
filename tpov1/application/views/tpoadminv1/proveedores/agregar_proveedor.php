@@ -12,19 +12,11 @@
     $lista_estatus_ids = ['','1','2'];
     for($z = 0; $z < sizeof($lista_estatus_ids); $z++)
     {
-        if( $registro['active'] == 'null' )
-        {
-            if($lista_estatus_ids[$z] == '1' ){
-                $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'" selected>' . $lista_estatus[$z] . '</option>';
-            }else{
-                $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'">' . $lista_estatus[$z] . '</option>';
-            }
-        } else{
-            if( $lista_estatus_ids[$z] == $registro['active'] ){
-                $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'" selected>' . $lista_estatus[$z] . '</option>';
-            }else{
-                $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'">' . $lista_estatus[$z] . '</option>';
-            }
+        
+        if($lista_estatus_ids[$z] == '1' ){
+            $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'" selected>' . $lista_estatus[$z] . '</option>';
+        }else{
+            $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'">' . $lista_estatus[$z] . '</option>';
         }
         
     }

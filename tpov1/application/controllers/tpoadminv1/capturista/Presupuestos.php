@@ -709,6 +709,31 @@ class Presupuestos extends CI_Controller
         }
     }
 
+    function validate_editar_status_presupuesto()
+    {
+        //Validamos que el usuario tenga acceso
+        $this->permiso_capturista();
+        $this->permiso_financiero();
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        $this->load->model('tpoadminv1/capturista/Presupuestos_model');
+        $this->load->model('tpoadminv1/Generales_model');
+        $this->load->library('form_validation');
+
+        $redict = true;
+        $agregar = $this->Presupuestos_model->editar_status_presupuesto();
+        if($agregar == 1){
+            $this->session->set_flashdata('exito', "Los presupuestos se han editado correctamente");
+        }else{
+            $this->session->set_flashdata('error', "Los presupuestos no se pudieron editar");
+        }
+        if($redict)
+        {
+            redirect('/tpoadminv1/capturista/presupuestos/busqueda_presupuestos');
+        } 
+        
+    }
+
     function clear_file()
     {
         $clear_path = './data/programas/' . $this->input->post('file_programa_anual'); //utf8_decode($this->input->post('file_programa_anual'));
@@ -1239,6 +1264,33 @@ class Presupuestos extends CI_Controller
             } 
         }
     }
+
+
+    function validate_editar_status_presupuesto_partida()
+    {
+        //Validamos que el usuario tenga acceso
+        $this->permiso_capturista();
+        $this->permiso_financiero();
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        $this->load->model('tpoadminv1/capturista/Presupuestos_model');
+        $this->load->library('form_validation');
+        
+        $redict = true;
+        $editar = $this->Presupuestos_model->editar_presupuesto_status_partida($this->input->post('id_presupuesto'));
+        if($editar == 1){
+            $this->session->set_flashdata('exito', "La partida se ha editado correctamente");
+        }else{
+            $this->session->set_flashdata('error', "La partida no se pudo editar");
+        }
+        if($redict)
+        {
+            $this->session->set_flashdata('tab_flag', "desglose");
+            redirect('/tpoadminv1/capturista/presupuestos/editar_presupuesto/'.$this->input->post('id_presupuesto'));
+        } 
+        
+    }
+
 
     function eliminar_presupuesto_partida()
     {

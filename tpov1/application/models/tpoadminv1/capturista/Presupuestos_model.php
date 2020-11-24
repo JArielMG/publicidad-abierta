@@ -308,6 +308,9 @@ class Presupuestos_Model extends CI_Model
 
     function editar_presupuesto()
     {
+        $idPresupuesto = $this->input->post('id_presupuesto');
+        $regAnt = $this->dame_presupuesto_id($idPresupuesto);
+
         $this->db->where('id_ejercicio', $this->input->post('id_ejercicio'));
         $this->db->where('id_sujeto_obligado', $this->input->post('id_sujeto_obligado'));
         $this->db->where_not_in('id_presupuesto', $this->input->post('id_presupuesto'));
@@ -317,39 +320,81 @@ class Presupuestos_Model extends CI_Model
         if($query->num_rows() > 0){
             return 2; // field is duplicated
         }else{
+
+
+            $continueUpdate = true;
+
+            if ($regAnt['active'] != $this->input->post('active')){
+                if($this->editar_presupuesto_status_partida($idPresupuesto) == 0){
+                    $continueUpdate = false;
+                }
+            }
+
+            if ($continueUpdate){
+
+                $data_new = array(
+                    'id_ejercicio' => $this->input->post('id_ejercicio'),
+                    'id_sujeto_obligado' => $this->input->post('id_sujeto_obligado'),
+                    'denominacion' => $this->input->post('denominacion'),
+                    'fecha_publicacion' => $this->stringToDate($this->input->post('fecha_publicacion')),
+                    'url_programa_anual' => $this->input->post('url_programa_anual'),
+                    'file_programa_anual' => $this->input->post('name_file_programa_anual'),
+                    'fecha_validacion' => $this->stringToDate($this->input->post('fecha_validacion')),
+    				'fecha_inicio_periodo' => $this->stringToDate($this->input->post('fecha_inicio_periodo')),
+                    'fecha_termino_periodo' => $this->stringToDate($this->input->post('fecha_termino_periodo')),
+                    'area_responsable' => $this->input->post('area_responsable'),
+                    'anio' => $this->input->post('anio'),
+                    'fecha_actualizacion' => $this->stringToDate($this->input->post('fecha_actualizacion')),
+                    'nota' => $this->input->post('nota'),
+                    'mision' => $this->input->post('mision'),
+                    'objetivo' => $this->input->post('objetivo'),
+                    'metas' => $this->input->post('metas'),
+                    'temas' => $this->input->post('temas'),
+                    'programas' => $this->input->post('programas'),
+                    'objetivo_transversal' => $this->input->post('objetivo_transversal'),
+                    'conjunto_campanas' => $this->input->post('conjunto_campanas'),
+                    'nota_planeacion' => $this->input->post('nota_planeacion'),
+                    'active' => $this->input->post('active')
+                );
+                
+                $this->db->where('id_presupuesto', $this->input->post('id_presupuesto'));
+                $this->db->update('tab_presupuestos', $data_new);
+        
+                if($this->db->affected_rows() > 0)
+                {
+                    $ejercicio = $this->Catalogos_model->dame_nombre_ejercicio($data_new['id_ejercicio']);
+                    $sujeto = $this->dame_nombre_sujeto($data_new['id_sujeto_obligado']);
+                    $this->registro_bitacora('Planeación y presupuestos', 'Edición presupuesto: ' . $ejercicio . " " . $sujeto);
+                    return 1; // is correct
+                }else
+                {
+                    // any trans error?
+                    if ($this->db->trans_status() === FALSE) {
+                        return 0; // sometime is wrong
+                    }else{
+                        return 1;
+                    }
+                }
+            }else{
+                return 0;
+            }
+        }
+    }
+
+    function editar_status_presupuesto()
+    {
+
             $data_new = array(
-                'id_ejercicio' => $this->input->post('id_ejercicio'),
-                'id_sujeto_obligado' => $this->input->post('id_sujeto_obligado'),
-                'denominacion' => $this->input->post('denominacion'),
-                'fecha_publicacion' => $this->stringToDate($this->input->post('fecha_publicacion')),
-                'url_programa_anual' => $this->input->post('url_programa_anual'),
-                'file_programa_anual' => $this->input->post('name_file_programa_anual'),
-                'fecha_validacion' => $this->stringToDate($this->input->post('fecha_validacion')),
-				'fecha_inicio_periodo' => $this->stringToDate($this->input->post('fecha_inicio_periodo')),
-                'fecha_termino_periodo' => $this->stringToDate($this->input->post('fecha_termino_periodo')),
-                'area_responsable' => $this->input->post('area_responsable'),
-                'anio' => $this->input->post('anio'),
-                'fecha_actualizacion' => $this->stringToDate($this->input->post('fecha_actualizacion')),
-                'nota' => $this->input->post('nota'),
-                'mision' => $this->input->post('mision'),
-                'objetivo' => $this->input->post('objetivo'),
-                'metas' => $this->input->post('metas'),
-                'temas' => $this->input->post('temas'),
-                'programas' => $this->input->post('programas'),
-                'objetivo_transversal' => $this->input->post('objetivo_transversal'),
-                'conjunto_campanas' => $this->input->post('conjunto_campanas'),
-                'nota_planeacion' => $this->input->post('nota_planeacion'),
                 'active' => $this->input->post('active')
             );
             
-            $this->db->where('id_presupuesto', $this->input->post('id_presupuesto'));
             $this->db->update('tab_presupuestos', $data_new);
+
+            $this->editar_presupuesto_status_partida("");
     
             if($this->db->affected_rows() > 0)
             {
-                $ejercicio = $this->Catalogos_model->dame_nombre_ejercicio($data_new['id_ejercicio']);
-                $sujeto = $this->dame_nombre_sujeto($data_new['id_sujeto_obligado']);
-                $this->registro_bitacora('Planeación y presupuestos', 'Edición presupuesto: ' . $ejercicio . " " . $sujeto);
+                $this->registro_bitacora('Planeación y presupuestos', 'Edición de status todos los presupuesto: ');
                 return 1; // is correct
             }else
             {
@@ -360,7 +405,7 @@ class Presupuestos_Model extends CI_Model
                     return 1;
                 }
             }
-        }
+        
     }
 
 
@@ -747,6 +792,40 @@ class Presupuestos_Model extends CI_Model
                 return 0; // sometime is wrong
             }
         }
+    }
+
+    function editar_presupuesto_status_partida($id = "")
+    {
+            if ($id == ""){
+                $id = $this->input->post('id_presupuesto');
+            }
+
+            $data_update = array(
+                'active' => $this->input->post('active')
+            );
+            
+            if ($id != ""){
+                $this->db->where('id_presupuesto', $id);
+            }
+
+            $this->db->update('tab_presupuestos_desglose', $data_update);
+    
+            if($this->db->affected_rows() > 0)
+            {
+                //$pc = $this->Catalogos_model->dame_presupuestos_concepto_nombre($data_update['id_presupuesto_concepto']);
+                //$monto = $this->Generales_model->money_format("%.2n", $data_update['monto_presupuesto']);
+                $this->registro_bitacora('Planeación y presupuestos', 'Se editaron las partidas de un presupuesto: '. $id);
+                return 1; // is correct
+            }else
+            {
+                // any trans error?
+                if ($this->db->trans_status() === FALSE) {
+                    return 0; // sometime is wrong
+                }else{
+                    return 1;
+                }
+            }
+        
     }
 
     function editar_presupuesto_partida()

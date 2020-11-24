@@ -840,6 +840,37 @@ class Ordenes_compra extends CI_Controller
         }
     }
 
+
+function validate_editar_status_orden_compra()
+    {
+        //Validamos que el usuario tenga acceso
+        $this->permiso_capturista();
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        $this->load->model('tpoadminv1/capturista/Presupuestos_model');
+        $this->load->model('tpoadminv1/capturista/Proveedores_model');
+        $this->load->model('tpoadminv1/capturista/Contratos_model');
+        $this->load->model('tpoadminv1/capturista/Ordenes_compra_model');
+        $this->load->model('tpoadminv1/Generales_model');
+        $this->load->library('form_validation');
+
+        
+        $redict = true;
+        $editar = $this->Ordenes_compra_model->editar_status_orden_compra();
+        if($editar == 1){
+            $this->session->set_flashdata('exito', "Las ordenes de compra se han editado correctamente");
+        }else{
+            $this->session->set_flashdata('error', "La orden de compra no se pudo editar");
+        }
+        if($redict)
+        {
+            redirect('/tpoadminv1/capturista/ordenes_compra/busqueda_ordenes_compra');
+        } 
+        
+    }
+
+
+
     function eliminar_orden_compra()
     {
 

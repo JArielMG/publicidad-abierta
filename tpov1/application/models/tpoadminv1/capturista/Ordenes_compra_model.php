@@ -433,6 +433,31 @@ class Ordenes_compra_Model extends CI_Model
         }
     }
 
+    function editar_status_orden_compra()
+    {
+
+            $data_update = array(
+                'active' => $this->input->post('active')
+            );
+            
+            $this->db->update('tab_ordenes_compra', $data_update);
+    
+            if($this->db->affected_rows() > 0)
+            {
+                $this->registro_bitacora('Ordenes de compra', 'Edición de todas las ordenes de compra');
+                return 1; // is correct
+            }else
+            {
+                // any trans error?
+                if ($this->db->trans_status() === FALSE) {
+                    return 0; // sometime is wrong
+                }else{
+                    return 1;
+                }
+            }
+        
+    }
+
     function eliminar_orden_compra($id)
     {
         $reg_eliminado = $this->dame_orden_compra_id($id);
