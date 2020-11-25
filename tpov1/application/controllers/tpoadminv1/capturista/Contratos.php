@@ -80,6 +80,7 @@ class Contratos extends CI_Controller
         $this->permiso_capturista();
 
         $this->load->model('tpoadminv1/capturista/Contratos_model');
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
                 
         $data['title'] = "Contratos";
         $data['heading'] = $this->session->userdata('usuario_nombre');
@@ -92,7 +93,11 @@ class Contratos extends CI_Controller
         $print_url = base_url() . "index.php/tpoadminv1/print_ci/print_contratos";
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         
-        $data['registros'] = $this->Contratos_model->dame_todos_contratos(false);
+        $data['ejercicios'] = $this->Catalogos_model->dame_todos_ejercicios(true);
+        $data['registros'] = $this->Contratos_model->dame_todos_contratos(false, $this->uri->segment(5),$this->uri->segment(6));
+
+        $data['yearSelected'] = $this->uri->segment(5);
+        $data['statusSelected'] = $this->uri->segment(6);
         
         $data['link_descarga'] = base_url() . "index.php/tpoadminv1/capturista/contratos/preparar_exportacion_contratos";
         $data['path_file_csv'] = '';//$this->Contratos_model->descarga_contratos();
@@ -850,6 +855,35 @@ class Contratos extends CI_Controller
         }
     }
 
+
+
+function validate_editar_status_contrato()
+    {
+        //Validamos que el usuario tenga acceso
+        $this->permiso_capturista();
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        $this->load->model('tpoadminv1/capturista/Presupuestos_model');
+        $this->load->model('tpoadminv1/capturista/Proveedores_model');
+        $this->load->model('tpoadminv1/capturista/Contratos_model');
+        $this->load->library('form_validation');
+
+        
+        $redict = true;
+        $editar = $this->Contratos_model->editar_status_contrato();
+        if($editar == 1){
+            $this->session->set_flashdata('exito', "Los contratos se han editado correctamente");
+        }else{
+            $this->session->set_flashdata('error', "Los contratos no se pudieron editar");
+        }
+        if($redict)
+        {
+            redirect('/tpoadminv1/capturista/contratos/busqueda_contratos');
+        } 
+        
+    }
+
+
     function get_contrato()
     {
         //Validamos que el usuario tenga acceso
@@ -1446,6 +1480,35 @@ class Contratos extends CI_Controller
             } 
         }
     }
+
+
+
+
+function validate_editar_status_convenio_modificatorio()
+    {
+        //Validamos que el usuario tenga acceso
+        $this->permiso_capturista();
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        $this->load->model('tpoadminv1/capturista/Contratos_model');
+        $this->load->library('form_validation');
+        
+        $redict = true;
+        $agregar = $this->Contratos_model->editar_status_convenio_modificatorio();
+        if($agregar == 1){
+            $this->session->set_flashdata('exito', "Los convenios modificatorios se han editado correctamente");
+        }else{
+            $this->session->set_flashdata('error', "Los convenios modificatorios no se pudieron editar");
+        }
+        if($redict)
+        {
+            $this->session->set_flashdata('tab_flag', "convenios");
+            redirect('/tpoadminv1/capturista/contratos/editar_contrato/'.$this->input->post('id_contrato'));
+        } 
+        
+    }
+
+
 
     function get_convenio_modificatorio()
     {

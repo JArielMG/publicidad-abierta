@@ -55,10 +55,19 @@ class Campana_Model extends CI_Model
         }
     }
 
-    function dame_todas_campanas()
+    function dame_todas_campanas($idEjercicio = "", $idStatus = "")
     {
         $estatus = array('1', '2','3','4');
         $this->db->where_in('active', $estatus);
+
+        if ($idEjercicio != "" && $idEjercicio != "0"){
+            $this->db->where('id_ejercicio', $idEjercicio);
+        }
+
+        if ($idStatus != "" && $idStatus != "0"){
+            $this->db->where('active', $idStatus);
+        }
+
         $this->db->order_by('id_campana_aviso', 'desc');
         $query = $this->db->get('tab_campana_aviso');
         
@@ -2305,6 +2314,25 @@ class Campana_Model extends CI_Model
                     return '2|'.$id_campana_aviso;
                 }
             }
+        }
+    }
+
+    function edita_status_campana()
+    {
+        
+        $data = array(
+            'active' => $this->input->post('active'),
+        );
+
+        $this->db->update('tab_campana_aviso', $data);
+        
+        if($this->db->affected_rows() > 0)
+        {
+            
+            $bitacora = $this->guardar_bitacora('Se modificaron todos los datos');
+            return 1;
+        }else{
+            return 0;
         }
     }
 

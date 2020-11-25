@@ -488,6 +488,31 @@ class Proveedores extends CI_Controller
         }
     }
 
+    function validate_editar_status_proveedor()
+    {
+        //Validamos que el usuario tenga acceso
+        $this->permiso_capturista();
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        $this->load->model('tpoadminv1/capturista/Proveedores_model');
+        $this->load->library('form_validation');
+
+        $redict = true;
+        $editar = $this->Proveedores_model->editar_status_proveedor();
+        if($editar[0] == 1){
+            $this->session->set_flashdata('exito', "Se han editado todos los registros");
+        }else{
+            $this->session->set_flashdata('error', "Ocurrio un error al editar los registros");
+            $this->load->view('tpoadminv1/includes/template', $data);
+            $redict = false;
+        }
+        if($redict)
+        {
+            redirect('/tpoadminv1/capturista/proveedores/busqueda_proveedores');
+        } 
+        
+    }
+
     function eliminar_proveedor()
     {
 
