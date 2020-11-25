@@ -11,11 +11,13 @@ if (!defined('BASEPATH'))
 
 class Webservices extends CI_Controller
 {
+    var $pnt_url;
      // Constructor que manda llamar la funcion is_logged_in
     function __construct()
     {
         parent::__construct();
         $this->is_logged_in();
+        $this->pnt_url = "http://devcarga.inai.org.mx:8080/sipot-web/spring/";
     }
 
     // Funcion para revisar inicio de session 
@@ -78,7 +80,7 @@ class Webservices extends CI_Controller
 
 
     function entrar_pnt(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/generaToken/";
+        $URL = $this->pnt_url . "generaToken/";
         $data = array(
             "usuario" => $_POST["user"], 
             "password" => $_POST["password"] 
@@ -122,7 +124,7 @@ class Webservices extends CI_Controller
     }
 
     function salir_pnt(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/generaToken/";
+        $URL = $this->pnt_url . "generaToken/";
         $data = array('usuario' => '', 'password' => '' );
 
         $options = array(
@@ -156,78 +158,7 @@ class Webservices extends CI_Controller
         header('Content-Type: application/json');
         echo json_encode( $rows ); 
     }
-    function pnt(){
-        //Validamos que el usuario tenga acceso
-        $this->permiso_administrador();
-
-        $this->load->model('tpoadminv1/logo/Logo_model');
-
-        $data['title'] = "Plataforma Nacional de Transparencia";
-        $data['heading'] = $this->session->userdata('usuario_nombre');
-        $data['mensaje'] = "";
-        $data['job'] = $this->session->userdata('usuario_rol_nombre');
-        $data['active'] = 'pnt'; // solo active 
-        $data['subactive'] = 'carga_pnt'; // class="active"
-        $data['body_class'] = 'skin-blue';
-
-        $formato = 1;
-        $validpntformato = array(1,2,21,22,23,3,31,4,42, 46, 44);
-        if( isset($_GET["formato"]) and in_array( $_GET["formato"], $validpntformato) ){
-            $formato = $_GET["formato"];
-        }
-
-        $data['main_content'] = 'tpoadminv1/logo/pnt' . $formato;
-        //$data['main_content'] = 'tpoadminv1/logo/pnt' . $formato;
-        $data['formato'] = $formato;
-
-        $data['url_logo'] = base_url() . "data/logo/logotop.png";
-        $data['fecha_act'] = $this->Logo_model->dame_fecha_act_manual();
-
-        $data['recaptcha'] = $this->Logo_model->get_registro_recaptcha();
-        $data['grafica'] = $this->Logo_model->get_registro_grafica_presupuesto();
-        
-        $data['registro'] = array(
-            'fecha_dof' => '',
-            'name_file_imagen' => '',
-        );
-
-        // poner true para ocultar los botones
-        $data['control_update'] = array (
-            'file_by_save' => false,
-            'file_saved' => true,
-            'file_see' => true,
-            'file_load' => true, 
-            "mensaje_file" => 'Formatos permitidos PNG.'
-        );
-
-        $data['scripts'] = "<script type='text/javascript'>" .
-                                "$(function () {" .
-                                    
-                                    "jQuery.datetimepicker.setLocale('es');". 
-                                    "jQuery('input[name=\"fecha_act\"]').datetimepicker({ " .
-                                        "timepicker:false," .
-                                        "format:'Y-m-d'," .
-                                        "scrollInput: false" .
-                                    "});" .
-                                    
-                                    "$.fn.datepicker.dates['es'] = {" .
-                                        "days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']," .
-                                        "daysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],".
-                                        "daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']," .
-                                        "months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],".
-                                        "monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],".
-                                        "today: 'Hoy'," .
-                                        "};" .
-                                    "setTimeout(function() { " .
-                                        "$('.alert').alert('close');" .
-                                    "}, 3000);" .
-                                    
-                                "});" .
-                            "</script>";
-        
-        $this->load->view('tpoadminv1/includes/template', $data);
-    }
-
+    
     function modificar_sujeto(){
         $_SESSION["unidad_administrativa"] = $_POST["unidad_administrativa"];
         $_SESSION["sujeto_obligado"] = $_POST["sujeto_obligado"];
@@ -273,7 +204,7 @@ class Webservices extends CI_Controller
     } 
 
     function eliminar_pnt(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/mantenimiento/elimina";
+        $URL = $this->pnt_url . "mantenimiento/elimina";
         $data = array( 
             "idFormato" => $_POST["idFormato"],
             "correoUnidadAdministrativa" => $_POST["correoUnidadAdministrativa"],  
@@ -325,7 +256,7 @@ class Webservices extends CI_Controller
 
 
     function eliminar_pnt(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/mantenimiento/elimina";
+        $URL = $this->pnt_url . "mantenimiento/elimina";
         $data = array( æ
             "idFormato" => $_POST["idFormato"],
             "correoUnidadAdministrativa" => $_POST["correoUnidadAdministrativa"],  
@@ -376,7 +307,7 @@ class Webservices extends CI_Controller
     /**/
 
     function agregar_pnt($table, $id){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/mantenimiento/agrega";
+        $URL = $this->pnt_url . "mantenimiento/agrega";
         $data = array(
             'idFormato' => $_POST["idFormato"], 
             'token' => $_POST["token"], 
@@ -416,7 +347,7 @@ class Webservices extends CI_Controller
     }
 
     function traer_formatos(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/informacionFormato/obtenerFormatos";
+        $URL = $this->pnt_url . "informacionFormato/obtenerFormatos";
         $request = array( "token" => strval($_SESSION['pnt']->token->token) );
 
         // Al parecer no necesita "concentradora" ni "codigoSO" 
@@ -444,7 +375,7 @@ class Webservices extends CI_Controller
 
     }
     function traer_campos(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/informacionFormato/camposFormato";
+        $URL = $this->pnt_url . "informacionFormato/camposFormato";
 
         $idFormato = ( isset($_GET["idFormato"]) )? $_GET["idFormato"] : 22532; 
 
@@ -470,7 +401,7 @@ class Webservices extends CI_Controller
     }
 
     function traer_campo(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/informacionFormato/campoCatalogo";
+        $URL = $this->pnt_url . "informacionFormato/campoCatalogo";
 
         $idCampo = ( isset($_GET["idCampo"]) )? $_GET["idCampo"] : 10658; 
 
