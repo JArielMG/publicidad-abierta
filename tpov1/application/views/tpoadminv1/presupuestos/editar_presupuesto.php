@@ -38,7 +38,27 @@
             $sel_sujetos .= '<option value="'.$sujetos[$z]['id_sujeto_obligado'].'">' . $sujetos[$z]['nombre_sujeto_obligado'] . '</option>';
         }
     }
+
 ?>
+
+<?php
+
+        $sel_estatus2 = '';
+        $lista_estatus2 = ['-Seleccione-','Activo','Inactivo'];
+        $lista_estatus_ids2 = ['','1','2'];
+        for($z = 0; $z < sizeof($lista_estatus_ids2); $z++)
+        {
+            
+                if($lista_estatus_ids2[$z] == '0' ){
+                    $sel_estatus2 .= '<option value="'.$lista_estatus_ids2[$z].'" selected>' . $lista_estatus2[$z] . '</option>';
+                }else{
+                    $sel_estatus2 .= '<option value="'.$lista_estatus_ids2[$z].'">' . $lista_estatus2[$z] . '</option>';
+                }
+            
+            
+        }
+
+    ?>
 
 <style>
     .tooltip.top .tooltip-inner {
@@ -336,8 +356,26 @@
                 <div class="tab-pane <?php if($this->session->flashdata('tab_flag')) echo 'active' ?>" id="tab_2"> 
                     <div class="box table-responsive">
                         <div class="box-header">
-                            <?php echo anchor("tpoadminv1/capturista/presupuestos/agregar_presupuesto_partida/" . $registro['id_presupuesto'] , "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
-                            <?php echo anchor("tpoadminv1/capturista/presupuestos/busqueda_presupuestos", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>
+                            <div class="pull-left">
+                                <?php echo anchor("tpoadminv1/capturista/presupuestos/agregar_presupuesto_partida/" . $registro['id_presupuesto'] , "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
+                                <?php echo anchor("tpoadminv1/capturista/presupuestos/busqueda_presupuestos", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>
+
+                                <br/>
+                                <br/>
+                                <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/presupuestos/validate_editar_status_presupuesto_partida" enctype="multipart/form-data" >
+                                    <input type="hidden" value="<?php echo $registro['id_presupuesto']; ?>" class="form-control" name="id_presupuesto"/>
+                                    <div class="form-group">
+                                        <label style="margin-left: 25px;">Estatus*
+                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                        </label>
+                                        <select class="form-control" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
+                                            <?php echo $sel_estatus2; ?>
+                                        </select>
+                                        <br/>
+                                        <button class="btn btn-primary" type="submit">Guardar</button>
+                                    </div> 
+                                </form>
+                            </div>
                             <div class="pull-right">
                                 <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
                                 <a class="btn btn-default" href="<?php echo base_url() . $path_file_csv ?>" download="<?php echo $name_file_csv ?>"><i class="fa fa-file"></i> Exportar a Excel</a>

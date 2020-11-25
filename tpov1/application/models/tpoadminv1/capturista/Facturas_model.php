@@ -81,7 +81,7 @@ class Facturas_Model extends CI_Model
         return $output;
     }
 
-    function dame_todas_facturas($activos)
+    function dame_todas_facturas($activos, $idEjercicio = "", $idStatus = "")
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Proveedores_model');
@@ -91,15 +91,33 @@ class Facturas_Model extends CI_Model
         $this->load->model('tpoadminv1/capturista/Ordenes_compra_model');
 
         if ($this->db->table_exists('vlista_facturas')){
-            if($activos){
-                $this->db->where('active', 'Activo');
+            
+            if ($idEjercicio != "" && $idEjercicio != "0"){
+                $this->db->where('ejercicio', $this->Catalogos_model->dame_nombre_ejercicio($idEjercicio));
             }
+
+            if ($idStatus != "" && $idStatus != "0"){
+                $this->db->where('active', $this->Generales_model->get_estatus_name($idStatus));
+            }else{
+                if($activos){
+                    $this->db->where('active', '1');
+                }
+            }
+
             $query = $this->db->get('vlista_facturas');
             return $query->result_array();
         }else{
 
-            if($activos){
-                $this->db->where('active', '1');
+            if ($idEjercicio != "" && $idEjercicio != "0"){
+                $this->db->where('id_ejercicio', $idEjercicio);
+            }
+
+            if ($idStatus != "" && $idStatus != "0"){
+                $this->db->where('active', $idStatus);
+            }else{
+                if($activos){
+                    $this->db->where('active', '1');
+                }
             }
 
             $query = $this->db->get('tab_facturas');
@@ -308,6 +326,10 @@ class Facturas_Model extends CI_Model
 
     function editar_factura()
     {
+
+        $idFactura = $this->input->post('id_factura');
+        $regAnt = $this->dame_factura_id($idFactura);
+
         $this->load->model('tpoadminv1/Generales_model');
         $this->db->where('numero_factura', $this->input->post('numero_factura'));
         $this->db->where_not_in('id_factura', $this->input->post('id_factura'));
@@ -316,35 +338,77 @@ class Facturas_Model extends CI_Model
         if($query->num_rows() > 0){
             return 2; // field is duplicated
         }else{
+
+            $continueUpdate = true;
+
+            if ($regAnt['active'] != $this->input->post('active')){
+                if($this->editar_status_factura_desglose($idFactura) == 0){
+                    $continueUpdate = false;
+                }
+            }
+
+            if ($continueUpdate){
+            
+                $data_update = array(
+                    'id_proveedor' => $this->input->post('id_proveedor'),
+                    'id_contrato' => $this->input->post('id_contrato'),
+                    'id_orden_compra' => $this->input->post('id_orden_compra'),
+                    'id_ejercicio' => $this->input->post('id_ejercicio'),
+                    'id_trimestre' => $this->input->post('id_trimestre'),
+                    'id_so_contratante' => NULL,
+                    'id_presupuesto_concepto' => NULL,
+                    'numero_factura' => $this->input->post('numero_factura'),
+                    'fecha_erogacion' => $this->Generales_model->stringToDate($this->input->post('fecha_erogacion')),
+                    'url_factura_pdf' => $this->input->post('url_factura_pdf'),
+                    'file_factura_pdf' => $this->input->post('name_file_factura_pdf'),
+                    'url_factura_xml' => $this->input->post('url_factura_xml'),
+                    'file_factura_xml' => $this->input->post('name_file_factura_xml'),
+                    'fecha_validacion' => $this->Generales_model->stringToDate($this->input->post('fecha_validacion')),
+                    'area_responsable' => $this->input->post('area_responsable'),
+                    'periodo' => $this->input->post('periodo'),
+                    'fecha_actualizacion' => $this->Generales_model->stringToDate($this->input->post('fecha_actualizacion')),
+                    'nota' => $this->input->post('nota'),
+                    'active' => $this->input->post('active')
+                );
+
+                $this->db->where('id_factura', $this->input->post('id_factura'));
+                $this->db->update('tab_facturas', $data_update);
+        
+                if($this->db->affected_rows() > 0)
+                {
+                    $this->registro_bitacora('Facturas', 'Edición de la factura: ' . $data_update['numero_factura']);
+                    return 1; // is correct
+                }else
+                {
+                    // any trans error?
+                    if ($this->db->trans_status() === FALSE) {
+                        return 0; // something is not correct
+                    }else{
+                        return 1; // is correct
+                    }
+                }
+            }
+        }
+    }
+
+    function editar_status_factura()
+    {
+        $this->load->model('tpoadminv1/Generales_model');
+        $query = $this->db->get('tab_facturas');
+
+        
             
             $data_update = array(
-                'id_proveedor' => $this->input->post('id_proveedor'),
-                'id_contrato' => $this->input->post('id_contrato'),
-                'id_orden_compra' => $this->input->post('id_orden_compra'),
-                'id_ejercicio' => $this->input->post('id_ejercicio'),
-                'id_trimestre' => $this->input->post('id_trimestre'),
-                'id_so_contratante' => NULL,
-                'id_presupuesto_concepto' => NULL,
-                'numero_factura' => $this->input->post('numero_factura'),
-                'fecha_erogacion' => $this->Generales_model->stringToDate($this->input->post('fecha_erogacion')),
-                'url_factura_pdf' => $this->input->post('url_factura_pdf'),
-                'file_factura_pdf' => $this->input->post('name_file_factura_pdf'),
-                'url_factura_xml' => $this->input->post('url_factura_xml'),
-                'file_factura_xml' => $this->input->post('name_file_factura_xml'),
-                'fecha_validacion' => $this->Generales_model->stringToDate($this->input->post('fecha_validacion')),
-                'area_responsable' => $this->input->post('area_responsable'),
-                'periodo' => $this->input->post('periodo'),
-                'fecha_actualizacion' => $this->Generales_model->stringToDate($this->input->post('fecha_actualizacion')),
-                'nota' => $this->input->post('nota'),
                 'active' => $this->input->post('active')
             );
 
-            $this->db->where('id_factura', $this->input->post('id_factura'));
+            $this->editar_status_factura_desglose("");
+
             $this->db->update('tab_facturas', $data_update);
     
             if($this->db->affected_rows() > 0)
             {
-                $this->registro_bitacora('Facturas', 'Edición de la factura: ' . $data_update['numero_factura']);
+                $this->registro_bitacora('Facturas', 'Edición de las facturas');
                 return 1; // is correct
             }else
             {
@@ -355,7 +419,7 @@ class Facturas_Model extends CI_Model
                     return 1; // is correct
                 }
             }
-        }
+        
     }
 
     function get_monto_factura($id_factura)
@@ -363,9 +427,11 @@ class Facturas_Model extends CI_Model
         $monto = 0.00;
         $facturas_desgloses = $this->dame_todas_facturas_desglose($id_factura, true);
 
-        for($z = 0; $z < sizeof($facturas_desgloses); $z++)
-        {
-            $monto += floatval($facturas_desgloses[$z]['monto_desglose']);
+        if (is_array($facturas_desgloses)){
+            for($z = 0; $z < sizeof($facturas_desgloses); $z++)
+            {
+                $monto += floatval($facturas_desgloses[$z]['monto_desglose']);
+            }
         }
 
         return $monto;
@@ -633,6 +699,41 @@ class Facturas_Model extends CI_Model
             }
         }
     }
+
+
+    function editar_status_factura_desglose($id = "")
+    {
+        
+        $data_update = array(
+            'active' => $this->input->post('active')
+        );
+
+        if ($id != ""){
+            $this->db->where('id_factura', $id);
+        }
+
+        $this->db->update('tab_facturas_desglose', $data_update);
+
+        if($this->db->affected_rows() > 0)
+        {
+            $this->registro_bitacora('Facturas', 'Edición de las facturas con desglose');
+            $result[0] = 1;
+            return $result; // is correct
+        }else
+        {
+            // any trans error?
+            if ($this->db->trans_status() === FALSE) {
+                $result[0] = 0;
+                $result[1] = 'algo salio mal'; //mensaje de error
+            }else{
+                $this->registro_bitacora('Facturas', 'Edición de las facturas con desglose');
+                $result[0] = 1;
+            }
+            return $result; // sometime is wrong
+        }
+        
+    }
+
 
     function eliminar_factura($id)
     {

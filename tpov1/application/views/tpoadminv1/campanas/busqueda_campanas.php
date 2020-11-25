@@ -1,3 +1,55 @@
+<?php
+
+
+        $sel_ejercicios = '';
+
+        $ejercicio['id_ejercicio'] = "0";
+        $ejercicio['ejercicio'] = "Todos";
+        $ejercicios[] = $ejercicio;
+
+
+
+        $ejercicios = array_reverse($ejercicios);
+        for($z = 0; $z < sizeof($ejercicios); $z++)
+        {
+            if ($ejercicios[$z]['id_ejercicio'] == $yearSelected){
+                $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'" selected>' . $ejercicios[$z]['ejercicio'] . '</option>';
+            }else{
+                $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'">' . $ejercicios[$z]['ejercicio'] . '</option>';
+            }
+            
+        }
+
+
+        $sel_estatus = '';
+        $lista_estatus = ['-Seleccione-','Activo','Inactivo'];
+        $lista_estatus_ids = ['','1','2'];
+        for($z = 0; $z < sizeof($lista_estatus_ids); $z++)
+        {
+            
+                if($lista_estatus_ids[$z] == '0' ){
+                    $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'" selected>' . $lista_estatus[$z] . '</option>';
+                }else{
+                    $sel_estatus .= '<option value="'.$lista_estatus_ids[$z].'">' . $lista_estatus[$z] . '</option>';
+                }
+            
+            
+        }
+
+        $sel_estatus2 = '';
+        $lista_estatus2 = ['Todos','Activo','Inactivo'];
+        $lista_estatus_ids2 = ['0','1','2'];
+        for($z = 0; $z < sizeof($lista_estatus_ids2); $z++)
+        {
+            if ($lista_estatus_ids2[$z] == $statusSelected){
+                $sel_estatus2 .= '<option value="'.$lista_estatus_ids2[$z].'" selected>' . $lista_estatus2[$z] . '</option>';            
+            }else{
+                $sel_estatus2 .= '<option value="'.$lista_estatus_ids2[$z].'">' . $lista_estatus2[$z] . '</option>';            
+            }
+        }
+
+    ?>
+
 <style>
     .tooltip.top .tooltip-inner {
         background-color: #fff;
@@ -55,11 +107,58 @@
         <div class="col-xs-12">
             <div class="box table-responsive no-padding">
                 <div class="box-header">
-                    <?php echo anchor("tpoadminv1/campanas/campanas/alta_campanas_avisos", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>                   
-                    <div class="pull-right">
-                        <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
-                        <a id="descargabtn" class="btn btn-default" onclick="descargar_archivo()" <?php //echo $print_onclick_exp   ?>><i class="fa fa-file"></i> Exportar a Excel</a>
-                        <input type="hidden" id="link_descarga" value="<?php echo $link_descarga; ?>"/>
+                    <div class="pull-left">
+                        <?php echo anchor("tpoadminv1/campanas/campanas/alta_campanas_avisos", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?> 
+
+                        <br/>
+                        <br/>
+                        <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/campanas/campanas/validate_edita_status_campanas_avisos" enctype="multipart/form-data" >
+
+                            <div class="form-group">
+                                <label style="margin-left: 25px;">Estatus*
+                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                </label>
+                                <select class="form-control" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
+                                    <?php echo $sel_estatus; ?>
+                                </select>
+                                <br/>
+                                <button class="btn btn-primary" type="submit">Guardar</button>
+                            </div> 
+                        </form>
+                    </div>                  
+                    <div class="pull-right">   
+                        <div class="col-xs-12">                     
+                            <a class="btn btn-default" <?php echo $print_onclick   ?>><i class="fa fa-print"></i> Imprimir</a>
+                            <a id="descargabtn" class="btn btn-default" onclick="descargar_archivo()"><i class="fa fa-file"></i> Exportar a Excel</a>
+                            <input type="hidden" id="link_descarga" value="<?php echo $link_descarga; ?>"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div>
+                            <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label>Ejercicio* 
+                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['id_ejercicio']?>"></i>
+                                        </label>
+                                        <select name="id_ejercicio" id="yearSelect" class="form-control <?php if($error_active) echo 'validation-error' ?>">
+                                            <?php echo $sel_ejercicios; ?>
+                                        </select>
+                                    </div>  
+                                
+                            </div>
+                            <div class="col-xs-6">
+
+                                    <div class="form-group">
+                                        <label style="margin-left: 25px;">Estatus
+                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                        </label>
+                                        <select class="form-control" id="statusSelect" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
+                                            <?php echo $sel_estatus2; ?>
+                                        </select>
+                                    </div> 
+                                
+                            </div>
+                        </div>
                     </div>
                 </div><!-- /.box-header -->
                 
@@ -428,6 +527,20 @@
 
 
 <script type="text/javascript">
+
+    var yearSelected = "<?php echo  $yearSelected;?>";
+    var statusSelect = "<?php echo  $statusSelected;?>";
+
+    $('#statusSelect').on('change', function(){
+        statusSelect = $(this).val();
+        window.location.href = "<?php echo  base_url() . 'index.php/tpoadminv1/campanas/campanas/busqueda_campanas_avisos/'; ?>" + yearSelected + "/" + statusSelect; 
+    });
+
+    $('#yearSelect').on('change', function(){
+        yearSelected = $(this).val();
+        //alert(selected);
+        window.location.href = "<?php echo  base_url() . 'index.php/tpoadminv1/campanas/campanas/busqueda_campanas_avisos/'; ?>" + yearSelected + "/" + statusSelect;
+    });
     
     var eliminarModal = function(id){
 
@@ -641,7 +754,21 @@
         var url = $('#url').val();
         $('#campanas').find('tbody').empty();
         $('#campanas').find('tbody').append('<tr><td colspan="13" class="text-center"><i class="fa fa-refresh fa-spin"></i> Cargando...</td></tr>');
-        buscar(url, null, set_valores_tabla, 'campanas');
+
+        var form_data = new FormData();
+
+        if (yearSelected == ""){
+            yearSelected = "0";
+        }
+
+        if (statusSelect == ""){
+            statusSelect = "0";
+        }
+
+        form_data.append('yearSelected', yearSelected);
+        form_data.append('statusSelected', statusSelect);
+
+        buscar(url, form_data, set_valores_tabla, 'campanas');
 
     }
     

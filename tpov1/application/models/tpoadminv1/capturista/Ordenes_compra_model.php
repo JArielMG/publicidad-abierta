@@ -165,15 +165,22 @@ class Ordenes_compra_Model extends CI_Model
         }
     }
 
-    function dame_todos_ordenes_compra($activos)
+    function dame_todos_ordenes_compra($activos, $idEjercicio = "", $idStatus = "")
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Proveedores_model');
         $this->load->model('tpoadminv1/Generales_model');
 
-        if($activos)
-        {
-            $this->db->where('active', '1');
+        if ($idEjercicio != "" && $idEjercicio != "0"){
+            $this->db->where('id_ejercicio', $idEjercicio);
+        }
+
+        if ($idStatus != "" && $idStatus != "0"){
+            $this->db->where('active', $idStatus);
+        }else{
+            if($activos){
+                $this->db->where('active', '1');
+            }
         }
 
         $this->db->where('id_orden_compra > ', '1');
@@ -431,6 +438,31 @@ class Ordenes_compra_Model extends CI_Model
                 }
             }
         }
+    }
+
+    function editar_status_orden_compra()
+    {
+
+            $data_update = array(
+                'active' => $this->input->post('active')
+            );
+            
+            $this->db->update('tab_ordenes_compra', $data_update);
+    
+            if($this->db->affected_rows() > 0)
+            {
+                $this->registro_bitacora('Ordenes de compra', 'Edición de todas las ordenes de compra');
+                return 1; // is correct
+            }else
+            {
+                // any trans error?
+                if ($this->db->trans_status() === FALSE) {
+                    return 0; // sometime is wrong
+                }else{
+                    return 1;
+                }
+            }
+        
     }
 
     function eliminar_orden_compra($id)

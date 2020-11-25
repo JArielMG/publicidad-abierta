@@ -133,10 +133,13 @@ class Facturas extends CI_Controller
         $this->Logo_model->actualizar_fecha_con_erogacion($format_date, $mensaje);
     }
 
-    function lista_facturas(){
+    function lista_facturas($yearSelected = "",$statusSelected = ""){
+
+        $yearSelected = $this->input->post('yearSelected');
+        $statusSelected = $this->input->post('statusSelected');
 
         $this->load->model('tpoadminv1/capturista/Facturas_model');
-        $data = $this->Facturas_model->dame_todas_facturas(false);
+        $data = $this->Facturas_model->dame_todas_facturas(false, $yearSelected, $statusSelected);
         
         header('Content-type: application/json');
         
@@ -162,6 +165,7 @@ class Facturas extends CI_Controller
         $this->permiso_capturista();
 
         $this->load->model('tpoadminv1/capturista/Facturas_model');
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
                 
         $data['title'] = "Facturas";
         $data['heading'] = $this->session->userdata('usuario_nombre');
@@ -178,8 +182,12 @@ class Facturas extends CI_Controller
 
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         $data['print_onclick_exp'] = "onclick=\"window.open('" . $print_url_exp . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
+
+        $data['ejercicios'] = $this->Catalogos_model->dame_todos_ejercicios(true);
         
         $data['registros'] = '';//$this->Facturas_model->dame_todas_facturas(false);
+        $data['yearSelected'] = $this->uri->segment(5);
+        $data['statusSelected'] = $this->uri->segment(6);
         
         $data['path_file_csv'] = ''; //$this->Facturas_model->descarga_facturas();
         $data['name_file_csv'] = "facturas.csv";
@@ -1006,6 +1014,37 @@ class Facturas extends CI_Controller
         }
     }
 
+    function validate_editar_status_factura()
+    {
+        //Validamos que el usuario tenga acceso
+        $this->permiso_capturista();
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        $this->load->model('tpoadminv1/capturista/Presupuestos_model');
+        $this->load->model('tpoadminv1/capturista/Proveedores_model');
+        $this->load->model('tpoadminv1/capturista/Contratos_model');
+        $this->load->model('tpoadminv1/capturista/Ordenes_compra_model');
+        $this->load->model('tpoadminv1/capturista/Facturas_model');
+        $this->load->library('form_validation');
+
+        
+        $redict = true;
+        $editar = $this->Facturas_model->editar_status_factura();
+        if($editar == 1){
+            if($this->input->post('fecha_erogacion') != $this->input->post('fecha_erogacion_actual')){
+                $this->update_fecha_actualizacion($this->input->post('fecha_erogacion'), $this->input->post('numero_factura'));
+            }
+            $this->session->set_flashdata('exito', "Las facturas se han editado correctamente");
+        }else{
+            $this->session->set_flashdata('error', "Las facturas no se pudieron editar");
+        }
+        if($redict)
+        {
+            redirect('/tpoadminv1/capturista/facturas/busqueda_facturas');
+        } 
+        
+    }
+
     function eliminar_factura()
     {
 
@@ -1818,6 +1857,39 @@ class Facturas extends CI_Controller
                 redirect('/tpoadminv1/capturista/facturas/editar_factura/'.$this->input->post('id_factura'));
             } 
         }
+    }
+
+    function validate_editar_status_factura_desglose()
+    {
+        //Validamos que el usuario tenga acceso
+        $this->permiso_capturista();
+
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
+        $this->load->model('tpoadminv1/capturista/Presupuestos_model');
+        $this->load->model('tpoadminv1/capturista/Contratos_model');
+        $this->load->model('tpoadminv1/capturista/Facturas_model');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('active', 'estatus', 'required');
+        $this->form_validation->set_error_delimiters('<p>','</p>');
+
+        $data['registro'] = array(
+            'active' => $this->input->post('active')
+        );
+        
+        $redict = true;
+        $editar = $this->Facturas_model->editar_status_factura_desglose($this->input->post('id_factura'));
+        if($editar[0] == 1){
+            $this->session->set_flashdata('exito', "La facturas desgloses se han editado correctamente");
+        }else{
+            $this->session->set_flashdata('error', "Las facturas desgloses no se pudieron editar");
+        }
+        if($redict)
+        {
+            $this->session->set_flashdata('tab_flag', "desglose");
+            redirect('/tpoadminv1/capturista/facturas/editar_factura/'.$this->input->post('id_factura'));
+        } 
+        
     }
 
     function eliminar_factura_desglose()
