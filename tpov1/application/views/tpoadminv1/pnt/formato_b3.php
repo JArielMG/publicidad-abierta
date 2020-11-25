@@ -82,7 +82,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/ejercicios"
+		var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/ejercicios"
 	
 	$.post(ejercicios_url, function(res, error){
     	if(res) {
@@ -136,7 +136,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 		        }
 	    	},
 	    	ajax: {
-	    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/registros23",
+	    		url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/registrosb3",
 	    		dataSrc: ''
 	    	},
     		scrollY: true,
@@ -179,34 +179,6 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         return data
                     }
                 },
-				/*{
-				    targets: 15,
-				    data: "data",
-   				    render: function ( data, type, row, meta ) {
-				      	var response = ""
-			      		_row = row //HtmlSanitizer.SanitizeHtml(JSON.stringify(row)) 
-				      	if( !(row.id_pnt) || row.id_pnt === ""){ 
-				      		response += "<a class='tpo_btn crear' href='#' data='" + _row + "'>" 
-				      		response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i>  </span> </a>"
-
-				      		response += "<a class='tpo_btn eliminar invisible' href='#' data='" + _row + "'>" 
-				      		response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
-
-				      		response += "<a class='tpo_btn editar invisible' href='#' data='" + _row + "'>" 
-				      		response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
-				      	}else{
-				      		response += "<a class='tpo_btn crear invisible' href='#' data='" + _row + "'>" 
-				      		response += "<span class='btn btn-success'><i class='fa fa-plus-circle'></i> </span> </a>"
-
-				      		response += "<a class='tpo_btn eliminar' href='#' data='" + _row + "'>" 
-				      		response += "<span class='btn btn-danger btn-sm'><i class='fa fa-close'></i>  </span> </a>"
-
-				      		response += "<a class='tpo_btn editar' href='#' data='" + _row + "'>" 
-				      		response += "<span class='btn btn-warning btn-sm'> <i class='fa fa-edit'></i>  </span></a>"
-				      	}
-				      	return response
-					}
-				},*/
 				{
 				    targets: [3,4,5,6,7,8,9,10,11,12,13,14],
 				    data: "data",
@@ -226,105 +198,6 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             if(year) $('#year').val(year).trigger('change');
         }, 1500);
 
-		$(document).on("click","a.crear",function(e){ 
-	    	e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
-		    var data = JSON.parse( $(this).attr("data") )
-			  , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/agregar_pnt";
-			
-			var a = $(this)
-		      , tr = a.parents("tr")
-		      , td = a.parents("td")
-
-		    a.css("display", "none")
-		    tr.css("background-color", "rgba(0,255,0, 0.2)")
-		    td.prepend("<img class='loading' src='<?php echo base_url(); ?>plugins/img/loading.gif'>")
-
-		    formato = {
-				"idFormato": 43320, //"Contratación de servicios de publicidad oficial"
-				"IdRegistro": "",
-				"token": '<?php echo $_SESSION["pnt"]["token"]["token"]; ?>',
-				"correoUnidadAdministrativa": '<?php echo $_SESSION["user_pnt"]; ?>' ,
-				"unidadAdministrativa": '<?php echo $_SESSION["unidad_administrativa"]; ?>',
-				"SujetoObligado": '<?php echo $_SESSION["sujeto_obligado"]; ?>',
-				"registros": [{
-				    "numeroRegistro": 1,
-				    "campos": [
-				    	{"idCampo": 333943, "valor": data["Ejercicio"] },
-						
-				    ]
-				}],
-			  "_id_interno": data["ID FACTURA"]
-			}
-
-	    	$.post(url, formato, function(res, error){
-    			if(!res || !('success' in res) ) {
-	    			console.log("No se pudo insertar el elemento correctamente")
-	    			a.css("display", "block")
-	    			a.siblings().css("display", "block")
-	    		} else {
-	    			tr.children("td").eq(1).text(res.id_pnt)
-	    			tr.children("td").eq(17).children("a.eliminar").removeClass("invisible")
-	    			tr.children("td").eq(17).children("img.check").removeClass("invisible")
-	    			tr.children("td").eq(17).children("a.crear").addClass("invisible")
-	    		}
-
-    			td.children("img.loading").remove("")
-    			
-    			if(tr.hasClass("odd")) tr.css("background-color", "#f9f9f9")
-    			else tr.css("background-color", "#fff")
-
-	    	})
-	    });
-
-		$(document).on("click","a.eliminar",function(e){ 
-	    	e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
-
-	    	var a = $(this)
-		      , tr = a.parents("tr")
-		      , td = a.parents("td")
-
-		    a.css("display", "none")
-		    a.siblings().css("display", "none")
-		    tr.css("background-color", "rgba(255,0,0, 0.2)")
-		    td.prepend("<img class='loading' src='<?php echo base_url(); ?>plugins/img/loading.gif'>")
-
-		    var id_pnt = tr.children("td").eq(1).text()
-
-	    	var data = JSON.parse( $(this).attr("data")  )
-			  , token = '<?php echo $_SESSION["pnt"]["token"]["token"]; ?>'
-
-			var formato = {
-				"idFormato": 43320, 
-				"correoUnidadAdministrativa": "so.inai@inai.org.mx",
-				"token": token,
-				"registros":[ { "numeroRegistro":1, "idRegistro": data.id_pnt || id_pnt } ],
-				"id_pnt": data.id_pnt || id_pnt
-			}
-
-			var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/eliminar_pnt"
-
-	    	$.post(url, formato, function(res, error){
-    			if(!res || !('success' in res) ) {
-	    			console.log("No se pudo eliminar el elemento correctamente")
-	    			a.css("display", "block")
-	    			a.siblings().css("display", "block")
-	    		} else {
-	    			tr.children("td").eq(1).html("<label class='btn'> <small> SIN SUBIR </small></label>")
-	    			tr.children("td").eq(17).children("a.eliminar").addClass("invisible")
-	    			tr.children("td").eq(17).children("img.check").addClass("invisible")
-	    			tr.children("td").eq(17).children("a.crear").css("display", "block")
-	    		}
-
-    			td.children("img.loading").remove("")
-    			if(tr.hasClass("odd"))
-    				tr.css("background-color", "#f9f9f9")
-    			else
-    				tr.css("background-color", "#fff")
-	    	})
-
-	    })
 	})
 
 </script>

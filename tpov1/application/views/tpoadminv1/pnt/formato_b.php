@@ -1,6 +1,6 @@
 <?php  
 if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !( $_SESSION["pnt"]["success"] ) ){
-    header("Location: " . base_url() ."index.php/tpoadminv1/pnt/formato_a/alta_carga_logo");
+    header("Location: " . base_url() ."index.php/tpoadminv1/pnt/formato_b/alta_carga_logo");
     die();
 }
 ?>
@@ -125,7 +125,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
     $(document).ready(function(){
 
         $.fn.dataTable.ext.errMode = 'none';
-        var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/ejercicios"
+        var ejercicios_url =  "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/ejercicios"
     
         $.post(ejercicios_url, function(res, error){
             if(res) {
@@ -179,7 +179,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 }
             },
             ajax: {
-                url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/registros2",
+                url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b",
                 dataSrc: ''
             },
             scrollY: true,
@@ -432,7 +432,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             e.preventDefault(); 
 				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var data = JSON.parse( $(this).attr("data") )
-              , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/agregar_pnt";
+              , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/enviar_pnt";
             
             var a = $(this)
               , tr = a.parents("tr")
@@ -495,9 +495,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
             $.post(url, formato, function(res, error){
                 console.log(res)
-                res = JSON.parse(res); 
-                console.log(res)
-
+                //res = JSON.parse(res); 
+                /*
                 if(!res || !('success' in res) ){
                     console.log("No se pudo insertar el elemento correctamente")
                     a.css("display", "block")
@@ -514,6 +513,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 
                 if(tr.hasClass("odd")) tr.css("background-color", "#f9f9f9")
                 else tr.css("background-color", "#fff")
+                */
 
             })
 
@@ -524,7 +524,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             e.preventDefault(); 
 				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var ids= $(this).attr("data").split("-")
-            var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_a/registros50";
+
+            var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/subtabla";
             
 
             $.get(url, { id_factura: ids[1], id_contrato: ids[3] },  function(res, error){
