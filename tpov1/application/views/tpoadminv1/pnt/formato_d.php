@@ -253,11 +253,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				}],
 			  "_id_interno": data['id']
 			}
-
 	    	$.post(url, formato, function(res, error){
 	    		res = JSON.parse(res)
 	    		console.log(res)
-				if(!res || !('success' in res) ) {
+				if(!res || !('success' in res) || !res.success) {
 	    			console.log("No se pudo insertar el elemento correctamente")
 	    			a.css("display", "block")
 	    		} else {
@@ -272,7 +271,6 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
     			
     			if(tr.hasClass("odd")) tr.css("background-color", "#f9f9f9")
     			else tr.css("background-color", "#fff")
-
 	    	})
 	    });
 		

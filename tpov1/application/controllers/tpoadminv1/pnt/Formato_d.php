@@ -46,10 +46,9 @@ class Formato_d extends Webservices
     function enviar_pnt(){
         $table = "rel_pnt_campana_aviso";
         $nombre_id_interno = "id_campana_aviso";
+        
+        $this->agregar_pnt($table, $nombre_id_interno);
 
-        $response = $this->agregar_pnt($table, $nombre_id_interno);
-        header('Content-Type: application/json');
-        echo json_encode($response);
     }
 
 

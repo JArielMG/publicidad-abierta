@@ -56,9 +56,7 @@ class Formato_a extends Webservices
         $table = "rel_pnt_presupuesto";
         $nombre_id_interno = "id_presupuesto";
         
-        $response = $this->agregar_pnt($table, $nombre_id_interno);
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        $this->agregar_pnt($table, $nombre_id_interno);
     }
 
 

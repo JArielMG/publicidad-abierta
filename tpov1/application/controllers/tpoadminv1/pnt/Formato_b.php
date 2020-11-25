@@ -467,11 +467,7 @@ class Formato_b extends Webservices
         );
 
         array_push( $_POST["registros"][0]['campos'], $con, $pro, $fac );
-
-
-        $response = $this->agregar_pnt($table, $nombre_id_interno);
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        $this->agregar_pnt($table, $nombre_id_interno);
     }
 
 }

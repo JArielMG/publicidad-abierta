@@ -261,15 +261,15 @@ class Webservices extends CI_Controller
         echo json_encode($query);
     }
 
-    private function date_format($dstring){
-        if ( !isset( $dstring ) OR $dstring == "" ) return $dstring;
+    function date_format($dstring){
+        if ( $dstring == "" ) return $dstring;
 
         try {
-            $dstring = explode("-", (string)$dstring );  
-            $dstring =  array_reverse( $dstring );  
-            $dstring =  implode("/",  $dstring );  
-            return $dstring;
-        } catch (Exception $e) {  return ""; }
+          $dstring = explode("-", (string)$dstring );  
+          $dstring = array_reverse( $dstring );  
+          $dstring = implode("/",  $dstring );  
+          return $dstring;
+        } catch (Exception $e) {  return $dstring; }
     } 
 
     function eliminar_pnt(){
@@ -294,7 +294,7 @@ class Webservices extends CI_Controller
         $res = file_get_contents( $URL, false, $context );
         $result =    json_decode( $res, true );
 
-         switch ($_POST["idFormato"]) {
+        switch ($_POST["idFormato"]) {
             case 43322:
                 $table = "rel_pnt_presupuesto";
                 break;
@@ -377,7 +377,6 @@ class Webservices extends CI_Controller
 
     function agregar_pnt($table, $id){
         $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/mantenimiento/agrega";
-        
         $data = array(
             'idFormato' => $_POST["idFormato"], 
             'token' => $_POST["token"], 
@@ -408,11 +407,14 @@ class Webservices extends CI_Controller
         
         if( $result["success"] ){
             $this->db->insert($table, $post_data);
-            $result['id_tpo'] =  $this->db->insert_id();
+            $result['id_tpo'] = $this->db->insert_id();
         }
 
-        return json_encode($result);
+        $response = json_encode($result);
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
+
     function traer_formatos(){
         $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/informacionFormato/obtenerFormatos";
         $request = array( "token" => strval($_SESSION['pnt']->token->token) );
