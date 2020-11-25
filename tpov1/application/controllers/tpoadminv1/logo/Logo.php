@@ -75,61 +75,7 @@ class Logo extends CI_Controller
             throw new Exception("Error loading '$url', $php_errormsg");
         }
     }
-
-    function entrar_pnt(){
-        $URL = "http://devcarga.inai.org.mx:8080/sipot-web/spring/generaToken/";
-        $data = array(
-            "usuario" => $_POST["user"], 
-            "password" => $_POST["password"] 
-        );
-
-        $options = array(
-            'http' => array(
-            'method'  => 'POST',
-            'content' => json_encode( $data ),
-            'header'=>  "Content-Type: application/json\r\n" .
-                        "Accept: application/json\r\n"
-            )
-        );
-
-        $response = json_encode($data);
-        $context  = stream_context_create( $options );
-        $result = file_get_contents( $URL, false, $context );
-        $result = json_decode($result, true);
-
-        
-        if( $result["success"] ){
-            $_SESSION["user_pnt"] = $data["usuario"];
-            $_SESSION["pnt"] = $result;
-
-            $stm  = "SELECT id_sujeto_obligado, nombre_sujeto_obligado, rol, nombre_unidad_administrativa 
-                FROM unidades_so WHERE correo_unidad_administrativa = '" . $data["usuario"] . "'";
-            $query = $this->db->query($stm);
-
-            $_SESSION["sujeto_obligado"] = $query->row()->nombre_sujeto_obligado;
-            $_SESSION["unidad_administrativa"] = $query->row()->nombre_unidad_administrativa;
-            $_SESSION["id_sujeto_obligado"] = $query->row()->id_sujeto_obligado;
-            $_SESSION["rol"] = $query->row()->rol;
-        
-         }
-
-        $response = json_encode($result);
-
-        header('Content-Type: application/json');
-        echo  $response; 
-
-    }
-
-    private function date_format($dstring){
-        if ( !isset( $dstring ) OR $dstring == "" ) return $dstring;
-
-        try {
-            $dstring = explode("-", (string)$dstring );  
-            $dstring =  array_reverse( $dstring );  
-            $dstring =  implode("/",  $dstring );  
-            return $dstring;
-        } catch (Exception $e) {  return ""; }
-    } 
+    
 
     function alta_carga_logo(){
 
