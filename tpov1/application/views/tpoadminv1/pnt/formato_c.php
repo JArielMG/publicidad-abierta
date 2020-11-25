@@ -281,8 +281,6 @@ $(document).ready(function(){
         var id = $(this).attr("data")
         var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_c/subtabla";
         
-        console.log(id)
-
         $.get(url, { id_factura_desglose: id },  function(res, error){
             function get_subtables(tag, data){
                 var res = "<tr><td> <h3> Datos de " + tag + " </h3> "
@@ -316,49 +314,49 @@ $(document).ready(function(){
       e.preventDefault(); 
 				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
       var data = JSON.parse( $(this).attr("data") )
-      , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_c/enviar_pnt";
-    
+        , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_c/enviar_pnt";
+     
       var a = $(this)
-         , tr = a.parents("tr")
-         , td = a.parents("td")
+        , tr = a.parents("tr")
+        , td = a.parents("td")
 
       a.css("display", "none")
       tr.css("background-color", "rgba(0,255,0, 0.2)")
       td.prepend("<img class='loading' src='<?php echo base_url(); ?>plugins/img/loading.gif'>")
 
       formato = {
-      "idFormato": "43360", //"Contratación de servicios de publicidad oficial"
-      "IdRegistro": "",
-      "token": '<?php echo $_SESSION["pnt"]["token"]["token"]; ?>',
-      "correoUnidadAdministrativa": '<?php echo $_SESSION["user_pnt"]; ?>' ,
-      "unidadAdministrativa": '<?php echo $_SESSION["unidad_administrativa"]; ?>',
-      "SujetoObligado": '<?php echo $_SESSION["sujeto_obligado"]; ?>',
-      "registros": [{
-          "numeroRegistro": 1,
-          "campos": [
-            { "idCampo": 334731, "valor": data.ejercicio }, 
-          { "idCampo": 334737, "valor": data.fecha_inicio_periodo }, 
-          //{ "idCampo": 334737, "valor": ( data.fecha_inicio_periodo != null )?  data["fecha_inicio_periodo"] : "" }, 
-          { "idCampo": 334736, "valor": data.fecha_termino_periodo }, 
-          //{ "idCampo": 334736, "valor": ( data.fecha_termino_periodo != null )?  data["fecha_termino_periodo"] : "" }, 
-          { "idCampo": 334735, "valor": "http://ola.kase" }, 
-          //{ "idCampo": 334735, "valor": data."Hipervínculo al Estado analítico del ejercicio del Presupuesto de Egresos" }, 
-          { "idCampo": 334739, "valor": data.area_responsable }, 
-          { "idCampo": 334732, "valor": data.fecha_validacion }, 
-          //{ "idCampo": 334732, "valor": ( data.fecha_validacion != null )? data["fecha_validacion"] : "" }, 
-          { "idCampo": 334734, "valor": data.fecha_actualizacion }, 
-          //{ "idCampo": 334734, "valor": ( data.fecha_actualizacion != null )? data["fecha_actualizacion"] : "" }, 
-          { "idCampo": 334738, "valor": data.nota }
+        "idFormato": "43360", //"Contratación de servicios de publicidad oficial"
+        "IdRegistro": "",
+        "token": '<?php echo $_SESSION["pnt"]["token"]["token"]; ?>',
+        "correoUnidadAdministrativa": '<?php echo $_SESSION["user_pnt"]; ?>' ,
+        "unidadAdministrativa": '<?php echo $_SESSION["unidad_administrativa"]; ?>',
+        "SujetoObligado": '<?php echo $_SESSION["sujeto_obligado"]; ?>',
+        "registros": [{
+            "numeroRegistro": 1,
+            "campos": [
+              { "idCampo": 334731, "valor": data.ejercicio }, 
+            { "idCampo": 334737, "valor": data.fecha_inicio_periodo }, 
+            //{ "idCampo": 334737, "valor": ( data.fecha_inicio_periodo != null )?  data["fecha_inicio_periodo"] : "" }, 
+            { "idCampo": 334736, "valor": data.fecha_termino_periodo }, 
+            //{ "idCampo": 334736, "valor": ( data.fecha_termino_periodo != null )?  data["fecha_termino_periodo"] : "" }, 
+            { "idCampo": 334735, "valor": "http://ola.kase" }, 
+            //{ "idCampo": 334735, "valor": data."Hipervínculo al Estado analítico del ejercicio del Presupuesto de Egresos" }, 
+            { "idCampo": 334739, "valor": data.area_responsable }, 
+            { "idCampo": 334732, "valor": data.fecha_validacion }, 
+            //{ "idCampo": 334732, "valor": ( data.fecha_validacion != null )? data["fecha_validacion"] : "" }, 
+            { "idCampo": 334734, "valor": data.fecha_actualizacion }, 
+            //{ "idCampo": 334734, "valor": ( data.fecha_actualizacion != null )? data["fecha_actualizacion"] : "" }, 
+            { "idCampo": 334738, "valor": data.nota }
 
-          ]
-      }],
-      "_id_interno": data.id_factura
-    }
+            ]
+        }],
+        //"_id_interno": data.id_factura
+        "_id_interno": data.id
+      }
 
       $.post(url, formato, function(res, error){
         res = JSON.parse(res)
-        console.log(res)
-      if(!res || !('success' in res) ) {
+        if(!res || !('success' in res) || !res.success ) {
           console.log("No se pudo insertar el elemento correctamente")
           a.css("display", "block")
         } else {
@@ -370,10 +368,10 @@ $(document).ready(function(){
           location.reload(); 
         }
 
-      td.children("img.loading").remove("")
+        td.children("img.loading").remove("")
       
-      if(tr.hasClass("odd")) tr.css("background-color", "#f9f9f9")
-      else tr.css("background-color", "#fff")
+        if(tr.hasClass("odd")) tr.css("background-color", "#f9f9f9")
+        else tr.css("background-color", "#fff")
       })
     
     });

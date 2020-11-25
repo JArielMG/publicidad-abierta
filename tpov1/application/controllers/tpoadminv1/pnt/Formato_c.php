@@ -119,19 +119,30 @@ class Formato_c extends Webservices
         echo json_encode( $rows ); 
     }
 
+    function date_format($dstring){
+        if ( $dstring == "" ) return $dstring;
+
+        try {
+          $dstring = explode("-", (string)$dstring );  
+          $dstring = array_reverse( $dstring );  
+          $dstring = implode("/",  $dstring );  
+          return $dstring;
+        } catch (Exception $e) {  return $dstring; }
+    }
+
     function enviar_pnt(){
         $table = "rel_pnt_campana_aviso2";
         $nombre_id_interno = "id_campana_aviso";
+        $r = $_POST["registros"][0]["campos"];
 
-        $_POST["registros"][0]["campos"][1]["valor"] = $this->date_format($_POST["registros"][0]["campos"][1]["valor"]);
-        $_POST["registros"][0]["campos"][2]["valor"] = $this->date_format($_POST["registros"][0]["campos"][2]["valor"]);
-        $_POST["registros"][0]["campos"][5]["valor"] = $this->date_format($_POST["registros"][0]["campos"][5]["valor"]);
-        $_POST["registros"][0]["campos"][6]["valor"] = $this->date_format($_POST["registros"][0]["campos"][6]["valor"]);
+        $_POST["registros"][0]["campos"][1]["valor"] = (isset($r[1]["valor"]))? $this->date_format($r[1]["valor"]) : "";
+        $_POST["registros"][0]["campos"][2]["valor"] = (isset($r[2]["valor"]))? $this->date_format($r[2]["valor"]) : "";
+        $_POST["registros"][0]["campos"][5]["valor"] = (isset($r[5]["valor"]))? $this->date_format($r[5]["valor"]) : "";
+        $_POST["registros"][0]["campos"][6]["valor"] = (isset($r[6]["valor"]))? $this->date_format($r[6]["valor"]) : "";
         
-        $response = $this->agregar_pnt($table, $nombre_id_interno);
-        header('Content-Type: application/json');
-        echo json_encode($response);    }
+        $this->agregar_pnt($table, $nombre_id_interno);
 
+    }
 
     function registrosc1(){
         $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
@@ -177,14 +188,13 @@ class Formato_c extends Webservices
     }
 
     function subtabla(){
-        $data = $this->_subtabla3($_GET["id_factura_desglose"]);
+        $data = $this->_subtabla($_GET["id_factura_desglose"]);
         header('Content-Type: application/json');
         echo json_encode( $data ); 
     }
 
     private function _subtabla($id_factura_desglose){
         $data = array();
-        //Datos de Factura
         $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
                       "pcon.denominacion_partida", "pdes.monto_presupuesto", "fact.total_ejercido", 
                       "pnt.estatus_pnt");
@@ -196,27 +206,7 @@ class Formato_c extends Webservices
             } else if ( strpos($col, ".") ) $tag = explode(".", $col)[1];
             $col = "IFNULL(" . $col . ", '') AS $tag";
         }
-        /*
-        $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_presupuestos_desglose pdes
-                JOIN (SELECT p.id_presupesto_concepto, c.concepto, c.denominacion 'nombre_concepto', 
-                           p.partida, p.denominacion 'denominacion_partida'
-                      FROM (SELECT id_presupesto_concepto, concepto, partida, denominacion FROM cat_presupuesto_conceptos pc
-                          WHERE trim(coalesce(concepto, '')) <> '' AND trim(coalesce(partida, '')) <> '' ) p 
-                      JOIN (SELECT concepto, denominacion FROM cat_presupuesto_conceptos
-                          WHERE trim(coalesce(concepto, '')) <>'' AND trim(coalesce(partida, '')) = '') c
-                      ON c.concepto = p.concepto
-                ) pcon ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                LEFT JOIN (
-                    SELECT numero_partida, id_factura_desglose, SUM(cantidad) total_ejercido 
-                    FROM tab_facturas_desglose fdes 
-                    GROUP BY numero_partida, id_factura_desglose
-                ) fact ON fact.numero_partida = pcon.partida
-                JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
-                JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
-                LEFT JOIN rel_pnt_presupuesto_desglose2 pnt 
-                    ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose
-                WHERE fact.id_factura_desglose =" . $id_factura_desglose);
-        */
+
         $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_presupuestos_desglose pdes 
             JOIN ( SELECT p.id_presupesto_concepto, c.concepto, c.denominacion 'nombre_concepto', p.partida, p.denominacion 'denominacion_partida' 
                 FROM (SELECT id_presupesto_concepto, concepto, partida, denominacion 
@@ -242,4 +232,5 @@ class Formato_c extends Webservices
         
         return $data;
     }
+
 }

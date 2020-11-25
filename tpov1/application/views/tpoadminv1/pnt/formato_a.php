@@ -293,16 +293,14 @@ $(document).ready(function(){
 		}
 
 		if ( validURL(data.file_programa_anual) ){
-					}
-formato.registros[0].campos.push( { "idCampo": 333995, "valor": data.file_programa_anual } )
-    		console.log("ola k ase")
-
+			formato.registros[0].campos.push( { "idCampo": 333995, "valor": data.file_programa_anual } )
+		}
 
     	$.post(url, formato, function(res, error){
     		console.log(res)
     		res = JSON.parse(res)
 
-    		if(!res || !('success' in res) ) {
+    		if(!res || !('success' in res) || !res.success) {
     			console.log("No se pudo insertar el elemento correctamente")
     			console.log(res, error)
     			a.css("display", "block")
