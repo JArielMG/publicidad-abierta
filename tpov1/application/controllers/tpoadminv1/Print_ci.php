@@ -48,10 +48,6 @@ class Print_CI extends CI_Controller
             redirect('tpoadminv1/securecms/sin_permiso');
         }
     }
-<<<<<<< HEAD
-
-    function hola(){ echo "hola";}
-=======
 	
 	function permiso_financiero()
     {
@@ -64,7 +60,6 @@ class Print_CI extends CI_Controller
         }
     }
     
->>>>>>> dba468a15cfeadd26dbeb346edc5b4c894052c5c
     function permiso_administrador()
     {
         //Revisamos que el usuario sea administrador
