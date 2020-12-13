@@ -62,6 +62,14 @@
         border-radius: 50%;
     }
 
+    .loading{
+        max-height: 45px;
+        position: absolute;
+        margin-top: -15px;
+        z-index: 0px
+
+    }
+
 </style>
 
 
@@ -393,8 +401,9 @@
                                             "Logs de conexión" . 
                                         "</h4>" . 
                                     "</div><div class='box-body'>" . 
-                                    "<table class='table table-bordered table-hover'>" . 
+                                    "<table class='table table-bordered table-hover' id='log-conversion'>" . 
                                         "<tr>" . 
+                                            "<th id='status_conn'> </th>" . 
                                             "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download> archivo_conexion.txt </a> </th>" . 
                                             "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download type='submit' class='btn btn-default' type='button'> Descargar </th>" . 
                                         "</tr> " . 
@@ -421,6 +430,7 @@
                                     "</div><div class='box-body'>" . 
                                     "<table class='table table-bordered table-hover'>" . 
                                         "<tr>" . 
+                                            "<th id='status_conn'> </th>" . 
                                             "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download> archivo_conexion.txt </a> </th>" . 
                                             "<th> <a href='" . base_url() . "data/archivo_conexion.txt' download type='submit' class='btn btn-default' type='button'> Descargar </th>" . 
                                         "</tr> " . 
@@ -643,15 +653,21 @@
 
     $("a#re-conectar").on("click", function(e){
         e.preventDefault()
-        $("td.inactive").prepend(
+        $("td.inactive, td.active").append(
             "<img class='loading' src='<?php echo base_url(); ?>plugins/img/loading.gif'>")
         
         $.post( $(this).attr("href"), { 'user': $("#re-user").val() , 'password': $("#re-pass").val() }, 
             function(data, error){
-                $("td.inactive").children(".loading").remove()
-                location.reload(); 
-                //
-                console.log(data)
+                $("td.inactive, td.active").children(".loading").remove()
+                $("#status_conn").text(data.mensaje)
+                if(!data.success) $("#log-conversion").css({ "border-color": "red", "border-width": "2px" })
+
+                url = "<?php echo base_url(); ?>" + "index.php/tpoadminv1/pnt/webservices/write_login"
+                $.get( url, {'status_conn': data.success, 'messagge': data.mensaje }, function(data, error){ 
+                    console.log(data)
+
+                });
+
             }
         );
         $("td.inactive").children(".loading").remove()
