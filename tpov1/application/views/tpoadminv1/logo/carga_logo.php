@@ -375,10 +375,11 @@
                                 echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
                                 echo "<td class='active'> <span class='circle' style='background: #3f3'>  </span> Activo </td>";
                                 
-                                echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' href='" . base_url() . "index.php/tpoadminv1/pnt/webservices/entrar_pnt' id='re-conectar'> Conectar </a> &nbsp;&nbsp;&nbsp;"; 
-                                echo      "<a type='submit' class='btn-group btn btn-danger btn-sm' href='" . base_url() . "index.php/tpoadminv1/pnt/webservices/salir_pnt'  id='desconectar'> Desconectar </a> </td>";
+                                echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' 
+                                              href='" . base_url() . "index.php/tpoadminv1/pnt/webservices/entrar_pnt' id='re-conectar'> Conectar </a> &nbsp;&nbsp;&nbsp;"; 
+                                echo      "<a type='submit' class='btn-group btn btn-danger btn-sm' 
+                                              href='" . base_url() . "index.php/tpoadminv1/pnt/webservices/salir_pnt'  id='desconectar'> Desconectar </a> </td>";
                                 echo "</tr></tbody></table>";
-                                echo "</form>";
                                 
                                 $txt = "conexión: " . json_encode($_SESSION["pnt"]["success"]) . ", mensaje: " . ( isset($_SESSION["pnt"]["mensaje"])? $_SESSION["pnt"]["mensaje"] : '');
                             } else{
@@ -386,6 +387,7 @@
                                 echo "<td> <input type='input' id='re-user' class='form-control' name='re-user'>  </td>";
                                 echo "<td> <input type='password' id='re-pass' class='form-control' name='re-pass'> </td>";
                                 echo "<td class='inactive'> <span class='circle' style='background: #f33'> </span> Inactivo </td>";
+
                                 echo "<td> <a type='submit' class='btn-group btn btn-success btn-sm' 
                                               href='" . base_url() . "index.php/tpoadminv1/pnt/webservices/entrar_pnt' id='re-conectar'> Conectar </a></td>";
                                               
@@ -662,7 +664,7 @@
                 $("#status_conn").text(data.mensaje)
                 if(!data.success) $("#log-conversion").css({ "border-color": "red", "border-width": "2px" })
 
-                url = "<?php echo base_url(); ?>" + "index.php/tpoadminv1/pnt/webservices/write_login"
+                url = "<?php echo base_url(); ?>" + "index.php/tpoadminv1/pnt/webservices/write_login"  
                 $.get( url, {'status_conn': data.success, 'messagge': data.mensaje }, function(data, error){ 
                     console.log(data)
 
