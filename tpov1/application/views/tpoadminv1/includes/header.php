@@ -258,11 +258,7 @@ header('Expires: 0'); // Proxies.
                             </li>
                         </ul>
                     </li>
-                    <li class=" <?php if($active == 'logo') { echo ' active'; } ?>">
-                        <a href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/alta_carga_logo">
-                            <i class="fa fa-cog"></i> Configuraci&oacute;n
-                        </a>
-                    </li>
+                    
 					
                     <?php } 
                     else if($this->session->userdata('usuario_rol') == '2' 
@@ -350,6 +346,11 @@ header('Expires: 0'); // Proxies.
                     
                     ?>
                     
+                    <li class=" <?php if($active == 'logo') { echo ' active'; } ?>">
+                        <a href="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/alta_carga_logo">
+                            <i class="fa fa-cog"></i> Configuraci&oacute;n
+                        </a>
+                    </li>
                     
                     <?php if(isset($_SESSION['pnt']) AND isset($_SESSION["pnt"]["success"]) AND $_SESSION["pnt"]["success"] ){?>
                         <!--li class=" <?php if($active == 'pnt') { echo ' active'; } ?>"-->

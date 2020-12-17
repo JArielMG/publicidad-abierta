@@ -114,223 +114,223 @@
     }
     ?>
 
-    <div class="row">
-        <input id="url_logo" type="hidden" value="<?php echo $url_logo;?>" >
-        <?php 
-            /*** El siguiente código es para colocar la clase .validation_error cuando hay un error en el form_validate 
-             * form_error regresa una cadena, si es vacía significa que no hay error, si trae texto se marca el error
-             * ***/
-           
-            $error_e = !empty(form_error('id_ejercicio', '<div class="text-danger">', '</div>'));
-            $error_so = !empty(form_error('id_sujeto_obligado', '<div class="text-danger">', '</div>'));
-            $error_active = !empty(form_error('active', '<div class="text-danger">', '</div>'));
-            $error_file = false; 
-            $mensaje = '';
+    <?php if($this->session->userdata('usuario_rol') == '1'){ ?>
+        <div class="row">
+            <input id="url_logo" type="hidden" value="<?php echo $url_logo;?>" >
+            <?php 
+                /*** El siguiente código es para colocar la clase .validation_error cuando hay un error en el form_validate 
+                 * form_error regresa una cadena, si es vacía significa que no hay error, si trae texto se marca el error
+                 * ***/
+               
+                $error_e = !empty(form_error('id_ejercicio', '<div class="text-danger">', '</div>'));
+                $error_so = !empty(form_error('id_sujeto_obligado', '<div class="text-danger">', '</div>'));
+                $error_active = !empty(form_error('active', '<div class="text-danger">', '</div>'));
+                $error_file = false; 
+                $mensaje = '';
 
-            if(validation_errors() == TRUE)
+                if(validation_errors() == TRUE)
+                {
+                    echo '<div class="alert alert-danger"><button class="close"  data-dismiss="alert">x</button>
+                    <h4><i class="icon fa fa-ban"></i>¡Alerta!</h4>' . validation_errors() . $mensaje .'</div>';  
+                }
+            ?>
+            <!-- custom tabs-->
+            <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/campanas/campanas/validate_alta_campanas_avisos" enctype="multipart/form-data" >
+                <div class="box table-responsive box-info">
+                    <div class="box-header">
+                        <h4>Actualiza Logo</h4>
+                        <div  class="box-tools pull-right">
+                            <img id="img_logo" src="<?php echo $url_logo; ?>" width="150"  height="90"/>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <!-- CODIGO PARA CARGAR ARCHIVOS -->
+                        <div class="form-group">
+                            <label class="custom-file-label"> Logo en formato PNG 150px ancho por 90px de alto, con efecto de transparencia.</label>
+                        </div>
+                        <div class="input-group">
+                            <div id="file_by_save" class="input-group-btn" style="<?php if($control_update['file_by_save']) echo 'display:none;' ?>">
+                                <button class="btn btn-success" type="button" onclick="triggerClickDocumento('lanzar')">Subir archivo</button>
+                            </div>
+                            <div id="file_see" class="input-group-btn" style="<?php if($control_update['file_see']) echo 'display:none;' ?>">
+                                <button class="btn btn-info" type="button" onclick="triggerClickDocumento('ver')" >Ver archivo</button>
+                            </div>
+                            <div id="file_load" class="input-group-btn" style="<?php if($control_update['file_load']) echo 'display:none;' ?>">
+                                <button class="btn btn-success" type="button" ><i class="fa fa-refresh fa-spin"></i></button>
+                            </div>
+                            <input type="text" id="name_file_input" placeholder="Ning&uacute;n archivo seleccionado" value="<?php echo $registro['name_file_imagen']; ?>"  class="form-control" />
+                            <input type="hidden" id="file_archivo_nombre" name="file_archivo_nombre" value="<?php echo $registro['name_file_imagen']; ?>" />
+                            <input type="hidden" id="name_file_imagen" name="name_file_imagen" value="<?php echo $registro['name_file_imagen']; ?>" />
+                            <input type="file" name="file_programa_imagen" id="file_programa_imagen" class="hide" accept=".png"/>
+                            <div id="file_saved" class="input-group-btn" style="<?php if($control_update['file_saved']) echo 'display:none;' ?>">
+                                <button class="btn btn-danger" type="button" onclick="triggerClickDocumento('eliminar')" >Eliminar archivo</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="help-block" id="result_upload"><?php echo $control_update['mensaje_file']; ?> </p>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <!-- <div class="box-footer">
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+                        <?php echo anchor("tpoadminv1/capturista/presupuestos/busqueda_presupuestos", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>
+                    </div>-->
+                </div><!-- /.box -->
+            </form>
+                    
+            
+            
+
+            <!-- Verificamos si ya esta dada de alta una fecha manualmente -->
+            <?php
+            if($fecha_act != '0')
             {
-                echo '<div class="alert alert-danger"><button class="close"  data-dismiss="alert">x</button>
-                <h4><i class="icon fa fa-ban"></i>¡Alerta!</h4>' . validation_errors() . $mensaje .'</div>';  
+                ?>
+                    <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
+
+                <div class="box table-responsive">
+                    <div class="box-header">
+                        <h4>Detalles fecha actualización</h4>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Fecha de actualizaci&oacute;n</th>
+                                    <th>Comentarios</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    echo '<tr>';
+                                    echo '<td>' . $fecha_act['fecha_act'] . '</td>';
+                                    echo '<td>' . $fecha_act['comentario_act'] . '</td>';
+                                    echo "<td> <span class='btn-group btn btn-warning btn-sm' onclick=\"editarFecha(" .$fecha_act['id_fecha_act'].",'".$fecha_act['fecha_act']."','".$fecha_act['comentario_act']."')\"> <i class='fa fa-edit'></i></span></td>";
+                                    echo '</tr>';
+                                ?>
+                            </tbody>
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            <?php
             }
-        ?>
-        <!-- custom tabs-->
-        <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/campanas/campanas/validate_alta_campanas_avisos" enctype="multipart/form-data" >
+            else
+            { 
+            ?>
+            <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/validate_alta_carga_logo" enctype="multipart/form-data" >
+                <div class="box">
+                    <div class="box-header">
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="custom-file-label">
+                                Fecha de actualizaci&oacute;n manual:
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id= "fecha_act" class="form-control" placeholder="Ingresa fecha actualizaci&oacute; manual" name="fecha_act" value="<?php echo set_value('fecha_act'); ?>" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label class="custom-file-label">
+                                Comentario:
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id= "comentario_act" class="form-control" placeholder="Ingresa un comentario sobre la actualizaci&oacute;n manual" name="comentario_act" value="<?php echo set_value('comentario_act'); ?>" autocomplete="off">
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+                    </div>   <!-- /.box-footer --> 
+                </div><!-- /.box -->
+            </form>
+            <?php
+            }
+            ?>
+        
+        </div><!-- /. div row-->
+
+        <div class="row">
+            <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
             <div class="box table-responsive box-info">
                 <div class="box-header">
-                    <h4>Actualiza Logo</h4>
-                    <div  class="box-tools pull-right">
-                        <img id="img_logo" src="<?php echo $url_logo; ?>" width="150"  height="90"/>
-                    </div>
-                </div><!-- /.box-header -->
+                   <h4 class="modal-title">
+                   <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Cuando se configure la url del sistema, &eacute;sta se debe ingresar a la configuraci&oacute;n de Google reCAPTCHA."></i>  
+                    reCAPTCHA
+                   </h4>
+                </div>
                 <div class="box-body">
-                    <!-- CODIGO PARA CARGAR ARCHIVOS -->
-                    <div class="form-group">
-                        <label class="custom-file-label"> Logo en formato PNG 150px ancho por 90px de alto, con efecto de transparencia.</label>
-                    </div>
-                    <div class="input-group">
-                        <div id="file_by_save" class="input-group-btn" style="<?php if($control_update['file_by_save']) echo 'display:none;' ?>">
-                            <button class="btn btn-success" type="button" onclick="triggerClickDocumento('lanzar')">Subir archivo</button>
-                        </div>
-                        <div id="file_see" class="input-group-btn" style="<?php if($control_update['file_see']) echo 'display:none;' ?>">
-                            <button class="btn btn-info" type="button" onclick="triggerClickDocumento('ver')" >Ver archivo</button>
-                        </div>
-                        <div id="file_load" class="input-group-btn" style="<?php if($control_update['file_load']) echo 'display:none;' ?>">
-                            <button class="btn btn-success" type="button" ><i class="fa fa-refresh fa-spin"></i></button>
-                        </div>
-                        <input type="text" id="name_file_input" placeholder="Ning&uacute;n archivo seleccionado" value="<?php echo $registro['name_file_imagen']; ?>"  class="form-control" />
-                        <input type="hidden" id="file_archivo_nombre" name="file_archivo_nombre" value="<?php echo $registro['name_file_imagen']; ?>" />
-                        <input type="hidden" id="name_file_imagen" name="name_file_imagen" value="<?php echo $registro['name_file_imagen']; ?>" />
-                        <input type="file" name="file_programa_imagen" id="file_programa_imagen" class="hide" accept=".png"/>
-                        <div id="file_saved" class="input-group-btn" style="<?php if($control_update['file_saved']) echo 'display:none;' ?>">
-                            <button class="btn btn-danger" type="button" onclick="triggerClickDocumento('eliminar')" >Eliminar archivo</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <p class="help-block" id="result_upload"><?php echo $control_update['mensaje_file']; ?> </p>
-                    </div>
-                </div><!-- /.box-body -->
-                <!-- <div class="box-footer">
-                    <button class="btn btn-primary" type="submit">Guardar</button>
-                    <?php echo anchor("tpoadminv1/capturista/presupuestos/busqueda_presupuestos", "<button class='btn btn-default' type='button'>Regresar</button></td>"); ?>
-                </div>-->
-            </div><!-- /.box -->
-        </form>
-                
-        
-        
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Se debe obtener en Google reCAPTCHA"></i>
+                                Clave del sitio
+                            </th>
+                            <th>
+                                <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Se debe obtener en Google reCAPTCHA"></i>
+                                Clave secreta
+                            </th>
+                            <th>
+                                <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="En activo se habilita el reCAPTCHA en el inicio de sesi&oacute;n, en inactivo se desahabilita."></i>
+                                Estatus
+                            </th>
+                            <th> <?php 
+                                    if(!isset($recaptcha)){  
+                                        echo "<button type='button' class='btn-group btn btn-primary btn-sm' onclick=\"agregarRecaptcha()\"> <i class='fa fa-edit'></i> Agregar</button>";
+                                    }
+                                ?>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            if(isset($recaptcha)){
+                                echo "<tr>";
+                                echo "<td>" . $recaptcha->recaptcha . "</td>";
+                                echo "<td>" . $recaptcha->clave . "</td>";
+                                echo "<td>" . ($recaptcha->active == 1 ? 'Activo' : 'Inactivo') . "</td>";
+                                echo "<td><button type='button' class='btn-group btn btn-warning btn-sm' onclick=\"editarRecaptcha(" . $recaptcha->id_settings. ", '". $recaptcha->recaptcha. "', '". $recaptcha->clave . "', " . $recaptcha->active . ")\"> <i class='fa fa-edit'></i></button></td>";
+                                echo "</tr>";
+                            } 
+                        ?>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
 
-        <!-- Verificamos si ya esta dada de alta una fecha manualmente -->
-        <?php
-        if($fecha_act != '0')
-        {
-            ?>
-                <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
-
+        <div class="row">
+            <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
             <div class="box table-responsive">
                 <div class="box-header">
-                    <h4>Detalles fecha actualización</h4>
-                </div><!-- /.box-header -->
+                   <h4 class="modal-title">
+                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Esta opci&oacute;n te permite habilitar o desahabilitar la gr&aacute;fica de la vista publica."></i>  
+                        Gr&aacute;fica <b>Presupuestos/&Oacute;rdenes de Gobierno</b> de la vista publica de la pesta&ntilde;a Presupuesto  
+                   </h4>
+                </div>
                 <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
+                    <table class="table table-bordered table-hover">
+                        <tbody style="font-size:16px;">
                             <tr>
-                                <th>Fecha de actualizaci&oacute;n</th>
-                                <th>Comentarios</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                echo '<tr>';
-                                echo '<td>' . $fecha_act['fecha_act'] . '</td>';
-                                echo '<td>' . $fecha_act['comentario_act'] . '</td>';
-                                echo "<td> <span class='btn-group btn btn-warning btn-sm' onclick=\"editarFecha(" .$fecha_act['id_fecha_act'].",'".$fecha_act['fecha_act']."','".$fecha_act['comentario_act']."')\"> <i class='fa fa-edit'></i></span></td>";
-                                echo '</tr>';
-                            ?>
-                        </tbody>
-                    </table>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        <?php
-        }
-        else
-        { 
-        ?>
-        <form role="form" method="post" action="<?php echo base_url(); ?>index.php/tpoadminv1/logo/logo/validate_alta_carga_logo" enctype="multipart/form-data" >
-            <div class="box">
-                <div class="box-header">
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <div class="form-group">
-                        <label class="custom-file-label">
-                            Fecha de actualizaci&oacute;n manual:
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id= "fecha_act" class="form-control" placeholder="Ingresa fecha actualizaci&oacute; manual" name="fecha_act" value="<?php echo set_value('fecha_act'); ?>" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label class="custom-file-label">
-                            Comentario:
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id= "comentario_act" class="form-control" placeholder="Ingresa un comentario sobre la actualizaci&oacute;n manual" name="comentario_act" value="<?php echo set_value('comentario_act'); ?>" autocomplete="off">
-                    </div>
-                </div><!-- /.box-body -->
-                <div class="box-footer">
-                    <button class="btn btn-primary" type="submit">Guardar</button>
-                </div>   <!-- /.box-footer --> 
-            </div><!-- /.box -->
-        </form>
-        <?php
-        }
-        ?>
-    
-    </div><!-- /. div row-->
-
-    <div class="row">
-        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
-        <div class="box table-responsive box-info">
-            <div class="box-header">
-               <h4 class="modal-title">
-               <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Cuando se configure la url del sistema, &eacute;sta se debe ingresar a la configuraci&oacute;n de Google reCAPTCHA."></i>  
-                reCAPTCHA
-               </h4>
-            </div>
-            <div class="box-body">
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Se debe obtener en Google reCAPTCHA"></i>
-                            Clave del sitio
-                        </th>
-                        <th>
-                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Se debe obtener en Google reCAPTCHA"></i>
-                            Clave secreta
-                        </th>
-                        <th>
-                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="En activo se habilita el reCAPTCHA en el inicio de sesi&oacute;n, en inactivo se desahabilita."></i>
-                            Estatus
-                        </th>
-                        <th> <?php 
-                                if(!isset($recaptcha)){  
-                                    echo "<button type='button' class='btn-group btn btn-primary btn-sm' onclick=\"agregarRecaptcha()\"> <i class='fa fa-edit'></i> Agregar</button>";
+                            <?php 
+                                if(!isset($grafica) || $grafica->active == 0){
+                                    echo "<td width='90%'>La gr&aacute;fica se encuentra actualmente <span id='tdMensaje' class='text-danger'><b>deshabilitada</b></span>.</td>";
+                                    echo "<td><button id='btnhabilitar' type='button' class='btn-group btn btn-success btn-sm' data-option='habilitar' onclick=\"habilitarGrafica()\"> <i class='fa fa-check'></i> Habilitar</button></td>";
+                                }else{
+                                    echo "<td width='90%'>La gr&aacute;fica se encuentra actualmente <span id='tdMensaje' class='text-success'><b>habilitada</b></span>.</td>";
+                                    echo "<td><button id='btnhabilitar' type='button' class='btn-group btn btn-danger btn-sm' data-option='deshabilitar' onclick=\"habilitarGrafica()\"> <i class='fa fa-close'></i> Deshabilitar</button></td>";
                                 }
                             ?>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                        if(isset($recaptcha)){
-                            echo "<tr>";
-                            echo "<td>" . $recaptcha->recaptcha . "</td>";
-                            echo "<td>" . $recaptcha->clave . "</td>";
-                            echo "<td>" . ($recaptcha->active == 1 ? 'Activo' : 'Inactivo') . "</td>";
-                            echo "<td><button type='button' class='btn-group btn btn-warning btn-sm' onclick=\"editarRecaptcha(" . $recaptcha->id_settings. ", '". $recaptcha->recaptcha. "', '". $recaptcha->clave . "', " . $recaptcha->active . ")\"> <i class='fa fa-edit'></i></button></td>";
-                            echo "</tr>";
-                        } 
-                    ?>
-                </tbody>
-            </table>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-
-
-
+    <?php } ?>
+    
     <div class="row">
-        <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
-        <div class="box table-responsive">
-            <div class="box-header">
-               <h4 class="modal-title">
-                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Esta opci&oacute;n te permite habilitar o desahabilitar la gr&aacute;fica de la vista publica."></i>  
-                    Gr&aacute;fica <b>Presupuestos/&Oacute;rdenes de Gobierno</b> de la vista publica de la pesta&ntilde;a Presupuesto  
-               </h4>
-            </div>
-            <div class="box-body">
-            <table class="table table-bordered table-hover">
-                <tbody style="font-size:16px;">
-                    <tr>
-                    <?php 
-                        if(!isset($grafica) || $grafica->active == 0){
-                            echo "<td width='90%'>La gr&aacute;fica se encuentra actualmente <span id='tdMensaje' class='text-danger'><b>deshabilitada</b></span>.</td>";
-                            echo "<td><button id='btnhabilitar' type='button' class='btn-group btn btn-success btn-sm' data-option='habilitar' onclick=\"habilitarGrafica()\"> <i class='fa fa-check'></i> Habilitar</button></td>";
-                        }else{
-                            echo "<td width='90%'>La gr&aacute;fica se encuentra actualmente <span id='tdMensaje' class='text-success'><b>habilitada</b></span>.</td>";
-                            echo "<td><button id='btnhabilitar' type='button' class='btn-group btn btn-danger btn-sm' data-option='deshabilitar' onclick=\"habilitarGrafica()\"> <i class='fa fa-close'></i> Deshabilitar</button></td>";
-                        }
-                    ?>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
-        </div>
-    </div>
-
-
         <!-- Mostramos los detalles de los grupos de lugares dados de alta -->
         <div class="box table-responsive box-info">
             <div class="box-header">
