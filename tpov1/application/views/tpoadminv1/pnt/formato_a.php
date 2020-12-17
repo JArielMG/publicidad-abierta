@@ -171,7 +171,7 @@ $(document).ready(function(){
 	            targets: 8,
 	            data: "data",
 	            render: function ( data, type, row, meta ) {
-	            	if(data != "") return "<?php echo base_url(); ?>data/archivos/" + data
+	            	if(data != "") return "<?php echo base_url(); ?>data/programas/" + data
 	            }
 	        },
 	        {
