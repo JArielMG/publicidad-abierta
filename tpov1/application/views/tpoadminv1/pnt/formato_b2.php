@@ -20,6 +20,20 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 			   height: 30px; margin: 0; padding-left: 5px;}
 	.subitems li a{ background-color: #ff00bf; }
 	.here{ background-color: #0277bd !important; border-color: #0277bd !important;}
+
+	#waiting{
+		z-index: 200;
+		position: absolute;
+		background: rgba(0,0,0,0.7);
+		min-width:100%;
+		min-height:100%;
+		top:40px;
+		left: 230px;
+		display: none;
+	}
+	#waiting img{
+		margin:25% 40%;
+	}
 </style>
 
 <!-- Main content -->
@@ -72,6 +86,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	    </thead>
 	    <tbody> <tr> </tr> </tbody>
 	</table>
+</section>
+
+<section id="waiting">
+	<img src='<?php echo base_url(); ?>plugins/img/waiting.gif'>
 </section>
 
 
@@ -179,6 +197,16 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				}
 			]
 	    });
+
+
+
+		$('#grid').on( 'draw.dt', function () {
+		    //alert( 'Table redrawn' );
+			$("#waiting").css("display", "block")
+			setTimeout(function(){ 
+				$("#waiting").css("display", "none")
+	        }, 5000);
+		} );
 
 	    setTimeout(function(){ 
             var year = window.location.href.split("#y")[1] 
