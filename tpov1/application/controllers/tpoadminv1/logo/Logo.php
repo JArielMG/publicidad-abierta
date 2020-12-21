@@ -345,4 +345,6 @@ class Logo extends CI_Controller
         echo json_encode( $registro );
     }
 
+    
+
 }

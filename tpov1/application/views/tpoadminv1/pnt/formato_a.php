@@ -21,6 +21,19 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 		border-color: #0277bd !important;
 	}
 	td a { display:block; margin: 4px;}
+	#waiting{
+		z-index: 200;
+		position: absolute;
+		background: rgba(0,0,0,0.7);
+		min-width:100%;
+		min-height:100%;
+		top:40px;
+		left: 230px;
+		display: none;
+	}
+	#waiting img{
+		margin:25% 40%;
+	}
 </style>
 
 <!-- Main content -->
@@ -70,6 +83,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	    </tbody>
 	    <tfoot></tfoot>
 	</table>
+</section>
+
+<section id="waiting">
+	<img src='<?php echo base_url(); ?>plugins/img/waiting.gif'>
 </section>
 
 
@@ -171,7 +188,7 @@ $(document).ready(function(){
 	            targets: 8,
 	            data: "data",
 	            render: function ( data, type, row, meta ) {
-	            	if(data != "") return "<?php echo base_url(); ?>data/archivos/" + data
+	            	if(data != "") return "<?php echo base_url(); ?>data/programas/" + data
 	            }
 	        },
 	        {
@@ -241,6 +258,15 @@ $(document).ready(function(){
 			/**/
 		]
     });
+
+
+	$('#grid1').on( 'draw.dt', function () {
+	    //alert( 'Table redrawn' );
+		$("#waiting").css("display", "block")
+		setTimeout(function(){ 
+			$("#waiting").css("display", "none")
+        }, 5000);
+	} );
 
 
     function validURL(str) {
@@ -329,6 +355,8 @@ $(document).ready(function(){
 	    a.css("display", "none")
 
 	})
+
+
 
 	$(document).on("click","a.eliminar",function(e){
     	e.preventDefault();
