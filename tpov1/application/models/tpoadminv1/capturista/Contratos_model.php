@@ -231,46 +231,86 @@ class Contratos_Model extends CI_Model
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
         $this->load->model('tpoadminv1/capturista/Proveedores_model');
         $this->load->model('tpoadminv1/Generales_model');
+        if ($idEjercicio == "" && $idStatus == ""){
+            $ejercicios = $this->Catalogos_model->dame_todos_ejercicios(true);
+            $ejercicios = array_reverse($ejercicios);
+            for ($i = 0; $i < count($ejercicios); $i++) {
+                $idEjercicio = $ejercicios[$i]["id_ejercicio"];
+                if ($idEjercicio != "" && $idEjercicio != "0"){
+                    $this->db->where('id_ejercicio', $idEjercicio);
+                }
 
-        if ($idEjercicio != "" && $idEjercicio != "0"){
-            $this->db->where('id_ejercicio', $idEjercicio);
-        }
-
-        if ($idStatus != "" && $idStatus != "0"){
-            $this->db->where('active', $idStatus);
+                $query = $this->db->get('tab_contratos');
+            
+                if($query->num_rows() > 0)
+                {
+                    $array_items = [];
+                    $cont = 0;
+                    foreach ($query->result_array() as $row) 
+                    {
+                        $montos = $this->getMontos($row['id_contrato'], $row['monto_contrato']);
+                        $array_items[$cont]['id'] = $cont + 1;
+                        $array_items[$cont]['id_contrato'] = $row['id_contrato'];
+                        $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
+                        $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
+                        $array_items[$cont]['nombre_so_contratante'] = $this->dame_nombre_contratante($row['id_so_contratante']);
+                        $array_items[$cont]['nombre_so_solicitante'] = $this->dame_nombre_solicitante($row['id_so_solicitante']);
+                        $array_items[$cont]['numero_contrato'] = $row['numero_contrato'];
+                        $array_items[$cont]['nombre_proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
+                        $array_items[$cont]['monto_contrato'] = $this->Generales_model->money_format("%.2n",$row['monto_contrato']);
+                        $array_items[$cont]['monto_modificado'] = $montos['monto_modificado'];
+                        $array_items[$cont]['monto_total'] = $montos['monto_total'];
+                        $array_items[$cont]['monto_pagado'] = $montos['monto_pagado'];
+                        $array_items[$cont]['active'] = $this->get_estatus_name($row['active']);
+                        $array_items[$cont]['selected'] = $idEjercicio;
+                        $cont++;
+                    }
+                    return $array_items;
+                }
+            }
         }else{
-            if($activos){
-                $this->db->where('active', '1');
-            }
-        }
-        
-        $this->db->where('id_contrato > ', '1');
 
-        $query = $this->db->get('tab_contratos');
-        
-        if($query->num_rows() > 0)
-        {
-            $array_items = [];
-            $cont = 0;
-            foreach ($query->result_array() as $row) 
-            {
-                $montos = $this->getMontos($row['id_contrato'], $row['monto_contrato']);
-                $array_items[$cont]['id'] = $cont + 1;
-                $array_items[$cont]['id_contrato'] = $row['id_contrato'];
-                $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
-                $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
-                $array_items[$cont]['nombre_so_contratante'] = $this->dame_nombre_contratante($row['id_so_contratante']);
-                $array_items[$cont]['nombre_so_solicitante'] = $this->dame_nombre_solicitante($row['id_so_solicitante']);
-                $array_items[$cont]['numero_contrato'] = $row['numero_contrato'];
-                $array_items[$cont]['nombre_proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
-                $array_items[$cont]['monto_contrato'] = $this->Generales_model->money_format("%.2n",$row['monto_contrato']);
-                $array_items[$cont]['monto_modificado'] = $montos['monto_modificado'];
-                $array_items[$cont]['monto_total'] = $montos['monto_total'];
-                $array_items[$cont]['monto_pagado'] = $montos['monto_pagado'];
-                $array_items[$cont]['active'] = $this->get_estatus_name($row['active']);
-                $cont++;
+            if ($idEjercicio != "" && $idEjercicio != "0"){
+                $this->db->where('id_ejercicio', $idEjercicio);
             }
-            return $array_items;
+
+            if ($idStatus != "" && $idStatus != "0"){
+                $this->db->where('active', $idStatus);
+            }else{
+                if($activos){
+                    $this->db->where('active', '1');
+                }
+            }
+            
+            $this->db->where('id_contrato > ', '1');
+
+            $query = $this->db->get('tab_contratos');
+            
+            if($query->num_rows() > 0)
+            {
+                $array_items = [];
+                $cont = 0;
+                foreach ($query->result_array() as $row) 
+                {
+                    $montos = $this->getMontos($row['id_contrato'], $row['monto_contrato']);
+                    $array_items[$cont]['id'] = $cont + 1;
+                    $array_items[$cont]['id_contrato'] = $row['id_contrato'];
+                    $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
+                    $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
+                    $array_items[$cont]['nombre_so_contratante'] = $this->dame_nombre_contratante($row['id_so_contratante']);
+                    $array_items[$cont]['nombre_so_solicitante'] = $this->dame_nombre_solicitante($row['id_so_solicitante']);
+                    $array_items[$cont]['numero_contrato'] = $row['numero_contrato'];
+                    $array_items[$cont]['nombre_proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
+                    $array_items[$cont]['monto_contrato'] = $this->Generales_model->money_format("%.2n",$row['monto_contrato']);
+                    $array_items[$cont]['monto_modificado'] = $montos['monto_modificado'];
+                    $array_items[$cont]['monto_total'] = $montos['monto_total'];
+                    $array_items[$cont]['monto_pagado'] = $montos['monto_pagado'];
+                    $array_items[$cont]['active'] = $this->get_estatus_name($row['active']);
+                    $array_items[$cont]['selected'] = "";
+                    $cont++;
+                }
+                return $array_items;
+            }
         }
     }
 
@@ -634,13 +674,27 @@ class Contratos_Model extends CI_Model
         $data_update = array(
             'active' => $this->input->post('active')
         );
+
+        if ($this->input->post('id_year_selected') != "" && $this->input->post('id_year_selected') != "0"){
+                $this->db->where('id_ejercicio', $this->input->post('id_year_selected'));
+            }
         
         $this->db->update('tab_contratos', $data_update);
 
-        $this->editar_status_convenio_modificatorio("");
-
+        
         if($this->db->affected_rows() > 0)
         {
+
+            if ($this->input->post('id_year_selected') != ""){
+                $presupuestosArray = $this->dame_todos_contratos("",$this->input->post('id_year_selected'), "");
+                foreach ( $presupuestosArray as $row) {
+                    $this->editar_status_convenio_modificatorio($row['id_contrato']);
+                }
+            }else{
+                $this->editar_status_convenio_modificatorio("");
+            }
+
+
             $this->registro_bitacora('Contratos', 'Se editaron todos los contratos');
             return 1; // is correct
         }else

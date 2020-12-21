@@ -111,6 +111,15 @@ class Ordenes_compra extends CI_Controller
         $data['registros'] = $this->Ordenes_compra_model->dame_todos_ordenes_compra(false, $this->uri->segment(5),$this->uri->segment(6));
 
         $data['yearSelected'] = $this->uri->segment(5);
+
+        if (is_array($data['registros'])){
+            if (count($data['registros'])!=0){
+                if($data['registros'][0]["selected"]!=""){
+                    $data['yearSelected'] = $data['registros'][0]["selected"];
+                }
+            }
+        }
+
         $data['statusSelected'] = $this->uri->segment(6);
         
         $data['link_descarga'] = base_url() . "index.php/tpoadminv1/capturista/ordenes_compra/preparar_exportacion_ordenes_compra";
@@ -869,7 +878,7 @@ function validate_editar_status_orden_compra()
         }
         if($redict)
         {
-            redirect('/tpoadminv1/capturista/ordenes_compra/busqueda_ordenes_compra');
+            redirect('/tpoadminv1/capturista/ordenes_compra/busqueda_ordenes_compra'."/".$this->input->post('id_year_selected'));
         } 
         
     }

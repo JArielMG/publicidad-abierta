@@ -97,36 +97,73 @@ class Presupuestos_Model extends CI_Model
     {
         $this->load->model('tpoadminv1/catalogos/Catalogos_model');
 
-        if ($idEjercicio != "" && $idEjercicio != "0"){
-            $this->db->where('id_ejercicio', $idEjercicio);
-        }
+        if ($idEjercicio == "" && $idStatus == ""){
+            $ejercicios = $this->Catalogos_model->dame_todos_ejercicios(true);
+            $ejercicios = array_reverse($ejercicios);
+            for ($i = 0; $i < count($ejercicios); $i++) {
+                $idEjercicio = $ejercicios[$i]["id_ejercicio"];
+                if ($idEjercicio != "" && $idEjercicio != "0"){
+                    $this->db->where('id_ejercicio', $idEjercicio);
+                }
 
-        if ($idStatus != "" && $idStatus != "0"){
-            $this->db->where('active', $idStatus);
-        }
-
-        $query = $this->db->get('tab_presupuestos');
-        
-        if($query->num_rows() > 0)
-        {
-            $array_items = [];
-            $cont = 0;
-            foreach ($query->result_array() as $row) 
-            {
-                $montos = $this->getMontosPartidas($row['id_presupuesto']);
-                $array_items[$cont]['id'] = $cont + 1;
-                $array_items[$cont]['id_presupuesto'] = $row['id_presupuesto'];
-                $array_items[$cont]['id_ejercicio'] = $row['id_ejercicio'];
-                $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
-                $array_items[$cont]['id_sujeto_obligado'] = $row['id_sujeto_obligado'];
-                $array_items[$cont]['nombre_sujeto_obligado'] = $this->dame_nombre_sujeto($row['id_sujeto_obligado']);
-                $array_items[$cont]['monto_presupuesto'] = $montos['monto_presupuesto'];
-                $array_items[$cont]['monto_modificacion'] = $montos['monto_modificacion'];
-                $array_items[$cont]['presupuesto_modificado'] = $montos['presupuesto_modificado'];
-                $array_items[$cont]['active'] = $this->get_estatus_name($row['active']);
-                $cont++;
+                $query = $this->db->get('tab_presupuestos');
+                
+                if($query->num_rows() > 0)
+                {
+                    $array_items = [];
+                    $cont = 0;
+                    foreach ($query->result_array() as $row) 
+                    {
+                        $montos = $this->getMontosPartidas($row['id_presupuesto']);
+                        $array_items[$cont]['id'] = $cont + 1;
+                        $array_items[$cont]['id_presupuesto'] = $row['id_presupuesto'];
+                        $array_items[$cont]['id_ejercicio'] = $row['id_ejercicio'];
+                        $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
+                        $array_items[$cont]['id_sujeto_obligado'] = $row['id_sujeto_obligado'];
+                        $array_items[$cont]['nombre_sujeto_obligado'] = $this->dame_nombre_sujeto($row['id_sujeto_obligado']);
+                        $array_items[$cont]['monto_presupuesto'] = $montos['monto_presupuesto'];
+                        $array_items[$cont]['monto_modificacion'] = $montos['monto_modificacion'];
+                        $array_items[$cont]['presupuesto_modificado'] = $montos['presupuesto_modificado'];
+                        $array_items[$cont]['active'] = $this->get_estatus_name($row['active']);
+                        $array_items[$cont]['selected'] = $idEjercicio;
+                        $cont++;
+                    }
+                    return $array_items;
+                }
             }
-            return $array_items;
+        }else{
+            if ($idEjercicio != "" && $idEjercicio != "0"){
+                $this->db->where('id_ejercicio', $idEjercicio);
+            }
+
+            if ($idStatus != "" && $idStatus != "0"){
+                $this->db->where('active', $idStatus);
+            }
+
+            $query = $this->db->get('tab_presupuestos');
+            
+            if($query->num_rows() > 0)
+            {
+                $array_items = [];
+                $cont = 0;
+                foreach ($query->result_array() as $row) 
+                {
+                    $montos = $this->getMontosPartidas($row['id_presupuesto']);
+                    $array_items[$cont]['id'] = $cont + 1;
+                    $array_items[$cont]['id_presupuesto'] = $row['id_presupuesto'];
+                    $array_items[$cont]['id_ejercicio'] = $row['id_ejercicio'];
+                    $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
+                    $array_items[$cont]['id_sujeto_obligado'] = $row['id_sujeto_obligado'];
+                    $array_items[$cont]['nombre_sujeto_obligado'] = $this->dame_nombre_sujeto($row['id_sujeto_obligado']);
+                    $array_items[$cont]['monto_presupuesto'] = $montos['monto_presupuesto'];
+                    $array_items[$cont]['monto_modificacion'] = $montos['monto_modificacion'];
+                    $array_items[$cont]['presupuesto_modificado'] = $montos['presupuesto_modificado'];
+                    $array_items[$cont]['active'] = $this->get_estatus_name($row['active']);
+                    $array_items[$cont]['selected'] = "";
+                    $cont++;
+                }
+                return $array_items;
+            }
         }
     }
 
@@ -395,14 +432,30 @@ class Presupuestos_Model extends CI_Model
             $data_new = array(
                 'active' => $this->input->post('active')
             );
+
+
+            if ($this->input->post('id_year_selected') != "" && $this->input->post('id_year_selected') != "0"){
+                $this->db->where('id_ejercicio', $this->input->post('id_year_selected'));
+            }
+
             
             $this->db->update('tab_presupuestos', $data_new);
 
-            $this->editar_presupuesto_status_partida("");
-    
             if($this->db->affected_rows() > 0)
             {
-                $this->registro_bitacora('Planeación y presupuestos', 'Edición de status todos los presupuesto: ');
+                
+                if ($this->input->post('id_year_selected') != ""){
+                    $presupuestosArray = $this->dame_todos_presupuestos($this->input->post('id_year_selected'), "");
+
+                    foreach ( $presupuestosArray as $row) {
+                        $this->editar_presupuesto_status_partida($row['id_presupuesto']);
+                    }
+                }else{
+                    $this->editar_presupuesto_status_partida("");
+                }
+                
+                $this->registro_bitacora('Planeación y presupuestos', 'Edición presupuestos');
+                
                 return 1; // is correct
             }else
             {

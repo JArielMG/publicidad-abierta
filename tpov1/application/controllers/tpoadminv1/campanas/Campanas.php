@@ -1095,6 +1095,7 @@ class Campanas extends CI_Controller
         $data['yearSelected'] = $this->uri->segment(5);
         $data['statusSelected'] = $this->uri->segment(6);
         
+        
         $data['path_file_csv'] = ''; //$this->Facturas_model->descarga_facturas();
         $data['name_file_csv'] = "campanasyavisos.csv";
         $serviceSide = base_url() . "index.php/tpoadminv1/campanas/campanas/lista_campanas";
@@ -1174,6 +1175,9 @@ class Campanas extends CI_Controller
 
         $this->load->model('tpoadminv1/campanas/Campana_model');
         $data = $this->Campana_model->dame_todas_campanas($yearSelected,$statusSelected);
+
+
+
         
         header('Content-type: application/json');
         

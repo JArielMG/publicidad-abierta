@@ -97,7 +97,16 @@ class Contratos extends CI_Controller
         $data['registros'] = $this->Contratos_model->dame_todos_contratos(false, $this->uri->segment(5),$this->uri->segment(6));
 
         $data['yearSelected'] = $this->uri->segment(5);
+        if (is_array($data['registros'])){
+            if (count($data['registros'])!=0){
+                if($data['registros'][0]["selected"]!=""){
+                    $data['yearSelected'] = $data['registros'][0]["selected"];
+                }
+            }
+        }
         $data['statusSelected'] = $this->uri->segment(6);
+
+
         
         $data['link_descarga'] = base_url() . "index.php/tpoadminv1/capturista/contratos/preparar_exportacion_contratos";
         $data['path_file_csv'] = '';//$this->Contratos_model->descarga_contratos();
@@ -851,6 +860,7 @@ class Contratos extends CI_Controller
             if($redict)
             {
                 redirect('/tpoadminv1/capturista/contratos/busqueda_contratos');
+                
             } 
         }
     }
@@ -878,7 +888,7 @@ function validate_editar_status_contrato()
         }
         if($redict)
         {
-            redirect('/tpoadminv1/capturista/contratos/busqueda_contratos');
+            redirect('/tpoadminv1/capturista/contratos/busqueda_contratos'."/".$this->input->post('id_year_selected'));
         } 
         
     }

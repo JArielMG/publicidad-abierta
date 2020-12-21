@@ -127,6 +127,7 @@
                                     <?php echo $sel_estatus; ?>
                                 </select>
                                 <br/>
+                                <input type="hidden" name="id_year_selected" value="<?php echo $yearSelected; ?>"/>
                                 <button class="btn btn-primary" type="submit">Guardar</button>
                             </div> 
                         </form>
@@ -404,13 +405,13 @@
 
     $('#statusSelect').on('change', function(){
         statusSelect = $(this).val();
-        window.location.href = "<?php echo  base_url() . 'index.php/tpoadminv1/capturista/contratos/busqueda_contratos/'; ?>" + yearSelected + "/" + statusSelect; 
+        window.location.href = "<?php echo  base_url() . 'index.php/tpoadminv1/capturista/ordenes_compra/busqueda_ordenes_compra/'; ?>" + yearSelected + "/" + statusSelect; 
     });
 
     $('#yearSelect').on('change', function(){
         yearSelected = $(this).val();
         //alert(selected);
-        window.location.href = "<?php echo  base_url() . 'index.php/tpoadminv1/capturista/contratos/busqueda_contratos/'; ?>" + yearSelected + "/" + statusSelect;
+        window.location.href = "<?php echo  base_url() . 'index.php/tpoadminv1/capturista/ordenes_compra/busqueda_ordenes_compra/'; ?>" + yearSelected + "/" + statusSelect;
     });
     
     var eliminarModal = function(id, name){
@@ -422,7 +423,7 @@
     }
 
     var eliminar = function (id){
-        window.location.href = "eliminar_orden_compra/" + id;
+        window.location.href = '<?php echo base_url() . 'index.php/tpoadminv1/capturista/ordenes_compra/eliminar_orden_compra/' ?>' + id;
     }
 
     var abrirModal = function(id){

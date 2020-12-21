@@ -69,12 +69,18 @@
         $ejercicio['ejercicio'] = "Todos";
         $ejercicios[] = $ejercicio;
 
-
-
         $ejercicios = array_reverse($ejercicios);
+
+        if ($yearSelected == ""){
+            $yearSelected2 = $ejercicios[1]['id_ejercicio'];
+        }else{
+            $yearSelected2 = $yearSelected;
+        }
+
+        
         for($z = 0; $z < sizeof($ejercicios); $z++)
         {
-            if ($ejercicios[$z]['id_ejercicio'] == $yearSelected){
+            if ($ejercicios[$z]['id_ejercicio'] == $yearSelected2){
                 $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'" selected>' . $ejercicios[$z]['ejercicio'] . '</option>';
             }else{
                 $sel_ejercicios .= '<option value="'.$ejercicios[$z]['id_ejercicio'].'">' . $ejercicios[$z]['ejercicio'] . '</option>';
@@ -130,6 +136,7 @@
                                     <?php echo $sel_estatus; ?>
                                 </select>
                                 <br/>
+                                <input type="hidden" name="id_year_selected" value="<?php echo $yearSelected; ?>"/>
                                 <button class="btn btn-primary" type="submit">Guardar</button>
                             </div> 
                         </form>
@@ -418,7 +425,8 @@
     }
 
     var eliminar = function (id){
-        window.location.href = "eliminar_factura/" + id;
+        //window.location.href = "eliminar_factura/" + id;
+        window.location.href = '<?php echo base_url() . 'index.php/tpoadminv1/capturista/facturas/eliminar_factura/' ?>' + id;;
     }
 
     var abrirModal = function(id){
@@ -595,14 +603,6 @@
         $('#facturas').find('tbody').append('<tr><td colspan="13" class="text-center"><i class="fa fa-refresh fa-spin"></i> Cargando...</td></tr>');
 
         var form_data = new FormData();
-
-        if (yearSelected == ""){
-            yearSelected = "0";
-        }
-
-        if (statusSelect == ""){
-            statusSelect = "0";
-        }
 
         form_data.append('yearSelected', yearSelected);
         form_data.append('statusSelected', statusSelect);

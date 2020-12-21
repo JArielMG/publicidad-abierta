@@ -57,85 +57,179 @@ class Campana_Model extends CI_Model
 
     function dame_todas_campanas($idEjercicio = "", $idStatus = "")
     {
-        $estatus = array('1', '2','3','4');
-        $this->db->where_in('active', $estatus);
+        $this->load->model('tpoadminv1/catalogos/Catalogos_model');
 
-        if ($idEjercicio != "" && $idEjercicio != "0"){
-            $this->db->where('id_ejercicio', $idEjercicio);
-        }
+        if ($idEjercicio == "" && $idStatus == ""){
 
-        if ($idStatus != "" && $idStatus != "0"){
-            $this->db->where('active', $idStatus);
-        }
+            $estatus = array('1', '2','3','4');
+            $this->db->where_in('active', $estatus);
 
-        $this->db->order_by('id_campana_aviso', 'desc');
-        $query = $this->db->get('tab_campana_aviso');
-        
-        if($query->num_rows() > 0)
-        {
-            $array_camp_avisos = [];
-            $cont = 0;
-            foreach ($query->result_array() as $row) 
-            {
-                $array_camp_avisos[$cont]['conteo'] = $cont+1;
-                $array_camp_avisos[$cont]['id_campana_aviso'] = $row['id_campana_aviso'];
-                $array_camp_avisos[$cont]['id_campana_cobertura'] = $row['id_campana_cobertura'];
-                $array_camp_avisos[$cont]['id_campana_tipo'] = $row['id_campana_tipo'];
-                $array_camp_avisos[$cont]['nombre_campana_tipo'] = $this->dame_camp_tipo_nombre($row['id_campana_tipo']);
-                $array_camp_avisos[$cont]['id_campana_subtipo'] = $row['id_campana_subtipo'];
-                $array_camp_avisos[$cont]['nombre_campana_subtipo'] = $this->dame_camp_subtipo_nombre($row['id_campana_subtipo']);
-                $array_camp_avisos[$cont]['id_campana_tema'] = $row['id_campana_tema'];
-                $array_camp_avisos[$cont]['id_campana_objetivo'] = $row['id_campana_objetivo'];
-                $array_camp_avisos[$cont]['id_ejercicio'] = $row['id_ejercicio'];
-                $array_camp_avisos[$cont]['nombre_ejercicio'] = $this->dame_ejercicio_nombre($row['id_ejercicio']);
-                $array_camp_avisos[$cont]['id_trimestre'] = $row['id_trimestre'];
-                $array_camp_avisos[$cont]['nombre_trimestre'] = $this->dame_trimestre_nombre($row['id_trimestre']);
-                $array_camp_avisos[$cont]['fecha_inicio_periodo'] = $row['fecha_inicio_periodo'];
-                $array_camp_avisos[$cont]['fecha_termino_periodo'] = $row['fecha_termino_periodo'];
-                $array_camp_avisos[$cont]['id_so_contratante'] = $row['id_so_contratante'];
-                //$array_camp_avisos[$cont]['nombre_so_contratante'] = $this->dame_soc_nombre($row['id_so_contratante']);
-                $array_camp_avisos[$cont]['nombre_so_contratante'] = $this->dame_nombre_contratante($row['id_so_contratante']);
-                $array_camp_avisos[$cont]['id_so_solicitante'] = $row['id_so_solicitante'];
-                //$array_camp_avisos[$cont]['nombre_so_solicitante'] = $this->dame_sos_nombre($row['id_so_solicitante']);
-                $array_camp_avisos[$cont]['nombre_so_solicitante'] = $this->dame_nombre_solicitante($row['id_so_solicitante']);
-                $array_camp_avisos[$cont]['id_tiempo_oficial'] = $row['id_tiempo_oficial'];
-                $array_camp_avisos[$cont]['nombre_campana_aviso'] = $row['nombre_campana_aviso'];
-                $array_camp_avisos[$cont]['objetivo_comunicacion'] = $row['objetivo_comunicacion'];
-                $array_camp_avisos[$cont]['fecha_inicio'] = $row['fecha_inicio'];
-                $array_camp_avisos[$cont]['fecha_termino'] = $row['fecha_termino'];
-                $array_camp_avisos[$cont]['fecha_inicio_to'] = $row['fecha_inicio_to'];
-                $array_camp_avisos[$cont]['fecha_termino_to'] = $row['fecha_termino_to'];
-                $array_camp_avisos[$cont]['id_campana_tipoTO'] = $row['id_campana_tipoTO'];
-				$array_camp_avisos[$cont]['id_presupuesto'] = $row['id_presupuesto'];
-				$array_camp_avisos[$cont]['id_servicio_categoria'] = $row['id_servicio_categoria'];
-                $array_camp_avisos[$cont]['monto_tiempo'] = $row['monto_tiempo'];
-                $array_camp_avisos[$cont]['hora_to'] = $row['hora_to'];
-                $array_camp_avisos[$cont]['minutos_to'] = $row['minutos_to'];
-                $array_camp_avisos[$cont]['segundos_to'] = $row['segundos_to'];
-                $array_camp_avisos[$cont]['mensajeTO'] = $row['mensajeTO'];
-                $array_camp_avisos[$cont]['descripcion_unidad'] = $row['descripcion_unidad'];
-                $array_camp_avisos[$cont]['responsable_publisher'] = $row['responsable_publisher'];
-                $array_camp_avisos[$cont]['name_comercial'] = $row['name_comercial'];
-                $array_camp_avisos[$cont]['razones_supplier'] = $row['razones_supplier'];
-                $array_camp_avisos[$cont]['difusion_mensaje'] = $row['difusion_mensaje'];
-                $array_camp_avisos[$cont]['num_factura'] = $row['num_factura'];
-                $array_camp_avisos[$cont]['publicacion_segob'] = $row['publicacion_segob'];
-                $array_camp_avisos[$cont]['campana_ambito_geo'] = $row['campana_ambito_geo'];
-                $array_camp_avisos[$cont]['plan_acs'] = $row['plan_acs'];
-                $array_camp_avisos[$cont]['fecha_dof'] = $row['fecha_dof'];
-                $array_camp_avisos[$cont]['evaluacion'] = $row['evaluacion'];
-                $array_camp_avisos[$cont]['evaluacion_documento'] = $row['evaluacion_documento'];
-                $array_camp_avisos[$cont]['fecha_validacion'] = $row['fecha_validacion'];
-                $array_camp_avisos[$cont]['area_responsable'] = $row['area_responsable'];
-                $array_camp_avisos[$cont]['periodo'] = $row['periodo'];
-                $array_camp_avisos[$cont]['fecha_actualizacion'] = $row['fecha_actualizacion'];
-                $array_camp_avisos[$cont]['nota'] = $row['nota'];
-                $array_camp_avisos[$cont]['autoridad'] = $row['autoridad'];
-                $array_camp_avisos[$cont]['clave_campana'] = $row['clave_campana'];
-                $array_camp_avisos[$cont]['active'] = $this->get_estatus_name($row['active']);
-                $cont++;
+
+            $ejercicios = $this->Catalogos_model->dame_todos_ejercicios(true);
+            $ejercicios = array_reverse($ejercicios);
+            for ($i = 0; $i < count($ejercicios); $i++) {
+                $idEjercicio = $ejercicios[$i]["id_ejercicio"];
+                if ($idEjercicio != "" && $idEjercicio != "0"){
+                    $this->db->where('id_ejercicio', $idEjercicio);
+                }
+                
+                $this->db->order_by('id_campana_aviso', 'desc');
+                $query = $this->db->get('tab_campana_aviso');
+                
+                if($query->num_rows() > 0)
+                {
+                    $array_camp_avisos = [];
+                    $cont = 0;
+                    foreach ($query->result_array() as $row) 
+                    {
+                        $array_camp_avisos[$cont]['conteo'] = $cont+1;
+                        $array_camp_avisos[$cont]['id_campana_aviso'] = $row['id_campana_aviso'];
+                        $array_camp_avisos[$cont]['id_campana_cobertura'] = $row['id_campana_cobertura'];
+                        $array_camp_avisos[$cont]['id_campana_tipo'] = $row['id_campana_tipo'];
+                        $array_camp_avisos[$cont]['nombre_campana_tipo'] = $this->dame_camp_tipo_nombre($row['id_campana_tipo']);
+                        $array_camp_avisos[$cont]['id_campana_subtipo'] = $row['id_campana_subtipo'];
+                        $array_camp_avisos[$cont]['nombre_campana_subtipo'] = $this->dame_camp_subtipo_nombre($row['id_campana_subtipo']);
+                        $array_camp_avisos[$cont]['id_campana_tema'] = $row['id_campana_tema'];
+                        $array_camp_avisos[$cont]['id_campana_objetivo'] = $row['id_campana_objetivo'];
+                        $array_camp_avisos[$cont]['id_ejercicio'] = $row['id_ejercicio'];
+                        $array_camp_avisos[$cont]['nombre_ejercicio'] = $this->dame_ejercicio_nombre($row['id_ejercicio']);
+                        $array_camp_avisos[$cont]['id_trimestre'] = $row['id_trimestre'];
+                        $array_camp_avisos[$cont]['nombre_trimestre'] = $this->dame_trimestre_nombre($row['id_trimestre']);
+                        $array_camp_avisos[$cont]['fecha_inicio_periodo'] = $row['fecha_inicio_periodo'];
+                        $array_camp_avisos[$cont]['fecha_termino_periodo'] = $row['fecha_termino_periodo'];
+                        $array_camp_avisos[$cont]['id_so_contratante'] = $row['id_so_contratante'];
+                        //$array_camp_avisos[$cont]['nombre_so_contratante'] = $this->dame_soc_nombre($row['id_so_contratante']);
+                        $array_camp_avisos[$cont]['nombre_so_contratante'] = $this->dame_nombre_contratante($row['id_so_contratante']);
+                        $array_camp_avisos[$cont]['id_so_solicitante'] = $row['id_so_solicitante'];
+                        //$array_camp_avisos[$cont]['nombre_so_solicitante'] = $this->dame_sos_nombre($row['id_so_solicitante']);
+                        $array_camp_avisos[$cont]['nombre_so_solicitante'] = $this->dame_nombre_solicitante($row['id_so_solicitante']);
+                        $array_camp_avisos[$cont]['id_tiempo_oficial'] = $row['id_tiempo_oficial'];
+                        $array_camp_avisos[$cont]['nombre_campana_aviso'] = $row['nombre_campana_aviso'];
+                        $array_camp_avisos[$cont]['objetivo_comunicacion'] = $row['objetivo_comunicacion'];
+                        $array_camp_avisos[$cont]['fecha_inicio'] = $row['fecha_inicio'];
+                        $array_camp_avisos[$cont]['fecha_termino'] = $row['fecha_termino'];
+                        $array_camp_avisos[$cont]['fecha_inicio_to'] = $row['fecha_inicio_to'];
+                        $array_camp_avisos[$cont]['fecha_termino_to'] = $row['fecha_termino_to'];
+                        $array_camp_avisos[$cont]['id_campana_tipoTO'] = $row['id_campana_tipoTO'];
+                        $array_camp_avisos[$cont]['id_presupuesto'] = $row['id_presupuesto'];
+                        $array_camp_avisos[$cont]['id_servicio_categoria'] = $row['id_servicio_categoria'];
+                        $array_camp_avisos[$cont]['monto_tiempo'] = $row['monto_tiempo'];
+                        $array_camp_avisos[$cont]['hora_to'] = $row['hora_to'];
+                        $array_camp_avisos[$cont]['minutos_to'] = $row['minutos_to'];
+                        $array_camp_avisos[$cont]['segundos_to'] = $row['segundos_to'];
+                        $array_camp_avisos[$cont]['mensajeTO'] = $row['mensajeTO'];
+                        $array_camp_avisos[$cont]['descripcion_unidad'] = $row['descripcion_unidad'];
+                        $array_camp_avisos[$cont]['responsable_publisher'] = $row['responsable_publisher'];
+                        $array_camp_avisos[$cont]['name_comercial'] = $row['name_comercial'];
+                        $array_camp_avisos[$cont]['razones_supplier'] = $row['razones_supplier'];
+                        $array_camp_avisos[$cont]['difusion_mensaje'] = $row['difusion_mensaje'];
+                        $array_camp_avisos[$cont]['num_factura'] = $row['num_factura'];
+                        $array_camp_avisos[$cont]['publicacion_segob'] = $row['publicacion_segob'];
+                        $array_camp_avisos[$cont]['campana_ambito_geo'] = $row['campana_ambito_geo'];
+                        $array_camp_avisos[$cont]['plan_acs'] = $row['plan_acs'];
+                        $array_camp_avisos[$cont]['fecha_dof'] = $row['fecha_dof'];
+                        $array_camp_avisos[$cont]['evaluacion'] = $row['evaluacion'];
+                        $array_camp_avisos[$cont]['evaluacion_documento'] = $row['evaluacion_documento'];
+                        $array_camp_avisos[$cont]['fecha_validacion'] = $row['fecha_validacion'];
+                        $array_camp_avisos[$cont]['area_responsable'] = $row['area_responsable'];
+                        $array_camp_avisos[$cont]['periodo'] = $row['periodo'];
+                        $array_camp_avisos[$cont]['fecha_actualizacion'] = $row['fecha_actualizacion'];
+                        $array_camp_avisos[$cont]['nota'] = $row['nota'];
+                        $array_camp_avisos[$cont]['autoridad'] = $row['autoridad'];
+                        $array_camp_avisos[$cont]['clave_campana'] = $row['clave_campana'];
+                        $array_camp_avisos[$cont]['active'] = $this->get_estatus_name($row['active']);
+                        $cont++;
+                    }
+                    return $array_camp_avisos;
+                }
             }
-            return $array_camp_avisos;
+
+
+
+
+        }else{
+
+            $estatus = array('1', '2','3','4');
+            $this->db->where_in('active', $estatus);
+
+            if ($idEjercicio != "" && $idEjercicio != "0"){
+                $this->db->where('id_ejercicio', $idEjercicio);
+            }
+
+            if ($idStatus != "" && $idStatus != "0"){
+                $this->db->where('active', $idStatus);
+            }
+
+            $this->db->order_by('id_campana_aviso', 'desc');
+            $query = $this->db->get('tab_campana_aviso');
+            
+            if($query->num_rows() > 0)
+            {
+                $array_camp_avisos = [];
+                $cont = 0;
+                foreach ($query->result_array() as $row) 
+                {
+                    $array_camp_avisos[$cont]['conteo'] = $cont+1;
+                    $array_camp_avisos[$cont]['id_campana_aviso'] = $row['id_campana_aviso'];
+                    $array_camp_avisos[$cont]['id_campana_cobertura'] = $row['id_campana_cobertura'];
+                    $array_camp_avisos[$cont]['id_campana_tipo'] = $row['id_campana_tipo'];
+                    $array_camp_avisos[$cont]['nombre_campana_tipo'] = $this->dame_camp_tipo_nombre($row['id_campana_tipo']);
+                    $array_camp_avisos[$cont]['id_campana_subtipo'] = $row['id_campana_subtipo'];
+                    $array_camp_avisos[$cont]['nombre_campana_subtipo'] = $this->dame_camp_subtipo_nombre($row['id_campana_subtipo']);
+                    $array_camp_avisos[$cont]['id_campana_tema'] = $row['id_campana_tema'];
+                    $array_camp_avisos[$cont]['id_campana_objetivo'] = $row['id_campana_objetivo'];
+                    $array_camp_avisos[$cont]['id_ejercicio'] = $row['id_ejercicio'];
+                    $array_camp_avisos[$cont]['nombre_ejercicio'] = $this->dame_ejercicio_nombre($row['id_ejercicio']);
+                    $array_camp_avisos[$cont]['id_trimestre'] = $row['id_trimestre'];
+                    $array_camp_avisos[$cont]['nombre_trimestre'] = $this->dame_trimestre_nombre($row['id_trimestre']);
+                    $array_camp_avisos[$cont]['fecha_inicio_periodo'] = $row['fecha_inicio_periodo'];
+                    $array_camp_avisos[$cont]['fecha_termino_periodo'] = $row['fecha_termino_periodo'];
+                    $array_camp_avisos[$cont]['id_so_contratante'] = $row['id_so_contratante'];
+                    //$array_camp_avisos[$cont]['nombre_so_contratante'] = $this->dame_soc_nombre($row['id_so_contratante']);
+                    $array_camp_avisos[$cont]['nombre_so_contratante'] = $this->dame_nombre_contratante($row['id_so_contratante']);
+                    $array_camp_avisos[$cont]['id_so_solicitante'] = $row['id_so_solicitante'];
+                    //$array_camp_avisos[$cont]['nombre_so_solicitante'] = $this->dame_sos_nombre($row['id_so_solicitante']);
+                    $array_camp_avisos[$cont]['nombre_so_solicitante'] = $this->dame_nombre_solicitante($row['id_so_solicitante']);
+                    $array_camp_avisos[$cont]['id_tiempo_oficial'] = $row['id_tiempo_oficial'];
+                    $array_camp_avisos[$cont]['nombre_campana_aviso'] = $row['nombre_campana_aviso'];
+                    $array_camp_avisos[$cont]['objetivo_comunicacion'] = $row['objetivo_comunicacion'];
+                    $array_camp_avisos[$cont]['fecha_inicio'] = $row['fecha_inicio'];
+                    $array_camp_avisos[$cont]['fecha_termino'] = $row['fecha_termino'];
+                    $array_camp_avisos[$cont]['fecha_inicio_to'] = $row['fecha_inicio_to'];
+                    $array_camp_avisos[$cont]['fecha_termino_to'] = $row['fecha_termino_to'];
+                    $array_camp_avisos[$cont]['id_campana_tipoTO'] = $row['id_campana_tipoTO'];
+    				$array_camp_avisos[$cont]['id_presupuesto'] = $row['id_presupuesto'];
+    				$array_camp_avisos[$cont]['id_servicio_categoria'] = $row['id_servicio_categoria'];
+                    $array_camp_avisos[$cont]['monto_tiempo'] = $row['monto_tiempo'];
+                    $array_camp_avisos[$cont]['hora_to'] = $row['hora_to'];
+                    $array_camp_avisos[$cont]['minutos_to'] = $row['minutos_to'];
+                    $array_camp_avisos[$cont]['segundos_to'] = $row['segundos_to'];
+                    $array_camp_avisos[$cont]['mensajeTO'] = $row['mensajeTO'];
+                    $array_camp_avisos[$cont]['descripcion_unidad'] = $row['descripcion_unidad'];
+                    $array_camp_avisos[$cont]['responsable_publisher'] = $row['responsable_publisher'];
+                    $array_camp_avisos[$cont]['name_comercial'] = $row['name_comercial'];
+                    $array_camp_avisos[$cont]['razones_supplier'] = $row['razones_supplier'];
+                    $array_camp_avisos[$cont]['difusion_mensaje'] = $row['difusion_mensaje'];
+                    $array_camp_avisos[$cont]['num_factura'] = $row['num_factura'];
+                    $array_camp_avisos[$cont]['publicacion_segob'] = $row['publicacion_segob'];
+                    $array_camp_avisos[$cont]['campana_ambito_geo'] = $row['campana_ambito_geo'];
+                    $array_camp_avisos[$cont]['plan_acs'] = $row['plan_acs'];
+                    $array_camp_avisos[$cont]['fecha_dof'] = $row['fecha_dof'];
+                    $array_camp_avisos[$cont]['evaluacion'] = $row['evaluacion'];
+                    $array_camp_avisos[$cont]['evaluacion_documento'] = $row['evaluacion_documento'];
+                    $array_camp_avisos[$cont]['fecha_validacion'] = $row['fecha_validacion'];
+                    $array_camp_avisos[$cont]['area_responsable'] = $row['area_responsable'];
+                    $array_camp_avisos[$cont]['periodo'] = $row['periodo'];
+                    $array_camp_avisos[$cont]['fecha_actualizacion'] = $row['fecha_actualizacion'];
+                    $array_camp_avisos[$cont]['nota'] = $row['nota'];
+                    $array_camp_avisos[$cont]['autoridad'] = $row['autoridad'];
+                    $array_camp_avisos[$cont]['clave_campana'] = $row['clave_campana'];
+                    $array_camp_avisos[$cont]['active'] = $this->get_estatus_name($row['active']);
+                    $cont++;
+                }
+                return $array_camp_avisos;
+            }
+
         }
     }
 	
@@ -2324,16 +2418,22 @@ class Campana_Model extends CI_Model
             'active' => $this->input->post('active'),
         );
 
+        if ($this->input->post('id_year_selected') != "" && $this->input->post('id_year_selected') != "0"){
+            $this->db->where('id_ejercicio', $this->input->post('id_year_selected'));
+        }
+
         $this->db->update('tab_campana_aviso', $data);
         
         if($this->db->affected_rows() > 0)
         {
             
             $bitacora = $this->guardar_bitacora('Se modificaron todos los datos');
+
             return 1;
         }else{
             return 0;
         }
+                
     }
 
     //Guardamos los detalles de las pestañas
