@@ -78,7 +78,7 @@ class Listado extends CI_Controller
 
     function index(){
         //Validamos que el usuario tenga acceso
-        $this->permiso_administrador();
+        //$this->permiso_administrador();
 
         $this->load->model('tpoadminv1/logo/Logo_model');
 

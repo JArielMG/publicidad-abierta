@@ -149,10 +149,6 @@ class Formato_c extends Webservices
                       "pcon.denominacion_partida", "fact2.total_monto_presupuesto", "fact.total_ejercido", 
                       "pnt.estatus_pnt");
 
-        $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
-                      "pcon.denominacion_partida", "fact2.total_monto_presupuesto", "fact.total_ejercido", 
-                      "pnt.estatus_pnt");
-
         foreach ($cols as &$col) {
             $tag = $col;
             if( strpos($col, " ") ) {
