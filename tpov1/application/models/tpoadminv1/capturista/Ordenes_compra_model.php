@@ -171,39 +171,74 @@ class Ordenes_compra_Model extends CI_Model
         $this->load->model('tpoadminv1/capturista/Proveedores_model');
         $this->load->model('tpoadminv1/Generales_model');
 
-        if ($idEjercicio != "" && $idEjercicio != "0"){
-            $this->db->where('id_ejercicio', $idEjercicio);
-        }
+        if ($idEjercicio == "" && $idStatus == ""){
+            $ejercicios = $this->Catalogos_model->dame_todos_ejercicios(true);
+            $ejercicios = array_reverse($ejercicios);
+            for ($i = 0; $i < count($ejercicios); $i++) {
+                $idEjercicio = $ejercicios[$i]["id_ejercicio"];
+                if ($idEjercicio != "" && $idEjercicio != "0"){
+                    $this->db->where('id_ejercicio', $idEjercicio);
+                }
 
-        if ($idStatus != "" && $idStatus != "0"){
-            $this->db->where('active', $idStatus);
+                $query = $this->db->get('tab_ordenes_compra');
+
+                if ($query->num_rows() >= 1)
+                {
+                    $array_items = [];
+                    $cont = 0;
+
+                    foreach ($query->result_array() as $row) {
+                        $array_items[$cont]['id'] = $cont +1;
+                        $array_items[$cont]['id_orden_compra'] = $row['id_orden_compra'];
+                        $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
+                        $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
+                        $array_items[$cont]['proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
+                        $array_items[$cont]['campana'] = $this->dame_nombre_campana_aviso($row['id_campana_aviso']);
+                        $array_items[$cont]['numero_orden_compra'] = $row['numero_orden_compra'];
+                        $array_items[$cont]['active'] = $this->Generales_model->get_estatus_name($row['active']);
+                        $array_items[$cont]['selected'] = $idEjercicio;
+                        $cont++;
+                    }
+                    return $array_items;
+                }
+            }
         }else{
-            if($activos){
-                $this->db->where('active', '1');
+
+            if ($idEjercicio != "" && $idEjercicio != "0"){
+                $this->db->where('id_ejercicio', $idEjercicio);
             }
-        }
 
-        $this->db->where('id_orden_compra > ', '1');
-
-        $query = $this->db->get('tab_ordenes_compra');
-
-        if ($query->num_rows() >= 1)
-        {
-            $array_items = [];
-            $cont = 0;
-
-            foreach ($query->result_array() as $row) {
-                $array_items[$cont]['id'] = $cont +1;
-                $array_items[$cont]['id_orden_compra'] = $row['id_orden_compra'];
-                $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
-                $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
-                $array_items[$cont]['proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
-                $array_items[$cont]['campana'] = $this->dame_nombre_campana_aviso($row['id_campana_aviso']);
-                $array_items[$cont]['numero_orden_compra'] = $row['numero_orden_compra'];
-                $array_items[$cont]['active'] = $this->Generales_model->get_estatus_name($row['active']);
-                $cont++;
+            if ($idStatus != "" && $idStatus != "0"){
+                $this->db->where('active', $idStatus);
+            }else{
+                if($activos){
+                    $this->db->where('active', '1');
+                }
             }
-            return $array_items;
+
+            $this->db->where('id_orden_compra > ', '1');
+
+            $query = $this->db->get('tab_ordenes_compra');
+
+            if ($query->num_rows() >= 1)
+            {
+                $array_items = [];
+                $cont = 0;
+
+                foreach ($query->result_array() as $row) {
+                    $array_items[$cont]['id'] = $cont +1;
+                    $array_items[$cont]['id_orden_compra'] = $row['id_orden_compra'];
+                    $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
+                    $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
+                    $array_items[$cont]['proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
+                    $array_items[$cont]['campana'] = $this->dame_nombre_campana_aviso($row['id_campana_aviso']);
+                    $array_items[$cont]['numero_orden_compra'] = $row['numero_orden_compra'];
+                    $array_items[$cont]['active'] = $this->Generales_model->get_estatus_name($row['active']);
+                    $array_items[$cont]['selected'] = "";
+                    $cont++;
+                }
+                return $array_items;
+            }
         }
     }
 
@@ -446,6 +481,10 @@ class Ordenes_compra_Model extends CI_Model
             $data_update = array(
                 'active' => $this->input->post('active')
             );
+
+            if ($this->input->post('id_year_selected') != "" && $this->input->post('id_year_selected') != "0"){
+                $this->db->where('id_ejercicio', $this->input->post('id_year_selected'));
+            }
             
             $this->db->update('tab_ordenes_compra', $data_update);
     

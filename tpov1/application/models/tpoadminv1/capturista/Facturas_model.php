@@ -91,58 +91,120 @@ class Facturas_Model extends CI_Model
         $this->load->model('tpoadminv1/capturista/Ordenes_compra_model');
 
         if ($this->db->table_exists('vlista_facturas')){
+
+            if ($idEjercicio == "" && $idStatus == ""){
+                $ejercicios = $this->Catalogos_model->dame_todos_ejercicios(true);
+                $ejercicios = array_reverse($ejercicios);
+                for ($i = 0; $i < count($ejercicios); $i++) {
+                    $idEjercicio = $ejercicios[$i]["id_ejercicio"];
+                    if ($idEjercicio != "" && $idEjercicio != "0"){
+                        $this->db->where('ejercicio', $this->Catalogos_model->dame_nombre_ejercicio($idEjercicio));
+                    }
+
+                    $query = $this->db->get('vlista_facturas');
+
+                    if($query->num_rows() > 0)
+                    {
+                        $array_items = [];
+                        $cont = 0;
+                        foreach ($query->result_array() as $row) 
+                        {
+                            $row['selected'] = $idEjercicio;
+                            $array_items[] = $row;
+                        }
+                        return $array_items;
+                    }
+                }
+            }else{
             
-            if ($idEjercicio != "" && $idEjercicio != "0"){
-                $this->db->where('ejercicio', $this->Catalogos_model->dame_nombre_ejercicio($idEjercicio));
-            }
-
-            if ($idStatus != "" && $idStatus != "0"){
-                $this->db->where('active', $this->Generales_model->get_estatus_name($idStatus));
-            }else{
-                if($activos){
-                    $this->db->where('active', '1');
+                if ($idEjercicio != "" && $idEjercicio != "0"){
+                    $this->db->where('ejercicio', $this->Catalogos_model->dame_nombre_ejercicio($idEjercicio));
                 }
-            }
 
-            $query = $this->db->get('vlista_facturas');
-            return $query->result_array();
+                if ($idStatus != "" && $idStatus != "0"){
+                    $this->db->where('active', $this->Generales_model->get_estatus_name($idStatus));
+                }else{
+                    if($activos){
+                        $this->db->where('active', '1');
+                    }
+                }
+
+                $query = $this->db->get('vlista_facturas');
+                return $query->result_array();
+            }
         }else{
-
-            if ($idEjercicio != "" && $idEjercicio != "0"){
-                $this->db->where('id_ejercicio', $idEjercicio);
-            }
-
-            if ($idStatus != "" && $idStatus != "0"){
-                $this->db->where('active', $idStatus);
-            }else{
-                if($activos){
-                    $this->db->where('active', '1');
+            if ($idEjercicio == "" && $idStatus == ""){
+                $ejercicios = $this->Catalogos_model->dame_todos_ejercicios(true);
+                $ejercicios = array_reverse($ejercicios);
+                for ($i = 0; $i < count($ejercicios); $i++) {
+                    $idEjercicio = $ejercicios[$i]["id_ejercicio"];
+                    if ($idEjercicio != "" && $idEjercicio != "0"){
+                        $this->db->where('id_ejercicio', $this->Catalogos_model->dame_nombre_ejercicio($idEjercicio));
+                    }
                 }
-            }
 
-            $query = $this->db->get('tab_facturas');
-        
-            if($query->num_rows() > 0)
-            {
-                $array_items = [];
-                $cont = 0;
-                foreach ($query->result_array() as $row) 
+                $query = $this->db->get('tab_facturas');
+            
+                if($query->num_rows() > 0)
                 {
-                    $array_items[$cont]['id'] = $cont + 1;
-                    $array_items[$cont]['id_factura'] = $row['id_factura'];
-                    $array_items[$cont]['orden'] = $this->Ordenes_compra_model->dame_nombre_orden_compra($row['id_orden_compra']);
-                    $array_items[$cont]['contrato'] = $this->Contratos_model->dame_nombre_contrato($row['id_contrato']);
-                    $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
-                    $array_items[$cont]['proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
-                    $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
-                    $array_items[$cont]['numero_factura'] = $row['numero_factura'];
-                    $array_items[$cont]['fecha_erogacion'] = $this->Generales_model->dateToString($row['fecha_erogacion']);
-                    $array_items[$cont]['monto_factura'] = $this->Generales_model->money_format("%.2n", $this->get_monto_factura($row['id_factura']));
-                    $array_items[$cont]['link'] = base_url() . "index.php/tpoadminv1/capturista/facturas/editar_factura/".$row['id_factura'];
-                    $array_items[$cont]['active'] = $this->Generales_model->get_estatus_name($row['active']);
-                    $cont++;
+                    $array_items = [];
+                    $cont = 0;
+                    foreach ($query->result_array() as $row) 
+                    {
+                        $array_items[$cont]['id'] = $cont + 1;
+                        $array_items[$cont]['id_factura'] = $row['id_factura'];
+                        $array_items[$cont]['orden'] = $this->Ordenes_compra_model->dame_nombre_orden_compra($row['id_orden_compra']);
+                        $array_items[$cont]['contrato'] = $this->Contratos_model->dame_nombre_contrato($row['id_contrato']);
+                        $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
+                        $array_items[$cont]['proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
+                        $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
+                        $array_items[$cont]['numero_factura'] = $row['numero_factura'];
+                        $array_items[$cont]['fecha_erogacion'] = $this->Generales_model->dateToString($row['fecha_erogacion']);
+                        $array_items[$cont]['monto_factura'] = $this->Generales_model->money_format("%.2n", $this->get_monto_factura($row['id_factura']));
+                        $array_items[$cont]['link'] = base_url() . "index.php/tpoadminv1/capturista/facturas/editar_factura/".$row['id_factura'];
+                        $array_items[$cont]['active'] = $this->Generales_model->get_estatus_name($row['active']);
+                        $array_items[$cont]['selected'] = $idEjercicio;
+                        $cont++;
+                    }
+                    return $array_items;
                 }
-                return $array_items;
+            }else{
+                if ($idEjercicio != "" && $idEjercicio != "0"){
+                    $this->db->where('id_ejercicio', $idEjercicio);
+                }
+
+                if ($idStatus != "" && $idStatus != "0"){
+                    $this->db->where('active', $idStatus);
+                }else{
+                    if($activos){
+                        $this->db->where('active', '1');
+                    }
+                }
+
+                $query = $this->db->get('tab_facturas');
+            
+                if($query->num_rows() > 0)
+                {
+                    $array_items = [];
+                    $cont = 0;
+                    foreach ($query->result_array() as $row) 
+                    {
+                        $array_items[$cont]['id'] = $cont + 1;
+                        $array_items[$cont]['id_factura'] = $row['id_factura'];
+                        $array_items[$cont]['orden'] = $this->Ordenes_compra_model->dame_nombre_orden_compra($row['id_orden_compra']);
+                        $array_items[$cont]['contrato'] = $this->Contratos_model->dame_nombre_contrato($row['id_contrato']);
+                        $array_items[$cont]['ejercicio'] = $this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio']);
+                        $array_items[$cont]['proveedor'] = $this->Proveedores_model->dame_nombre_proveedor($row['id_proveedor']);
+                        $array_items[$cont]['trimestre'] = $this->Catalogos_model->dame_nombre_trimestre($row['id_trimestre']);
+                        $array_items[$cont]['numero_factura'] = $row['numero_factura'];
+                        $array_items[$cont]['fecha_erogacion'] = $this->Generales_model->dateToString($row['fecha_erogacion']);
+                        $array_items[$cont]['monto_factura'] = $this->Generales_model->money_format("%.2n", $this->get_monto_factura($row['id_factura']));
+                        $array_items[$cont]['link'] = base_url() . "index.php/tpoadminv1/capturista/facturas/editar_factura/".$row['id_factura'];
+                        $array_items[$cont]['active'] = $this->Generales_model->get_estatus_name($row['active']);
+                        $cont++;
+                    }
+                    return $array_items;
+                }
             }
         }
     }
@@ -342,7 +404,7 @@ class Facturas_Model extends CI_Model
             $continueUpdate = true;
 
             if ($regAnt['active'] != $this->input->post('active')){
-                if($this->editar_status_factura_desglose($idFactura) == 0){
+                if($this->editar_status_factura_desglose($idFactura,"") == 0){
                     $continueUpdate = false;
                 }
             }
@@ -383,7 +445,7 @@ class Facturas_Model extends CI_Model
                     // any trans error?
                     if ($this->db->trans_status() === FALSE) {
                         return 0; // something is not correct
-                    }else{
+                    }else{ 
                         return 1; // is correct
                     }
                 }
@@ -395,30 +457,41 @@ class Facturas_Model extends CI_Model
     {
         $this->load->model('tpoadminv1/Generales_model');
         $query = $this->db->get('tab_facturas');
-
-        
-            
-            $data_update = array(
-                'active' => $this->input->post('active')
-            );
-
-            $this->editar_status_factura_desglose("");
-
-            $this->db->update('tab_facturas', $data_update);
     
-            if($this->db->affected_rows() > 0)
-            {
-                $this->registro_bitacora('Facturas', 'Edición de las facturas');
-                return 1; // is correct
-            }else
-            {
-                // any trans error?
-                if ($this->db->trans_status() === FALSE) {
-                    return 0; // something is not correct
-                }else{
-                    return 1; // is correct
+        $data_update = array(
+            'active' => $this->input->post('active')
+        );
+
+        if ($this->input->post('id_year_selected') != "" && $this->input->post('id_year_selected') != "0"){
+            $this->db->where('id_ejercicio', $this->input->post('id_year_selected'));
+        }
+
+        $this->db->update('tab_facturas', $data_update);
+
+        if($this->db->affected_rows() > 0)
+        {
+
+            if ($this->input->post('id_year_selected') != ""){
+                $presupuestosArray = $this->dame_todas_facturas("",$this->input->post('id_year_selected'), "");
+
+                foreach ( $presupuestosArray as $row) {
+                    $this->editar_status_factura_desglose($row['id_factura'],$this->input->post('active'));
                 }
+            }else{
+                $this->editar_status_factura_desglose("","");
             }
+
+            $this->registro_bitacora('Facturas', 'Edición de las facturas');
+            return 1; // is correct
+        }else
+        {
+            // any trans error?
+            if ($this->db->trans_status() === FALSE) {
+                return 0; // something is not correct
+            }else{
+                return 1; // is correct
+            }
+        }
         
     }
 
@@ -701,12 +774,17 @@ class Facturas_Model extends CI_Model
     }
 
 
-    function editar_status_factura_desglose($id = "")
+    function editar_status_factura_desglose($id = "", $status = "")
     {
-        
-        $data_update = array(
-            'active' => $this->input->post('active')
-        );
+        if ($status == ""){
+            $data_update = array(
+                'active' => $this->input->post('active')
+            );
+        }else {
+            $data_update = array(
+                'active' => $status
+            );
+        }
 
         if ($id != ""){
             $this->db->where('id_factura', $id);

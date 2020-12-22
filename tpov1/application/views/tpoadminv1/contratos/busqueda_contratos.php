@@ -128,6 +128,7 @@
                                     <?php echo $sel_estatus; ?>
                                 </select>
                                 <br/>
+                                <input type="hidden" name="id_year_selected" value="<?php echo $yearSelected; ?>"/>
                                 <button class="btn btn-primary" type="submit">Guardar</button>
                             </div> 
                         </form>
@@ -472,7 +473,7 @@
     }
 
     var eliminar = function (id){
-        window.location.href = "eliminar_contrato/" + id;
+        window.location.href = '<?php echo base_url() . 'index.php/tpoadminv1/capturista/contratos/eliminar_contrato/' ?>' + id;
     }
 
     var abrirModal = function(id){
