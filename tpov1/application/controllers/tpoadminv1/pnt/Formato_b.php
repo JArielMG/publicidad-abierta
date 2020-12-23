@@ -130,13 +130,13 @@ class Formato_b extends Webservices
             } else if ( strpos($col, ".") ) $tag = explode(".", $col)[1];
             $col = "IFNULL(" . $col . ", '') AS $tag";
         }
-
+//file_programa_anual
 
         $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_facturas f
                     JOIN tab_facturas_desglose fd ON fd.id_factura = f.id_factura
                     JOIN tab_campana_aviso cam ON cam.id_campana_aviso = fd.id_campana_aviso
                     JOIN cat_ejercicios e ON e.id_ejercicio = cam.id_ejercicio 
-                    JOIN tab_proveedores prov ON prov.id_proveedor = f.id_proveedor
+                    LEFT JOIN tab_proveedores prov ON prov.id_proveedor = f.id_proveedor
                     LEFT JOIN tab_contratos con ON con.id_proveedor = prov.id_proveedor
                     LEFT JOIN cat_procedimientos proc ON proc.id_procedimiento = con.id_procedimiento
                     LEFT JOIN rel_pnt_proveedor pnt ON pnt.id_proveedor = prov.id_proveedor;");

@@ -398,6 +398,13 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     render: function ( data, type, row, meta ) {
                         var response = ""
                         //_row = HtmlSanitizer.SanitizeHtml(JSON.stringify(row)) 
+                        row.objetivo_comunicacion =  row.objetivo_comunicacion.replace(/"/g, "'")
+
+                        var contenido = row.objetivo_comunicacion.replace(/"/g, "'")
+                        var temporal = document.createElement("div");
+                        temporal.innerHTML = contenido;
+                        row.objetivo_comunicacion = temporal.textContent || temporal.innerText || "";
+
                         _row = JSON.stringify(row)
 
                         if( !(row.id_pnt) || row.id_pnt === ""){ 

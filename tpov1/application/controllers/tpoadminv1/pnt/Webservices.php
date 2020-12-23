@@ -123,6 +123,18 @@ class Webservices extends CI_Controller
 
     }
 
+    function write_login(){
+        $myfile = fopen($_SERVER["DOCUMENT_ROOT"] . "/publicidad-abierta/tpov1/data/archivo_conexion.txt", "w") or die("Unable to open file!");
+        $txt = "conexión: " . $this->input->get('status_conn') . ", mensaje: " . $this->input->get('messagge') ;
+
+        fwrite($myfile, $txt);
+        echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . "/publicidad-abierta/tpov1/data/archivo_conexion.txt" );
+
+        
+        fclose($myfile); 
+
+    }
+
     function salir_pnt(){
         $URL = $this->pnt_url . "generaToken/";
         $data = array('usuario' => '', 'password' => '' );
