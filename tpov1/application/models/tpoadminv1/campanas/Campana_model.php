@@ -2426,12 +2426,15 @@ class Campana_Model extends CI_Model
         
         if($this->db->affected_rows() > 0)
         {
-            
             $bitacora = $this->guardar_bitacora('Se modificaron todos los datos');
-
             return 1;
         }else{
-            return 0;
+            // any trans error?
+            if ($this->db->trans_status() === FALSE) {
+                return 0; // sometime is wrong
+            }else{
+                return 1;
+            }
         }
                 
     }
