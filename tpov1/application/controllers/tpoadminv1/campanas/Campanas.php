@@ -1799,19 +1799,18 @@ class Campanas extends CI_Controller
 
         $this->load->model('tpoadminv1/campanas/Campana_model');
         $this->load->library('form_validation');
-        
-        
+
         $alta = $this->Campana_model->edita_status_campana();
 
         switch ($alta)
         {
             case '1':
                 $this->session->set_flashdata('exito', "Los datos han sido modificados exitosamente.");
-                redirect('/tpoadminv1/campanas/campanas/busqueda_campanas_avisos', $alta_1[1]);
+                redirect('/tpoadminv1/campanas/campanas/busqueda_campanas_avisos', $alta);
                 break;
             default: 
-                $this->session->set_flashdata('alerta', "Hubo un error intente de nuevo");
-                $this->load->view('tpoadminv1/includes/template', $data);
+                $this->session->set_flashdata('alert', "Hubo un error intente de nuevo");
+                redirect('/tpoadminv1/campanas/campanas/busqueda_campanas_avisos');
                 break;
         }
         
