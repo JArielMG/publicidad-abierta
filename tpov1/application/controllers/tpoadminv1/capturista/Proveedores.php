@@ -90,7 +90,7 @@ class Proveedores extends CI_Controller
             'descripcion_servicios' => 'Descripci&oacute;n de sus servicios',
             'nota' => 'Nota',
             'active' => 'Indica el estado de la informaci&oacute;n “Activa” o “Inactiva”.',
-            'cambiar_estatus' => 'Cambia el estatus de todos los registros de acuerdo al año seleccionado.',
+            'cambiar_estatus' => 'Cambia el estatus de todos los registros.',
             'select_ejercicio' => 'Periodo que muestra los registros del año seleccionado.',
             'select_estatus' => 'Condición del registro de acuerdo al periodo seleccionado.'
         );
