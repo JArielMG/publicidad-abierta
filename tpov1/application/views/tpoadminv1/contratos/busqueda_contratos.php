@@ -121,8 +121,8 @@
                         <form role="form" method="post" autocomplete="off" action="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/contratos/validate_editar_status_contrato/" enctype="multipart/form-data" >
 
                             <div class="form-group">
-                                <label style="margin-left: 25px;">Estatus*
-                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                <label>Cambiar estatus
+                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['cambiar_estatus']?>"></i>
                                 </label>
                                 <select class="form-control" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
                                     <?php echo $sel_estatus; ?>
@@ -140,13 +140,14 @@
                             <a id="descargabtn" class="btn btn-default" onclick="descargar_archivo()"><i class="fa fa-file"></i> Exportar a Excel</a>
                             <input type="hidden" id="link_descarga" value="<?php echo $link_descarga; ?>"/>
                         </div>
-                        <br/>
-                        <br/>
+                        <br>
+                        <br>
+                        <br>
                         <div>
                             <div class="col-xs-6">
                                     <div class="form-group">
-                                        <label>Ejercicio* 
-                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['id_ejercicio']?>"></i>
+                                        <label>Ejercicio 
+                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['select_ejercicio']?>"></i>
                                         </label>
                                         <select name="id_ejercicio" id="yearSelect" class="form-control <?php if($error_active) echo 'validation-error' ?>">
                                             <?php echo $sel_ejercicios; ?>
@@ -156,8 +157,8 @@
                             </div>
                             <div class="col-xs-6">
                                     <div class="form-group">
-                                        <label style="margin-left: 25px;">Estatus
-                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                        <label>Estatus
+                                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['select_estatus']?>"></i>
                                         </label>
                                         <select class="form-control" id="statusSelect" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
                                             <?php echo $sel_estatus2; ?>

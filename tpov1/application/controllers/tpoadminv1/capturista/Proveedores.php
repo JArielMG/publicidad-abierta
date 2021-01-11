@@ -89,7 +89,10 @@ class Proveedores extends CI_Controller
             'fecha_actualizacion' => 'Fecha de actualizaci&oacute;n',
             'descripcion_servicios' => 'Descripci&oacute;n de sus servicios',
             'nota' => 'Nota',
-            'active' => 'Indica el estado de la informaci&oacute;n “Activa” o “Inactiva”.'
+            'active' => 'Indica el estado de la informaci&oacute;n “Activa” o “Inactiva”.',
+            'cambiar_estatus' => 'Cambia el estatus de todos los registros de acuerdo al año seleccionado.',
+            'select_ejercicio' => 'Periodo que muestra los registros del año seleccionado.',
+            'select_estatus' => 'Condición del registro de acuerdo al periodo seleccionado.'
         );
 
         $data['scripts'] = "<script type='text/javascript'>" .

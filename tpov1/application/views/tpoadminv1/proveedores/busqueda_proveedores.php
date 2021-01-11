@@ -83,13 +83,13 @@
                 <div class="box-header">
                     <div class="pull-left">
                         <?php echo anchor("tpoadminv1/capturista/proveedores/agregar_proveedor", "<button class='btn btn-success'><i class=\"fa fa-plus-circle\"></i> Agregar</button></td>"); ?>
-                        <br/>
-                        <br/>
+                        <br>
+                        <br>
                         <form role="form" method="post" autocomplete="off" action="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/proveedores/validate_editar_status_proveedor" enctype="multipart/form-data" >
 
                             <div class="form-group">
-                                <label style="margin-left: 25px;">Estatus*
-                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                <label>Cambiar estatus
+                                    <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['cambiar_estatus']?>"></i>
                                 </label>
                                 <select class="form-control" name="active" class="form-control <?php if($error_active) echo 'validation-error' ?>">
                                     <?php echo $sel_estatus; ?>

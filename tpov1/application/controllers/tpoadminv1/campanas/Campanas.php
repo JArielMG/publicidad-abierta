@@ -1111,7 +1111,7 @@ class Campanas extends CI_Controller
             'trimestre' => 'Trimeste en que se lleva a cabo la difusión de la campaña.',
             'soc' => 'Indica el nombre del sujeto obligado que celebra el contrato u orden de compra con el proveedor.',
             'sos' => 'Indica el nombre del sujeto que solicitó el producto o servicio aunque éste no sea quien celebra el contrato u orden de compra con el proveedor (Ej. Sujeto obligado solicitante: Secretaría de Cultura; sujeto obligado contratante: Coordinación General de Comunicación Social).',
-            'active' => 'Identifica si al campaña esta activa o inactiva.',
+            'active' => 'Identifica si la campaña esta activa o inactiva.',
 			'fecha_inicio_periodo' => 'Fecha de inicio del periodo que se informa',
             'fecha_termino_periodo' => 'Fecha de termino del periodo que se informa',            
             'tema' => 'Indica el tema de la campa&ntilde;a o aviso institucional (Ej. Salud, Educaci&oacute;n, etc.)',
@@ -1146,7 +1146,10 @@ class Campanas extends CI_Controller
             'anio' => 'Año en que se lleva a cabo la difusión de la campaña.',
             'fecha_actualizacion' => 'Fecha de actualización',
             'nota' => 'Nota',
-            'id_ejercicio' => 'Indica el año del ejercicio presupuestario.'
+            'id_ejercicio' => 'Indica el año del ejercicio presupuestario.',
+            'cambiar_estatus' => 'Cambia el estatus de todos los registros de acuerdo al año seleccionado.',
+            'select_ejercicio' => 'Periodo que muestra los registros del año seleccionado.',
+            'select_estatus' => 'Condición del registro de acuerdo al periodo seleccionado.'
         );
        
         $data['scripts'] = "<script type='text/javascript'>" .

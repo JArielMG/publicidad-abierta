@@ -139,7 +139,10 @@ class Generales_model extends CI_Model
             'objetivo_estrategico' => 'Objetivo estrat&eacute;gico o transversal, seg&uacute;n corresponda, alineado y vinculado al Plan Nacional de Desarrollo.',
             'temas' => 'Temas específicos derivados de los objetivos estrat&eacute;gicos o transversales que abordar&aacute;n en las Campa&ntilde;as del Programa anual de Comunicaci&oacute;n Social.',
             'programas' => 'Nombre del programa o programas relacionados al Programa Anual de Comunicaci&oacute;n Social.', 
-            'sin_definir' => 'Sin definir'
+            'sin_definir' => 'Sin definir',
+            'cambiar_estatus' => 'Cambia el estatus de todos los registros de acuerdo al año seleccionado.',
+            'select_ejercicio' => 'Periodo que muestra los registros del año seleccionado.',
+            'select_estatus' => 'Condición del registro de acuerdo al periodo seleccionado.'
         );
     }
 
