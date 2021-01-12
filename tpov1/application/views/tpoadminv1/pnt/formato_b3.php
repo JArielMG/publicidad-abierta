@@ -213,7 +213,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 			]
 	    });
 
-	    $('#grid1').on( 'draw.dt', function () {
+	    $('#grid').on( 'draw.dt', function () {
 		    //alert( 'Table redrawn' );
 			$("#waiting").css("display", "block")
 			setTimeout(function(){ 
