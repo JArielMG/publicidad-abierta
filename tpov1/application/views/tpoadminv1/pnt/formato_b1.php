@@ -210,7 +210,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
 				        	return data
 					   //} else return "<input type='text' value='" + data + "'>" 
-				    	} else return data
+				    	} else return data.replace(/(<([^>]+)>)/gi, "");
+
 				    }
 				}
 			]
