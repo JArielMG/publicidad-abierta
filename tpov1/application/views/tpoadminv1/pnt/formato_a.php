@@ -172,7 +172,7 @@ $(document).ready(function(){
 	        { data: 'area_responsable' },
 	        { data: 'fecha_validacion' },
 	        { data: 'fecha_actualizacion' },
-	        { data: 'nota' },
+	        { data: 'nota_planeacion' },
 	        { data: 'estatus_pnt' }
 		],
 		columnDefs: [ 
