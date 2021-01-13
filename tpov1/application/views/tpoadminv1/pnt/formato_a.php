@@ -263,9 +263,12 @@ $(document).ready(function(){
 	$('#grid1').on( 'draw.dt', function () {
 	    //alert( 'Table redrawn' );
 		$("#waiting").css("display", "block")
+		
 		setTimeout(function(){ 
 			$("#waiting").css("display", "none")
         }, 5000);
+
+        $(".dataTables_empty").removeClass("dataTables_empty")
 	} );
 
 

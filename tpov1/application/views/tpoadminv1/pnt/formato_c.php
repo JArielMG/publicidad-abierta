@@ -1,4 +1,4 @@
-<?php 
+  <?php 
 if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !( $_SESSION["pnt"]["success"] ) ){
   header("Location: " . base_url() ."index.php/tpoadminv1/pnt/formato_a/alta_carga_logo");
   die();
@@ -182,7 +182,9 @@ $(document).ready(function(){
         
       ajax: {
         url: "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_c",
-        dataSrc: ''
+        dataSrc: '',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
       },
       scrollY: true,
         scrollX: true,
@@ -297,8 +299,10 @@ $(document).ready(function(){
           //alert( 'Table redrawn' );
         $("#waiting").css("display", "block")
         setTimeout(function(){ 
-      $("#waiting").css("display", "none")
+          $("#waiting").css("display", "none")
         }, 5000);
+
+        $(".dataTables_empty").removeClass("dataTables_empty")
       } );    
 
     $(document).on("click","a.ver_mas",function(e){ 
