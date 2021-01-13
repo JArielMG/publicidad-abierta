@@ -221,7 +221,10 @@ class Facturas extends CI_Controller
             'periodo' => 'A&ntilde;o',
             'fecha_actualizacion' => 'Fecha de actualizaci&oacute;n',
             'nota' => 'Nota',
-            'active' => 'Indica el estado de la informaci&oacute;n correspondiente al registro, “Activa”, “Inactiva”.'
+            'active' => 'Indica el estado de la informaci&oacute;n correspondiente al registro, “Activa”, “Inactiva”.',
+            'cambiar_estatus' => 'Cambia el estatus de todos los registros de acuerdo al año seleccionado.',
+            'select_ejercicio' => 'Periodo que muestra los registros del año seleccionado.',
+            'select_estatus' => 'Condición del registro de acuerdo al periodo seleccionado.'
         );
 
         
