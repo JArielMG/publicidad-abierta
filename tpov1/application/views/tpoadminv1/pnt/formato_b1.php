@@ -185,9 +185,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				      	if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
 				      	return data
 				    }
-				},
+				},/*
 				{
-				    targets: 6,
+				    targets: 10,
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 
@@ -198,6 +198,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 					    } else return "<input type='text' value='" + data + "'>" 
 				    }
 				},
+				*/
 				{
 				    targets: [3,4,5,6,7,8,9,10,11,12],
 				    data: "data",
