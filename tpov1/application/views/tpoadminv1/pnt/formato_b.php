@@ -233,10 +233,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 { data: 'rangos_edad' },
                 { data: 'poblacion_nivel' },
                 { data: 'resp_pro_con' },
-                
                 { data: 'resp_rec_pre' },
                 { data: 'resp_con_mon' },
-
                 { data: 'area_responsable' },
                 { data: 'fecha_validacion' },
                 { data: 'fecha_actualizacion' },
@@ -253,7 +251,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     }
                 },
                 {
-                    targets: [4, 5, 23, 24, 32, 33 ],
+                    targets: [4, 5, 23, 24, 34, 35 ],
                     data: "data",
                     render: function ( data, type, row, meta ) {
                         try{
@@ -502,7 +500,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.crear",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var data = JSON.parse( $(this).attr("data") )
               , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/enviar_pnt";
             
@@ -592,7 +590,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.ver_mas",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var ids= $(this).attr("data").split("-")
 
             var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/subtabla";
@@ -621,7 +619,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.eliminar",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 
             var a = $(this)
               , tr = a.parents("tr")
