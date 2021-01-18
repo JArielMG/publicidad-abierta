@@ -233,10 +233,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 { data: 'rangos_edad' },
                 { data: 'poblacion_nivel' },
                 { data: 'resp_pro_con' },
-                
                 { data: 'resp_rec_pre' },
                 { data: 'resp_con_mon' },
-
                 { data: 'area_responsable' },
                 { data: 'fecha_validacion' },
                 { data: 'fecha_actualizacion' },
@@ -253,7 +251,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     }
                 },
                 {
-                    targets: [4, 5, 23, 24, 32, 33 ],
+                    targets: [4, 5, 23, 24, 34, 35 ],
                     data: "data",
                     render: function ( data, type, row, meta ) {
                         try{
