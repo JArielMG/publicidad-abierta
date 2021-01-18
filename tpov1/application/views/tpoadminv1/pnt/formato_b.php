@@ -466,7 +466,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.crear",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var data = JSON.parse( $(this).attr("data") )
               , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/enviar_pnt";
             
@@ -556,7 +556,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.ver_mas",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var ids= $(this).attr("data").split("-")
 
             var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/subtabla";
@@ -585,7 +585,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.eliminar",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 
             var a = $(this)
               , tr = a.parents("tr")
