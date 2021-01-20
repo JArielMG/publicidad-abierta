@@ -172,7 +172,7 @@ $(document).ready(function(){
 	        { data: 'area_responsable' },
 	        { data: 'fecha_validacion' },
 	        { data: 'fecha_actualizacion' },
-	        { data: 'nota' },
+	        { data: 'nota_planeacion' },
 	        { data: 'estatus_pnt' }
 		],
 		columnDefs: [ 
@@ -263,9 +263,12 @@ $(document).ready(function(){
 	$('#grid1').on( 'draw.dt', function () {
 	    //alert( 'Table redrawn' );
 		$("#waiting").css("display", "block")
+		
 		setTimeout(function(){ 
 			$("#waiting").css("display", "none")
         }, 5000);
+
+        $(".dataTables_empty").removeClass("dataTables_empty")
 	} );
 
 

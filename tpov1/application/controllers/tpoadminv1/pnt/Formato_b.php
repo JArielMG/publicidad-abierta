@@ -21,7 +21,7 @@ class Formato_b extends Webservices
     function index(){
         $cols = array("pnt.id_tpo", "pnt.id_pnt", "f.id_factura", "e.ejercicio", 
                       "fd.area_administrativa",  "fd.id_servicio_clasificacion", 
-                      "scat.nombre_servicio_categoria",  "sscat.id_servicio_subcategoria", 
+                      "scat.id_servicio_categoria",  "sscat.id_servicio_subcategoria", 
                       "suni.nombre_servicio_unidad", "cam.nombre_campana_aviso", "cam.periodo", 
                       "ctem.nombre_campana_tema", "cobj.campana_objetivo", "cam.objetivo_comunicacion", 
                       "fd.precio_unitarios", "cam.clave_campana", "cam.autoridad", 

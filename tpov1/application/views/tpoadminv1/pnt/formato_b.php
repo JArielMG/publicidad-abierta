@@ -211,7 +211,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 { data: 'funcion_sujeto' },
                 { data: 'area_administrativa' },
                 { data: 'id_servicio_clasificacion' },
-                { data: 'nombre_servicio_categoria' },
+                { data: 'id_servicio_categoria' },
                 { data: 'id_servicio_subcategoria' },
                 { data: 'nombre_servicio_unidad' },
                 { data: 'tipo' },
@@ -233,10 +233,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 { data: 'rangos_edad' },
                 { data: 'poblacion_nivel' },
                 { data: 'resp_pro_con' },
-                
                 { data: 'resp_rec_pre' },
                 { data: 'resp_con_mon' },
-
                 { data: 'area_responsable' },
                 { data: 'fecha_validacion' },
                 { data: 'fecha_actualizacion' },
@@ -253,7 +251,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     }
                 },
                 {
-                    targets: [4, 5, 23, 24, 32, 33 ],
+                    targets: [4, 5, 23, 24, 34, 35 ],
                     data: "data",
                     render: function ( data, type, row, meta ) {
                         try{
@@ -287,6 +285,25 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                             case "3": return "Erogación de recursos por contratación de servicios de impresión, difusión y publicidad"; break;
                             case "4": return "Utilización de tiempos oficiales: Tiempo de estado y Tiempo Fiscal"; break;
                             default: return data;
+                        }
+                    }
+                },{
+                    targets: 9,
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+
+                        switch(data){
+                            case "1": return "Radio"; break;  // 1
+                            case "2": return "Televisión"; break;  // 2
+                            case "3": return "Internet"; break;  // 0
+                            case "4": return "Medios digitales"; break;  // 5
+                            case "5": return "Otros servicios asociados"; break;  // 8 
+                            case "6": return "Medios impresos"; break;  // Internet
+                            case "7": return "Medios impresos"; break;  // Producción de contenidos
+                            case "8": return "Medios Complementarios"; break;  // Producción de contenidos
+                            case "9": return "Espectaculares"; break;  // 6
+                            case "10": return "Otros"; break;  // 9
+                            default: return "Otros";
                         }
                     }
                 },{
@@ -405,6 +422,23 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         temporal.innerHTML = contenido;
                         row.objetivo_comunicacion = temporal.textContent || temporal.innerText || "";
 
+                        row.id_servicio_categoria = function(data){
+                            switch(data){
+                                case "1": return "1"; break;  // "Radio" 1
+                                case "2": return "2"; break;  // "Televisión"2
+                                case "3": return "0"; break;  // "Internet"0
+                                case "4": return "5"; break;  // "Medios digitales"5
+                                case "5": return "8"; break;  // "Otros servicios asociados"8 
+                                case "6": return "4"; break;  // "Medios impresos"Internet
+                                case "7": return "4"; break;  // "Medios impresos"Producción de contenidos
+                                case "8": return "7"; break;  // "Medios Complementarios"Producción de contenidos
+                                case "9": return "6"; break;  // "Espectaculares"6
+                                case "10": return "9"; break;  // "Otros"9
+                                default: return "9";
+                            }
+                        }(row.id_servicio_categoria)
+                            
+
                         _row = JSON.stringify(row)
 
                         if( !(row.id_pnt) || row.id_pnt === ""){ 
@@ -434,7 +468,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     }
                 },
                 {
-                    targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34, 35, 36],
+                    targets: [0,2,3,4,5,6,7,8,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34, 35, 36],
                     data: "data",
                     render: function ( data, type, row, meta ) {
                         if( !(row.id_pnt) || row.id_pnt === ""){ 
@@ -455,6 +489,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             setTimeout(function(){ 
                 $("#waiting").css("display", "none")
             }, 5000);
+            $(".dataTables_empty").removeClass("dataTables_empty")
+
         } );
 
         setTimeout(function(){ 
@@ -464,7 +500,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.crear",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var data = JSON.parse( $(this).attr("data") )
               , url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/enviar_pnt";
             
@@ -495,7 +531,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         {"idCampo": 333950, "valor": data["area_administrativa"]},
                         {"idCampo": 333968, "valor": data["id_servicio_clasificacion"]},
                         {"idCampo": 333940, "valor": data["nombre_servicio_categoria"]},
-                        //{"idCampo": 333969, "valor": data["id_servicio_subcategoria"] },
+                        {"idCampo": 333969, "valor": data["id_servicio_categoria"] },
                         {"idCampo": 333970, "valor": data["nombre_servicio_unidad"]},
                         {"idCampo": 333956, "valor": parseInt(data["tipo"]) },
                         {"idCampo": 333947, "valor": data["nombre_campana_aviso"]},
@@ -529,7 +565,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
             $.post(url, formato, function(res, error){
                 res = JSON.parse(res); 
-                console.log(res)
+                console.log(res, error)
                 if(!res || !('success' in res) || !res.success){
                     console.log("No se pudo insertar el elemento correctamente")
                     a.css("display", "block")
@@ -539,7 +575,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     tr.children("td").eq(35).children("img.check").removeClass("invisible")
                     tr.children("td").eq(35).children("a.crear").addClass("invisible")
                     table.draw(); 
-                    location.reload(); 
+                    //  location.reload(); 
                 }
 
                 td.children("img.loading").remove("")
@@ -554,7 +590,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.ver_mas",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
             var ids= $(this).attr("data").split("-")
 
             var url = "<?php echo base_url(); ?>index.php/tpoadminv1/pnt/formato_b/subtabla";
@@ -583,7 +619,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
         $(document).on("click","a.eliminar",function(e){ 
             e.preventDefault(); 
-				if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
+                if( !confirm("¿Está seguro de continuar con esta operación?") ) return false
 
             var a = $(this)
               , tr = a.parents("tr")

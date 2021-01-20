@@ -206,6 +206,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 			setTimeout(function(){ 
 				$("#waiting").css("display", "none")
 	        }, 5000);
+        	$(".dataTables_empty").removeClass("dataTables_empty")
+
 		} );
 
 	     setTimeout(function(){ 
