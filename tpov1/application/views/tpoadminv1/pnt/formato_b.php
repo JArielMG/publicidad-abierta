@@ -546,7 +546,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         {"idCampo": 333971, "valor": data["campana_ambito_geo"]},
                         {"idCampo": 333952, "valor": ( data["fecha_inicio_cam"] != null )? data["fecha_inicio_cam"].split('-').reverse().join('/') : '' },
                         {"idCampo": 333953, "valor": ( data["fecha_termino_cam"] != null )? data["fecha_termino_cam"].split('-').reverse().join('/') : '' },
-                        {"idCampo": 333965, "valor": parseInt(data["sexo"]) },
+                        {"idCampo": 333965, "valor": data["sexo"] },
                         {"idCampo": 333946, "valor": data["poblaciones"]},
                         {"idCampo": 333941, "valor": data["nivel_educativo"]},
                         {"idCampo": 333945, "valor": data["rangos_edad"]},
@@ -564,13 +564,14 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             }
 
             $.post(url, formato, function(res, error){
-                res = JSON.parse(res); 
-                console.log(res, error)
+                var res = JSON.parse(res); 
                 if(!res || !('success' in res) || !res.success){
+                    console.log(res, error)
                     console.log("No se pudo insertar el elemento correctamente")
                     a.css("display", "block")
                 } else {
                     tr.children("td").eq(1).text(res.mensaje.registros[0].idRegistro)
+                    console.log(res)
                     tr.children("td").eq(35).children("a.eliminar").removeClass("invisible")
                     tr.children("td").eq(35).children("img.check").removeClass("invisible")
                     tr.children("td").eq(35).children("a.crear").addClass("invisible")

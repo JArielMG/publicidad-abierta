@@ -130,7 +130,6 @@ class Formato_b extends Webservices
             } else if ( strpos($col, ".") ) $tag = explode(".", $col)[1];
             $col = "IFNULL(" . $col . ", '') AS $tag";
         }
-//file_programa_anual
 
         $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_facturas f
                     JOIN tab_facturas_desglose fd ON fd.id_factura = f.id_factura
@@ -452,12 +451,12 @@ class Formato_b extends Webservices
                     "numeroRegistro" => 1,
                     "IdRegistro" => "",
                     "campos" => array(
-                        array("idCampo" => "43256", "valor" => $d3['nombre_razon_social'] ),
+                        //array("idCampo" => "43256", "valor" => $d3['nombre_razon_social'] ),
                         array("idCampo" => "43257", "valor" => $d3['nombres'] ),
                         array("idCampo" => "43258", "valor" => $d3['primer_apellido'] ),
                         array("idCampo" => "43259", "valor" => $d3['segundo_apellido'] ),
                         array("idCampo" => "43260", "valor" => $d3['rfc'] ),
-                        array("idCampo" => "43261", "valor" => $d3['nombre_procedimiento'] ), //AQUI
+                        //array("idCampo" => "43261", "valor" => $d3['nombre_procedimiento'] ), //AQUI
                         array("idCampo" => "43262", "valor" => $d3['fundamento_juridico'] ),
                         array("idCampo" => "43263", "valor" => $d3['descripcion_justificacion'] ),
                         array("idCampo" => "43264", "valor" => $d3['nombre_comercial'] )
