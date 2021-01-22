@@ -133,6 +133,13 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             }
             table.draw(); 
         });
+
+        var quitarTags =  function(str){
+            var contenido = str.replace(/"/g, "'")
+            var temporal = document.createElement("div");
+            temporal.innerHTML = contenido;
+            return temporal.textContent || temporal.innerText || "";
+        }
 	    
 	    var table = $('#grid').DataTable({
 	    	language: {
@@ -178,14 +185,22 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				/*, { data: 'estatus_pnt' }*/
 			],
 			columnDefs: [ 
-				{
+				{ 
 				    targets: 1,
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				      	if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
-				      	return data
+				      	return quitarTags(data)
 				    }
-				},/*
+				},
+				{ 
+				    targets: 11,
+				    data: "data",
+				    render: function ( data, type, row, meta ) {
+				      	return quitarTags(data)
+				    }
+				},
+				/*
 				{
 				    targets: 10,
 				    data: "data",
@@ -200,7 +215,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				},
 				*/
 				{
-				    targets: [3,4,5,6,7,8,9,10,11,12],
+				    targets: [3,4,5,6,7,8,9,10,12],
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 		      			_row = JSON.stringify(row) 
@@ -208,9 +223,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 				      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
-				        	return data
+				        	return quitarTags(data)
 					   //} else return "<input type='text' value='" + data + "'>" 
-				    	} else return data.replace(/(<([^>]+)>)/gi, "");
+				    	} else return quitarTags(data)
 
 				    }
 				}
