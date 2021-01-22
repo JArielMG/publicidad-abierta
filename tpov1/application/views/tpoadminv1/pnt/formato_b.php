@@ -173,6 +173,15 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             if (year == "") return true
             return (year == ejercicio);
         });
+
+
+        var quitarTags =  function(str){
+            str = str.replace(/"/g, "'")
+            var contenido = str.replace(/"/g, "'")
+            var temporal = document.createElement("div");
+            temporal.innerHTML = contenido;
+            return temporal.textContent || temporal.innerText || "";
+        }
         
         table = $('#grid').DataTable({
             language: {
@@ -280,10 +289,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
 
                         switch(data){
-                            case "1": return "Servicios de difusión en medios de comunicación"; break;
-                            case "2": return "Otros servicios asociados a la comunicación"; break;
-                            case "3": return "Erogación de recursos por contratación de servicios de impresión, difusión y publicidad"; break;
-                            case "4": return "Utilización de tiempos oficiales: Tiempo de estado y Tiempo Fiscal"; break;
+                            case "0": return "Servicios de difusión en medios de comunicación"; break;
+                            case "1": return "Otros servicios asociados a la comunicación"; break;
+                            case "2": return "Erogación de recursos por contratación de servicios de impresión, difusión y publicidad"; break;
+                            case "3": return "Utilización de tiempos oficiales: Tiempo de estado y Tiempo Fiscal"; break;
                             default: return data;
                         }
                     }
@@ -415,15 +424,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     render: function ( data, type, row, meta ) {
                         var response = ""
                         //_row = HtmlSanitizer.SanitizeHtml(JSON.stringify(row)) 
-                        row.objetivo_comunicacion =  row.objetivo_comunicacion.replace(/"/g, "'")
+                        row.objetivo_comunicacion = quitarTags(row.objetivo_comunicacion)
 
-                        var contenido = row.objetivo_comunicacion.replace(/"/g, "'")
-                        var temporal = document.createElement("div");
-                        temporal.innerHTML = contenido;
-                        row.objetivo_comunicacion = temporal.textContent || temporal.innerText || "";
-
-                        row.id_servicio_categoria = function(data){
-                            switch(data){
+                        row.id_servicio_categoria = function(d){
+                            switch(d){
                                 case "1": return "1"; break;  // "Radio" 1
                                 case "2": return "2"; break;  // "Televisión"2
                                 case "3": return "0"; break;  // "Internet"0
