@@ -67,21 +67,21 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	<table id="grid" class="dataTable stripe hover order-column row-border cell-border compact">
 		<thead>
 	        <tr>
-				<td> ID TPO </td>
-				<td> ID PNT </td>
-				<td> ID </td>
-				<td> Ejercicio </td>
-				<td> Fecha de firma del contrato</td>
-				<td> Número o referencia de identificación del contrato</td>
-				<td> Objeto del contrato</td>
-				<td> Hipervínculo al contrato firmado</td>
-				<td> Hipervínculo al convenio modificatorio en su caso</td>
-				<td> Monto total del contrato</td>
-				<td> Monto pagado al periodo publicado</td>
-				<td> Fecha de inicio de los servicios contratados</td>
-				<td> Fecha de término de los servicios contratados</td>
-				<td> Número de factura</td>
-				<td> Hipervínculo a la factura</td>
+				<th> ID TPO </th>
+				<th> ID PNT </th>
+				<th> ID </th>
+				<th> Ejercicio </th>
+				<th> Fecha de firma del contrato</th>
+				<th> Número o referencia de identificación del contrato</th>
+				<th> Objeto del contrato</th>
+				<th> Hipervínculo al contrato firmado</th>
+				<th> Hipervínculo al convenio modificatorio en su caso</th>
+				<th> Monto total del contrato</th>
+				<th> Monto pagado al periodo publicado</th>
+				<th> Fecha de inicio de los servicios contratados</th>
+				<th> Fecha de término de los servicios contratados</th>
+				<th> Número de factura</th>
+				<th> Hipervínculo a la factura</th>
 				<!--td> Estatus</td-->
 	        </tr>
 	    </thead>

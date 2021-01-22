@@ -69,7 +69,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	            <th> Fecha de inicio</th>
 	            <th> Fecha de término</th>
 	            <th> Denominación del documento</th>
-	            <th> Fecha aprobovación</th>
+	            <th> Fecha aprobación</th>
 	            <th> Hipervínculo al PACS</th>
 	            <th> Área(s) responsable(s)</th>
 	            <th> Fecha de Validación</th>

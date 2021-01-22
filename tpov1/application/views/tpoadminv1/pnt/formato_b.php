@@ -103,7 +103,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 <th> Respecto a los proveedores y su contratación </th>
 
                 <th> Respecto a los recursos y el presupuesto </th>
-                <th> Respecto a los nontos y su contratos </th>
+                <th> Respecto a los montos y su contratos </th>
 
                 <th> Área(s) Responsable(s) que generan(n) posee(n), Publica(n) y Actualiza(n) la información </th>
                 <th> Fecha de Validación </th>
@@ -276,7 +276,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
 
                         switch(data){
-                            case "2": return "Contratante y Solicitante"; break;
+                            case "2": return "Contratante y solicitante"; break;
                             case "1": return "Solicitante"; break;
                             case "0": return "Contratante"; break;
                             default: return data;
@@ -302,16 +302,16 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     render: function ( data, type, row, meta ) {
 
                         switch(data){
-                            case "1": return "Radio"; break;  // 1
-                            case "2": return "Televisión"; break;  // 2
-                            case "3": return "Internet"; break;  // 0
-                            case "4": return "Medios digitales"; break;  // 5
-                            case "5": return "Otros servicios asociados"; break;  // 8 
-                            case "6": return "Medios impresos"; break;  // Internet
-                            case "7": return "Medios impresos"; break;  // Producción de contenidos
-                            case "8": return "Medios Complementarios"; break;  // Producción de contenidos
-                            case "9": return "Espectaculares"; break;  // 6
-                            case "10": return "Otros"; break;  // 9
+                            case "0": return "Internet"; break;
+                            case "1": return "Radio"; break;
+                            case "2": return "Televisión"; break;
+                            case "3": return "Cine"; break;
+                            case "4": return "Medios impresos"; break;
+                            case "5": return "Medios digitales"; break;
+                            case "6": return "Espectaculares"; break;                        
+                            case "7": return "Medios Complementarios"; break;
+                            case "8": return "Otros servicios asociados"; break; 
+                            case "9": return "Otros"; break;
                             default: return "Otros";
                         }
                     }
@@ -385,7 +385,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
 
                         switch(data){
-                            case "1": return "Aviso Institucional"; break;
+                            case "1": return "Aviso institucional"; break;
                             case "0": return "Campaña"; break;
                             default: return data;
                         }
@@ -413,7 +413,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         switch(data){
                             case "1": return "Masculino"; break;
                             case "0": return "Femenino"; break;
-                            case "2": return "Masculino y Femenino"; break;
+                            case "2": return "Femenino y masculino"; break;
                             default: return data;
                         }
                     }
@@ -428,16 +428,16 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
                         row.id_servicio_categoria = function(d){
                             switch(d){
-                                case "1": return "1"; break;  // "Radio" 1
-                                case "2": return "2"; break;  // "Televisión"2
-                                case "3": return "0"; break;  // "Internet"0
-                                case "4": return "5"; break;  // "Medios digitales"5
-                                case "5": return "8"; break;  // "Otros servicios asociados"8 
-                                case "6": return "4"; break;  // "Medios impresos"Internet
-                                case "7": return "4"; break;  // "Medios impresos"Producción de contenidos
-                                case "8": return "7"; break;  // "Medios Complementarios"Producción de contenidos
-                                case "9": return "6"; break;  // "Espectaculares"6
-                                case "10": return "9"; break;  // "Otros"9
+                                case "0": return "0"; break;
+                                case "1": return "1"; break; 
+                                case "2": return "2"; break;
+                                case "3": return "3"; break;
+                                case "4": return "4"; break; 
+                                case "5": return "5"; break;
+                                case "6": return "6"; break;
+                                case "7": return "7"; break;
+                                case "8": return "8"; break;
+                                case "9": return "9"; break;
                                 default: return "9";
                             }
                         }(row.id_servicio_categoria)
@@ -559,7 +559,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         {"idCampo": 333967, "valor": (data["area_responsable"] != null )? data["area_responsable"] : ''},
                         {"idCampo": 333954, "valor": (data["fecha_validacion"] != null )? data["fecha_validacion"].split('-').reverse().join('/') : '' },
                         {"idCampo": 333961, "valor": (data["fecha_actualizacion"] != null )? data["fecha_actualizacion"].split('-').reverse().join('/') : '' },
-                        {"idCampo": 333966, "valor": data["nota"]}//
+                        {"idCampo": 333966, "valor": data["nota"]}
                     ]
                 }],
               "_id_interno": data["id_factura"],

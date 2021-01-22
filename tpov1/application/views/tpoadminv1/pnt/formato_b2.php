@@ -67,7 +67,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	<table id="grid" class="dataTable stripe hover order-column row-border cell-border compact">
 		<thead>
 	        <tr>
-	           	<th>ID TPO/th>
+	           	<th>ID TPO </th>
 	           	<th>ID PNT</th>
 	           	<th>ID</th>
 	           	<th>Ejercicio</th>

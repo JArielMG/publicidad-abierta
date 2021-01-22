@@ -294,13 +294,13 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 						{ "idCampo": 333975, "valor": data['ejercicio'] }, 
 						{ "idCampo": 333978, "valor": ( data['fecha_inicio_periodo'] != null )?  data["fecha_inicio_periodo"].split('-').reverse().join('/') : '2016-12-05' }, 
 						{ "idCampo": 333979, "valor": ( data['fecha_termino_periodo'] != null )?  data["fecha_termino_periodo"].split('-').reverse().join('/') : '2016-12-05' }, 
-						{ "idCampo": 333984, "valor": ( data['mensajeTO'] != null )? data["mensajeTO"] : 'NA'  }, 
+						{ "idCampo": 333984, "valor": data['mensajeTO'] }, 
 						{ "idCampo": 333980, "valor": "http://test.ts" }, 
 						//{ "idCampo": 333980, "valor": data['Hipervínculo'] }, 
-						{ "idCampo": 333983, "valor": ( data['area_responsable'] != null )? data["area_responsable"] : 'NA'  }, 
+						{ "idCampo": 333983, "valor": data['area_responsable']}, 
 						{ "idCampo": 333976, "valor": ( data['fecha_validacion'] != null )?  data["fecha_validacion"].split('-').reverse().join('/') : '' }, 
 						{ "idCampo": 333981, "valor": ( data['fecha_actualizacion'] != null )?  data["fecha_actualizacion"].split('-').reverse().join('/') : '' }, 
-						{ "idCampo": 333982, "valor": ( data['nota'] != null )? data["nota"] : 'NA' }, 
+						{ "idCampo": 333982, "valor": data['nota'] }, 
 				    ]
 				}],
 			  "_id_interno": data['id']

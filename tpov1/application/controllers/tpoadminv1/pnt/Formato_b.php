@@ -57,21 +57,21 @@ class Formato_b extends Webservices
                     END) funcion_sujeto,
                     (CASE 
                         WHEN cam.id_campana_tipo= NULL THEN '' 
+                        WHEN cam.id_campana_tipo = 0 THEN 0
                         WHEN cam.id_campana_tipo = 1 THEN 1
-                        WHEN cam.id_campana_tipo = 2 THEN 0
                     END) 'tipo',
                     (CASE 
                         WHEN ccob.id_campana_cobertura = NULL THEN '' 
-                        WHEN ccob.id_campana_cobertura = 1 THEN 3
-                        WHEN ccob.id_campana_cobertura = 2 THEN 2 
-                        WHEN ccob.id_campana_cobertura = 3 THEN 1
-                        WHEN ccob.id_campana_cobertura = 4 THEN 0
+                        WHEN ccob.id_campana_cobertura = 0 THEN 0
+                        WHEN ccob.id_campana_cobertura = 1 THEN 1 
+                        WHEN ccob.id_campana_cobertura = 2 THEN 2
+                        WHEN ccob.id_campana_cobertura = 3 THEN 3
                     END) 'cobertura', 
                     (CASE 
                         WHEN sexo.poblacion_sexo = NULL THEN '' 
-                        WHEN sexo.poblacion_sexo = 1 THEN 1
-                        WHEN sexo.poblacion_sexo = 2 THEN 0 
-                        WHEN sexo.poblacion_sexo = 3 THEN 2
+                        WHEN sexo.poblacion_sexo = 0 THEN 0
+                        WHEN sexo.poblacion_sexo = 1 THEN 1 
+                        WHEN sexo.poblacion_sexo = 2 THEN 2
                     END) 'sexo', 
                     CONCAT(f.id_ejercicio, '-', f.id_factura, '-', f.id_orden_compra, '-', f.id_contrato, '-', f.id_proveedor) 'resp_pro_con', 
                     CONCAT(f.id_ejercicio, '-', f.id_factura, '-', f.id_orden_compra, '-', f.id_contrato, '-', f.id_proveedor) 'resp_rec_pre', 
