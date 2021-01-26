@@ -148,7 +148,7 @@ class Formato_b extends Webservices
 
     function registrosb2(){
         $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
-                       "pcon.partida", "pcon.capitulo", "pcon.nombre_concepto", "total.presupuesto", 
+                       "pcon.partida", "pcon.capitulo", "pcon.concepto", "pcon.denominacion", "total.presupuesto", 
                        "total.modificado total_modificado", "pdes.monto_presupuesto", 
                        "pdes.monto_modificacion", "fact.total_ejercido", "pnt.estatus_pnt");
 
@@ -160,6 +160,34 @@ class Formato_b extends Webservices
             $col = "IFNULL(" . $col . ", '') AS $tag";
         }
 
+        $query = $this->db->query("SELECT " . join(", ", $cols) .  
+                  " FROM tab_presupuestos_desglose pdes 
+                    JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
+                    JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
+                    JOIN (
+                        SELECT id_presupesto_concepto, capitulo, concepto, partida, denominacion 
+                        FROM cat_presupuesto_conceptos 
+                        WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
+                              (concepto IS NOT NULL AND concepto <> '' ) AND 
+                              (partida IS NOT NULL AND partida <> '')
+                    ) pcon ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    JOIN (
+                        ( SELECT pcon.id_presupesto_concepto, pcon.concepto, 
+                                  SUM(pdes.monto_presupuesto) presupuesto, SUM(pdes.monto_modificacion) modificado
+                           FROM tab_presupuestos_desglose pdes
+                           JOIN (SELECT id_presupesto_concepto, capitulo, concepto, partida, denominacion 
+                                 FROM cat_presupuesto_conceptos 
+                                 WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
+                                       (concepto IS NOT NULL AND concepto <> '' ) AND 
+                                       (partida IS NOT NULL AND partida <> '')) pcon 
+                           ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                           GROUP BY pcon.concepto, pcon.id_presupesto_concepto)
+                    ) total ON total.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    LEFT JOIN (SELECT numero_partida, SUM(monto_desglose) total_ejercido 
+                               FROM tab_facturas_desglose GROUP BY numero_partida) fact ON fact.numero_partida = pcon.partida 
+                    LEFT JOIN rel_pnt_presupuesto_desglose pnt ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose");
+        
+        /*
         $query = $this->db->query("SELECT " . join(", ", $cols) .  
                   " FROM tab_presupuestos_desglose pdes 
                     JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
@@ -189,6 +217,7 @@ class Formato_b extends Webservices
                                FROM tab_facturas_desglose GROUP BY numero_partida) fact 
                          ON fact.numero_partida = pcon.partida 
                     LEFT JOIN rel_pnt_presupuesto_desglose pnt ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose");
+        /**/
 
         $rows = $query->result_array();
 

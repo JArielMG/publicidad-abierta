@@ -166,7 +166,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'ejercicio' },
 				{ data: 'partida' },
 				{ data: 'capitulo' }, //concepto
-				{ data: 'nombre_concepto' },
+				{ data: 'concepto' },
 				{ data: 'presupuesto' },
 				{ data: 'total_modificado' },
 				{ data: 'denominacion_partida' },
