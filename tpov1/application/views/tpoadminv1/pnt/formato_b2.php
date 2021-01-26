@@ -167,12 +167,12 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'partida' },
 				{ data: 'capitulo' }, //concepto
 				{ data: 'concepto' },
-				{ data: 'presupuesto' },
+				{ data: 'total_presupuesto' },
 				{ data: 'total_modificado' },
-				{ data: 'denominacion_partida' },
+				{ data: 'denominacion' },
 				{ data: 'monto_presupuesto' },
 				{ data: 'monto_modificacion' },
-				{ data: 'total_ejercido' }/*,
+				{ data: 'total_partida' }/*,
 				{ data: 'estatus_pnt'}*/
 			],
 			columnDefs: [ 
