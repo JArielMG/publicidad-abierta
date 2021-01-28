@@ -22,7 +22,7 @@ class Formato_a extends Webservices
     function index(){ 
         $cols = array("pnt.id_tpo", "pnt.id_pnt", "p.id_presupuesto", "e.ejercicio", 
                       "p.fecha_inicio_periodo", "p.id_sujeto_obligado", "p.fecha_termino_periodo", "p.denominacion", 
-                      "p.fecha_publicacion", "p.file_programa_anual", "p.area_responsable", "p.nota_planeacion", 
+                      "p.fecha_publicacion", "p.url_programa_anual", "p.area_responsable", "p.nota", 
                       "p.fecha_validacion", "p.fecha_actualizacion", "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
