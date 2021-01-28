@@ -220,8 +220,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 { data: 'funcion_sujeto' },
                 { data: 'area_administrativa' },
                 { data: 'id_servicio_clasificacion' },
-                { data: 'id_servicio_categoria' },
                 { data: 'id_servicio_subcategoria' },
+                { data: 'id_servicio_categoria' },
                 { data: 'nombre_servicio_unidad' },
                 { data: 'tipo' },
                 { data: 'nombre_campana_aviso' },
@@ -297,26 +297,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                         }
                     }
                 },{
+                    
                     targets: 9,
-                    data: "data",
-                    render: function ( data, type, row, meta ) {
-
-                        switch(data){
-                            case "0": return "Internet"; break;
-                            case "1": return "Radio"; break;
-                            case "2": return "Televisión"; break;
-                            case "3": return "Cine"; break;
-                            case "4": return "Medios impresos"; break;
-                            case "5": return "Medios digitales"; break;
-                            case "6": return "Espectaculares"; break;                        
-                            case "7": return "Medios Complementarios"; break;
-                            case "8": return "Otros servicios asociados"; break; 
-                            case "9": return "Otros"; break;
-                            default: return "Otros";
-                        }
-                    }
-                },{
-                    targets: 10,
                     data: "data",
                     render: function ( data, type, row, meta ) {
                         if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
@@ -376,6 +358,25 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                             case "52": return "Streaming"; break; 
                             case "53": return "Difusión"; break; 
                             default: return data;
+                        }
+                    }
+                },{
+                    targets: 10,
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+
+                        switch(data){
+                            case "0": return "Internet"; break;
+                            case "1": return "Radio"; break;
+                            case "2": return "Televisión"; break;
+                            case "3": return "Cine"; break;
+                            case "4": return "Medios impresos"; break;
+                            case "5": return "Medios digitales"; break;
+                            case "6": return "Espectaculares"; break;                        
+                            case "7": return "Medios Complementarios"; break;
+                            case "8": return "Otros servicios asociados"; break; 
+                            case "9": return "Otros"; break;
+                            default: return "Otros";
                         }
                     }
                 },{

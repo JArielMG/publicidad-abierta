@@ -148,9 +148,9 @@ class Formato_b extends Webservices
 
     function registrosb2(){
         $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
-                       "pcon.partida", "pcon.capitulo", "pcon.concepto", "pcon.denominacion", "pres.total_presupuesto", 
-                       "pres.total_modificado", "pdes.monto_presupuesto", 
-                       "pdes.monto_modificacion", "fact.total_partida", "pnt.estatus_pnt");
+                       "d.partida", "c1.id_presupesto_concepto", "c.concepto", "d.denominacion", "p.total_presupuesto", 
+                       "p.total_modificado", "pdes.monto_presupuesto", 
+                       "pdes.monto_modificacion", "f.total_partida", "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
             $tag = $col;
@@ -164,14 +164,21 @@ class Formato_b extends Webservices
                   " FROM tab_presupuestos_desglose pdes 
                     JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
                     JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
-                    JOIN (
-                        SELECT id_presupesto_concepto, capitulo, concepto, partida, denominacion 
+                    LEFT JOIN (  
+                        SELECT id_presupesto_concepto, denominacion concepto
+                        FROM cat_presupuesto_conceptos 
+                        WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
+                              (concepto IS NULL OR concepto = '' ) AND 
+                              (partida IS NULL OR partida = '')
+                    ) c ON c.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                        LEFT JOIN ( 
+                        SELECT id_presupesto_concepto, partida, denominacion 
                         FROM cat_presupuesto_conceptos 
                         WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
                               (concepto IS NOT NULL AND concepto <> '' ) AND 
                               (partida IS NOT NULL AND partida <> '')
-                    ) pcon ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                    JOIN (
+                    ) d ON d.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    LEFT JOIN (
                         SELECT pcon.id_presupesto_concepto, pcon.concepto, 
                               SUM(pdes.monto_presupuesto) total_presupuesto, SUM(pdes.monto_modificacion) total_modificado
                         FROM tab_presupuestos_desglose pdes
@@ -182,8 +189,13 @@ class Formato_b extends Webservices
                                    (partida IS NOT NULL AND partida <> '')
                         ) pcon ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
                         GROUP BY pcon.concepto, pcon.id_presupesto_concepto
-                    ) pres ON pres.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                    JOIN (
+                    ) p ON p.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    LEFT JOIN (  
+                        SELECT id_presupesto_concepto, denominacion concepto
+                        FROM cat_presupuesto_conceptos 
+
+                        tab_presupuestos_desglose c1 ON c1.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    LEFT JOIN (
                         SELECT pcon.id_presupesto_concepto, SUM(fdes.monto_desglose) total_partida
                         FROM tab_facturas_desglose fdes
                         JOIN (
@@ -194,7 +206,7 @@ class Formato_b extends Webservices
                                    (partida IS NOT NULL AND partida <> '')
                         ) pcon ON pcon.id_presupesto_concepto  = fdes.id_presupuesto_concepto
                         GROUP BY pcon.partida, pcon.id_presupesto_concepto
-                    ) fact ON fact.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    ) f ON f.id_presupesto_concepto = pdes.id_presupuesto_concepto
                     LEFT JOIN rel_pnt_presupuesto_desglose pnt ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose");
         
         /*
