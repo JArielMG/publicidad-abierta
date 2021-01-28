@@ -9,7 +9,7 @@
 //print_r($campana);
 
 //Tipo
-$sel_camp_tipo = '<option value="0">- Selecciona -</option>';
+$sel_camp_tipo = '<option value="">- Selecciona -</option>';
 for($z = 0; $z < sizeof($camp_tipo); $z++)
 {
     if($this->input->post('id_campana_tipo') == $camp_tipo[$z]['id_campana_tipo']){
@@ -110,7 +110,7 @@ for($z = 0; $z < sizeof($objetivos); $z++)
 }
 
 //Cobertura
-$sel_cobertura = '<option value="0">-Seleccione-</option>';
+$sel_cobertura = '<option value="">-Seleccione-</option>';
 for($z = 0; $z < sizeof($coberturas); $z++)
 {
     if($this->input->post('id_campana_cobertura') == $coberturas[$z]['id_campana_cobertura']){
@@ -145,7 +145,7 @@ $sel_categorias = '<option value="0">-Seleccione-</option>';
     }
     
 //Documentos_PACS
-$sel_pacs = '<option value="0">- Selecciona -</option>';
+$sel_pacs = '<option value="0">-Seleccione-</option>';
 for($z = 0; $z < sizeof($docpacs); $z++)
 	{
 		if($this->input->post('id_presupuesto') == $docpacs[$z]['id_presupuesto']){
@@ -239,6 +239,8 @@ for($z = 0; $z < sizeof($docpacs); $z++)
             $error_fecha_pub = !empty(form_error('fecha_dof', '<div class="text-danger">', '</div>'));
             $error_so = !empty(form_error('id_sujeto_obligado', '<div class="text-danger">', '</div>'));
             $error_active = !empty(form_error('active', '<div class="text-danger">', '</div>'));
+            $error_fip = !empty(form_error('fecha_inicio_periodo', '<div class="text-danger">', '</div>'));
+            $error_ftp = !empty(form_error('fecha_termino_periodo', '<div class="text-danger">', '</div>'));
             $error_file = false; 
             $mensaje = '';
 
@@ -346,7 +348,7 @@ for($z = 0; $z < sizeof($docpacs); $z++)
 			                    	<label>Fecha de inicio del periodo que se informa*
 			                        	<i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_inicio_periodo']?>"></i>
 			                        </label>
-			                        <?php $class = "form-control datepicker";
+			                        <?php $class = "form-control datepicker"; if($error_fip) $class="form-control has-error";
 			            				echo form_input(array('type' => 'text', 'autocomplete' => 'off', 'id' => 'fecha_inicio_periodo', 'name' => 'fecha_inicio_periodo',
 			                            'placeholder' => 'Ingrese fecha de inicio del período', 'value' => $this->input->post('fecha_inicio_periodo'), 'class' => $class)); ?>
 			                    </div>
@@ -354,7 +356,7 @@ for($z = 0; $z < sizeof($docpacs); $z++)
 			                        <label>Fecha de término del periodo que se informa*
 			                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_termino_periodo']?>"></i>
 			                        </label>
-			                        <?php $class = "form-control datepicker";
+			                        <?php $class = "form-control datepicker"; if($error_ftp) $class="form-control has-error";
 			                             echo form_input(array('type' => 'text', 'autocomplete' => 'off', 'id' => 'fecha_termino_periodo', 'name' => 'fecha_termino_periodo',
 			                             'placeholder' => 'Ingrese fecha de término del período', 'value' => $this->input->post('fecha_termino_periodo'), 'class' => $class)); ?>
 			                    </div>
@@ -439,6 +441,7 @@ for($z = 0; $z < sizeof($docpacs); $z++)
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['tiempo_oficial']?>"></i>
                                     </label>
                                     <select name="id_tiempo_oficial" onChange="toOnChange(this)" class="form-control <?php if($error_tiempo_oficial) echo 'has-error' ?>">
+                                        <option value="">-Seleccione-</option> 
                                         <option value="1" <?php if($this->input->post('id_tiempo_oficial') == '1') { ?>  selected="selected"; <?php } ?> >No</option>
                                         <option value="2" <?php if($this->input->post('id_tiempo_oficial') == '2') { ?>  selected="selected"; <?php } ?>>Sí</option>
                                     </select>
