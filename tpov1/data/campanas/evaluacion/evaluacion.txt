@@ -1,0 +1,1 @@
+Aquí se guardan las evaluaciones, la carpeta debe de tener permisos de lectura y escritura.

@@ -7,7 +7,7 @@
 ?>
 <?php
 
-	$sel_camp_tipo = '<option value="0">- Selecciona -</option>';
+	$sel_camp_tipo = '<option value="">- Selecciona -</option>';
 	for($z = 0; $z < sizeof($camp_tipo); $z++)
 	{
 	    if($campana['id_campana_tipo'] == $camp_tipo[$z]['id_campana_tipo']){
@@ -109,7 +109,7 @@
         }
     }
 
-    $sel_cobertura = '<option value="0">-Seleccione-</option>';
+    $sel_cobertura = '<option value="">-Seleccione-</option>';
     for($z = 0; $z < sizeof($coberturas); $z++)
     {
         if($campana['id_campana_cobertura'] == $coberturas[$z]['id_campana_cobertura']){
@@ -439,6 +439,7 @@
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['tiempo_oficial']?>"></i>
                                     </label>
                                     <select name="id_tiempo_oficial" onChange="toOnChange(this)" class="form-control <?php if($error_so) echo 'has-error' ?>">
+                                        <option value="">-Seleccione-</option> 
                                         <option value="1" <?php if($campana['id_tiempo_oficial'] == '1') { ?>  selected="selected"; <?php } ?> >No</option>
                                         <option value="2" <?php if($campana['id_tiempo_oficial'] == '2') { ?>  selected="selected"; <?php } ?>>Sí</option>
                                     </select>

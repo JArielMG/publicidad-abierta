@@ -53,7 +53,7 @@ class Campanas extends CI_Controller
     //Validamos las opciones que son necesarias
     function validate_tipo($str)
     {
-        if($str != '0')
+        if($str != '')
         {
             return TRUE;
         }
@@ -139,7 +139,7 @@ class Campanas extends CI_Controller
 
     function validate_cobertura($str)
     {
-        if($str != '0'){
+        if($str != ''){
             return TRUE;
         }
         else{
