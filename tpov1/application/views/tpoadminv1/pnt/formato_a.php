@@ -132,7 +132,7 @@ $(document).ready(function(){
             table.draw(); 
         });
 
-     var quitarTags =  function(str){
+    quitarTags =  function(str){
             str = str.replace(/"/g, "'")
             var contenido = str.replace(/"/g, "'")
             var temporal = document.createElement("div");
@@ -258,7 +258,7 @@ $(document).ready(function(){
 			    render: function ( data, type, row, meta ) {
 			    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 			      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
-			        	return data
+			        	return  quitarTags(data)
 				    //} else return "<input type='text' value='" + data + "'>" 
 				    } else return quitarTags(data)
 			    }
