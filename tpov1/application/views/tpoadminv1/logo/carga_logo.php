@@ -669,7 +669,6 @@
                     console.log(data)
                     location.reload();
                 });
-
             }
         );
         $("td.inactive").children(".loading").remove()
