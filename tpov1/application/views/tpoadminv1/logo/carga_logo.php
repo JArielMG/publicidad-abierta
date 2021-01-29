@@ -667,7 +667,7 @@
                 url = "<?php echo base_url(); ?>" + "index.php/tpoadminv1/pnt/webservices/write_login"  
                 $.get( url, {'status_conn': data.success, 'messagge': data.mensaje }, function(data, error){ 
                     console.log(data)
-
+                    location.reload();
                 });
 
             }
