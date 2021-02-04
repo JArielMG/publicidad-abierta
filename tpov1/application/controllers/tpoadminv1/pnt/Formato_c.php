@@ -70,10 +70,10 @@ class Formato_c extends Webservices
                          FROM rel_campana_nivel_educativo cedu
                          JOIN cat_poblacion_nivel_educativo edu ON edu.id_poblacion_nivel_educativo = cedu.id_rel_campana_nivel_educativo) edu
                    ON edu.id_campana_aviso = cam.id_campana_aviso
-                   LEFT JOIN (SELECT ceda.id_campana_aviso, eda.nombre_poblacion_grupo_edad
-                         FROM rel_campana_grupo_edad ceda
-                         JOIN cat_poblacion_grupo_edad eda ON eda.id_poblacion_grupo_edad = ceda.id_rel_campana_grupo_edad) eda
-                   ON eda.id_campana_aviso = cam.id_campana_aviso
+                   JOIN (SELECT ceda.id_campana_aviso, ceda.id_poblacion_grupo_edad, eda.nombre_poblacion_grupo_edad
+                          FROM rel_campana_grupo_edad ceda
+                          JOIN cat_poblacion_grupo_edad eda ON eda.id_poblacion_grupo_edad = ceda.id_poblacion_grupo_edad
+                   ) eda ON eda.id_campana_aviso = cam.id_campana_aviso
                    LEFT JOIN (SELECT cniv.id_campana_aviso, GROUP_CONCAT(niv.nombre_poblacion_nivel) nombre_poblacion_nivel
                          FROM rel_campana_nivel cniv
                          JOIN cat_poblacion_nivel niv ON niv.id_poblacion_nivel = cniv.id_poblacion_nivel
