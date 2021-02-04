@@ -46,6 +46,7 @@ class Formato_c extends Webservices
             } else if ( strpos($col, ".") ) $tag = explode(".", $col)[1];
             $col = "IFNULL(" . $col . ", '') AS $tag";
         }
+        /*
         $query = $this->db->query("SELECT " . join(", ", $cols) . " 
                     -- 'Presupuesto total asignado y ejercido de cada partida',
                   FROM tab_campana_aviso cam
@@ -72,14 +73,14 @@ class Formato_c extends Webservices
                    ON edu.id_campana_aviso = cam.id_campana_aviso
                    JOIN (SELECT ceda.id_campana_aviso, ceda.id_poblacion_grupo_edad, eda.nombre_poblacion_grupo_edad
                           FROM rel_campana_grupo_edad ceda
-                          JOIN cat_poblacion_grupo_edad eda ON eda.id_poblacion_grupo_edad = ceda.id_poblacion_grupo_edad
+                          JOIN cat_poblacion_grupo_edad eda ON  eda.id_poblacion_grupo_edad = ceda.id_poblacion_grupo_edad
                    ) eda ON eda.id_campana_aviso = cam.id_campana_aviso
                    LEFT JOIN (SELECT cniv.id_campana_aviso, GROUP_CONCAT(niv.nombre_poblacion_nivel) nombre_poblacion_nivel
                          FROM rel_campana_nivel cniv
                          JOIN cat_poblacion_nivel niv ON niv.id_poblacion_nivel = cniv.id_poblacion_nivel
                          GROUP BY cniv.id_campana_aviso) niv ON niv.id_campana_aviso = cam.id_campana_aviso
                    LEFT JOIN rel_pnt_campana_aviso2 pnt ON pnt.id_campana_aviso = cam.id_campana_aviso ;");
-
+        */
 
         $query = $this->db->query("SELECT " . join(", ", $cols) . " FROM tab_campana_aviso cam
                     JOIN cat_ejercicios ej ON ej.id_ejercicio = cam.id_ejercicio
@@ -87,9 +88,9 @@ class Formato_c extends Webservices
                   LEFT JOIN cat_campana_tiposTO ctip ON ctip.id_campana_tipoTO = cam.id_campana_tipoTO
                   LEFT JOIN cat_campana_coberturas ccob ON ccob.id_campana_cobertura = cam.id_campana_cobertura
                    LEFT JOIN cat_servicios_categorias cscat ON cscat.id_servicio_categoria = cam.id_servicio_categoria
-                   LEFT JOIN (SELECT ceda.id_campana_aviso, eda.nombre_poblacion_grupo_edad
-                         FROM rel_campana_grupo_edad ceda
-                         JOIN cat_poblacion_grupo_edad eda ON eda.id_poblacion_grupo_edad = ceda.id_rel_campana_grupo_edad) eda
+                   LEFT JOIN (SELECT ceda.id_campana_aviso, ceda.id_poblacion_grupo_edad, eda.nombre_poblacion_grupo_edad
+                          FROM rel_campana_grupo_edad ceda
+                          JOIN cat_poblacion_grupo_edad eda ON  eda.id_poblacion_grupo_edad = ceda.id_poblacion_grupo_edad) eda
                    ON eda.id_campana_aviso = cam.id_campana_aviso
                    LEFT JOIN (SELECT cniv.id_campana_aviso, GROUP_CONCAT(niv.nombre_poblacion_nivel) nombre_poblacion_nivel
                          FROM rel_campana_nivel cniv
@@ -102,10 +103,8 @@ class Formato_c extends Webservices
                           ON edu.id_poblacion_nivel_educativo = cedu.id_poblacion_nivel_educativo
                         GROUP BY id_campana_aviso) edu
                    ON edu.id_campana_aviso = cam.id_campana_aviso
-                   LEFT JOIN (SELECT clug.id_campana_aviso, GROUP_CONCAT(lug.nombre_poblacion_lugar) poblacion_lugar
-                        FROM rel_campana_lugar clug 
-                        JOIN cat_poblacion_lugar lug ON lug.id_poblacion_lugar = clug.id_campana_lugar
-                        GROUP BY clug.id_campana_aviso) lug
+                   LEFT JOIN (SELECT id_campana_aviso, GROUP_CONCAT(poblacion_lugar) poblacion_lugar                         
+                        FROM rel_campana_lugar GROUP BY id_campana_aviso) lug
                    ON lug.id_campana_aviso = cam.id_campana_aviso
                    LEFT JOIN (SELECT csex.id_campana_aviso, GROUP_CONCAT(sex.nombre_poblacion_sexo) nombre_poblacion_sexo
                         FROM rel_campana_sexo csex
