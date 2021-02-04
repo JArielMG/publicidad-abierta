@@ -169,7 +169,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'fecha_celebracion' },
 				{ data: 'numero_contrato' },
 				{ data: 'objeto_contrato' },
-				{ data: 'Hipervínculo al contrato firmado' },
+				{ data: 'url_contrato' },
 				{ data: 'file_convenio' }, //{ data: 'Hipervínculo al convenio modificatorio en su caso' },
 				{ data: 'Monto total del contrato' },
 				{ data: 'Monto pagado al periodo publicado' },

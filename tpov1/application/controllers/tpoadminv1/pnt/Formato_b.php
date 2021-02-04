@@ -255,8 +255,7 @@ class Formato_b extends Webservices
             $col = "IFNULL(" . $col . ", '') AS $tag";
         }
 
-        $query = $this->db->query("SELECT " . join(", ", $cols) . ",
-                IFNULL(vcon.`Archivo contrato en PDF (Vinculo al archivo)` , '') AS 'Hipervínculo al contrato firmado',
+        $query = $this->db->query("SELECT " . join(", ", $cols) . ", cont.url_contrato,
                 IFNULL(vcon.`Monto original del contrato` , '') AS 'Monto total del contrato',
                 IFNULL(vcon.`Monto pagado a la fecha` , '') AS 'Monto pagado al periodo publicado',
                 cont.fecha_inicio, cont.fecha_fin 
