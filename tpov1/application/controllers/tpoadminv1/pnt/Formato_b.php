@@ -179,21 +179,15 @@ class Formato_b extends Webservices
                               (partida IS NOT NULL AND partida <> '')
                     ) d ON d.id_presupesto_concepto = pdes.id_presupuesto_concepto
                     LEFT JOIN (
-                        SELECT pcon.id_presupesto_concepto, pcon.concepto, 
+                        SELECT pcon2.id_presupesto_concepto, pcon2.concepto, 
                               SUM(pdes.monto_presupuesto) total_presupuesto, SUM(pdes.monto_modificacion) total_modificado
-                        FROM tab_presupuestos_desglose pdes
-                        JOIN (SELECT id_presupesto_concepto, capitulo, concepto, partida, denominacion 
-                             FROM cat_presupuesto_conceptos 
-                             WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
-                                   (concepto IS NOT NULL AND concepto <> '' ) AND 
-                                   (partida IS NOT NULL AND partida <> '')
-                        ) pcon ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                        GROUP BY pcon.concepto, pcon.id_presupesto_concepto
+                        FROM tab_presupuestos_desglose pdes 
+                        JOIN cat_presupuesto_conceptos pcon2 ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                        GROUP BY pcon2.concepto, pcon2.id_presupesto_concepto
                     ) p ON p.id_presupesto_concepto = pdes.id_presupuesto_concepto
                     LEFT JOIN (  
                         SELECT id_presupesto_concepto, denominacion concepto
                         FROM cat_presupuesto_conceptos 
-
                         tab_presupuestos_desglose c1 ON c1.id_presupesto_concepto = pdes.id_presupuesto_concepto
                     LEFT JOIN (
                         SELECT pcon.id_presupesto_concepto, SUM(fdes.monto_desglose) total_partida
@@ -265,8 +259,7 @@ class Formato_b extends Webservices
                 IFNULL(vcon.`Archivo contrato en PDF (Vinculo al archivo)` , '') AS 'Hipervínculo al contrato firmado',
                 IFNULL(vcon.`Monto original del contrato` , '') AS 'Monto total del contrato',
                 IFNULL(vcon.`Monto pagado a la fecha` , '') AS 'Monto pagado al periodo publicado',
-                IFNULL(vcon.`Fecha inicio` , '') AS 'Fecha de inicio de los servicios contratados',
-                IFNULL(vcon.`Fecha fin` , '') AS 'Fecha de término de los servicios contratados'
+                cont.fecha_inicio, cont.fecha_fin 
             FROM tab_contratos cont
             LEFT JOIN vout_contratos vcon ON vcon.`ID (Número de contrato)` = cont.id_contrato
             LEFT JOIN vout_convenios_modificatorios vcmod ON vcmod.`ID (Número de contrato)` = cont.id_contrato

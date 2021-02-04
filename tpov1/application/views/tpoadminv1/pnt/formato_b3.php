@@ -173,8 +173,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'file_convenio' }, //{ data: 'Hipervínculo al convenio modificatorio en su caso' },
 				{ data: 'Monto total del contrato' },
 				{ data: 'Monto pagado al periodo publicado' },
-				{ data: 'Fecha de inicio de los servicios contratados' },
-				{ data: 'Fecha de término de los servicios contratados' },
+				{ data: 'fecha_inicio' },
+				{ data: 'fecha_fin' },
 				{ data: 'numeros_factura' },
 				{ data: 'files_factura_pdf' }/*,
 				{ data: 'estatus_pnt' }*/
