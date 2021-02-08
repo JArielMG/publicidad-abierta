@@ -152,6 +152,11 @@ class Formato_b extends Webservices
                        "p.total_modificado", "pdes.monto_presupuesto", 
                        "pdes.monto_modificacion", "f.total_partida", "pnt.estatus_pnt");
 
+        $cols = array("pdes.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
+                       "c.partida", "c.id_par", "c.concepto", "c.concepto_txt", "c.partida_txt", "p.total_presupuesto", 
+                       "p.total_modificado", "pdes.monto_presupuesto", 
+                       "pdes.monto_modificacion", "f.total_partida", "pnt.estatus_pnt");
+
         foreach ($cols as &$col) {
             $tag = $col;
             if( strpos($col, " ") ) {
@@ -164,14 +169,76 @@ class Formato_b extends Webservices
                   " FROM tab_presupuestos_desglose pdes 
                     JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
                     JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
-                    LEFT JOIN (  
+                    JOIN ( 
+                      SELECT p3.id_presupesto_concepto id_par, sp2.capitulo, sp2.capitulo_txt, 
+                           sp2.concepto, sp2.concepto_txt, p3.partida, p3.denominacion partida_txt
+                      FROM cat_presupuesto_conceptos p3
+                      JOIN ( SELECT sp.id_cap, sp.capitulo, sp.capitulo_txt, p1.id_presupesto_concepto id_con, p1.concepto, p1.denominacion concepto_txt
+                        FROM cat_presupuesto_conceptos p1
+                        JOIN ( SELECT p2.id_presupesto_concepto id_cap, p2.capitulo, p2.denominacion capitulo_txt                        
+                          FROM cat_presupuesto_conceptos p2                      
+                          WHERE (p2.concepto IS NULL OR p2.concepto = '' ) AND (p2.partida IS NULL OR p2.partida = '')
+                          AND p2.capitulo IS NOT NULL AND p2.capitulo <> ''
+                        ) sp ON sp.capitulo = p1.capitulo
+                        WHERE (p1.partida IS NULL OR p1.partida = '') 
+                        AND (p1.concepto IS NOT NULL AND p1.concepto <> '')
+                      ) sp2 ON sp2.concepto = p3.concepto
+                      WHERE (p3.capitulo IS NOT NULL AND p3.capitulo <> '') AND 
+                            (p3.concepto IS NOT NULL AND p3.concepto <> '' ) AND 
+                            (p3.partida IS NOT NULL AND p3.partida <> '')
+                    ) c ON c.id_par = pdes.id_presupuesto_concepto
+                    LEFT JOIN (
+                        SELECT pcon2.id_presupesto_concepto, pcon2.concepto, 
+                              SUM(pdes.monto_presupuesto) total_presupuesto, SUM(pdes.monto_modificacion) total_modificado
+                        FROM tab_presupuestos_desglose pdes 
+                        JOIN cat_presupuesto_conceptos pcon2 ON pcon2.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                        GROUP BY pcon2.concepto, pcon2.id_presupesto_concepto
+                    ) p ON p.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    LEFT JOIN (
+                        SELECT pcon.id_presupesto_concepto, SUM(fdes.monto_desglose) total_partida
+                        FROM tab_facturas_desglose fdes
+                        JOIN (
+                            SELECT id_presupesto_concepto, partida 
+                            FROM cat_presupuesto_conceptos 
+                            WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
+                                   (concepto IS NOT NULL AND concepto <> '' ) AND 
+                                   (partida IS NOT NULL AND partida <> '')
+                        ) pcon ON pcon.id_presupesto_concepto  = fdes.id_presupuesto_concepto
+                        GROUP BY pcon.partida, pcon.id_presupesto_concepto
+                    ) f ON f.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    LEFT JOIN rel_pnt_presupuesto_desglose pnt ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose");
+
+                    /*
+                    " LEFT JOIN (  
                         SELECT id_presupesto_concepto, denominacion concepto
                         FROM cat_presupuesto_conceptos 
-                        WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
-                              (concepto IS NULL OR concepto = '' ) AND 
-                              (partida IS NULL OR partida = '')
+                        tab_presupuestos_desglose c1 ON c1.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    LEFT JOIN (
+                        SELECT pcon.id_presupesto_concepto, SUM(fdes.monto_desglose) total_partida
+                        FROM tab_facturas_desglose fdes
+                        JOIN (
+                            SELECT id_presupesto_concepto, partida 
+                            FROM cat_presupuesto_conceptos 
+                            WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
+                                   (concepto IS NOT NULL AND concepto <> '' ) AND 
+                                   (partida IS NOT NULL AND partida <> '')
+                        ) pcon ON pcon.id_presupesto_concepto  = fdes.id_presupuesto_concepto
+                        GROUP BY pcon.partida, pcon.id_presupesto_concepto
+                    ) f ON f.id_presupesto_concepto = pdes.id_presupuesto_concepto
+                    LEFT JOIN rel_pnt_presupuesto_desglose pnt ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose");
+                    */
+        /*
+         $query = $this->db->query("SELECT " . join(", ", $cols) .  
+                  " FROM tab_presupuestos_desglose pdes 
+                    JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
+                    JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
+                    LEFT JOIN (  
+                        SELECT id_presupesto_concepto, capitulo, denominacion concepto                        
+                        FROM cat_presupuesto_conceptos                          
+                        WHERE (concepto IS NULL OR concepto = '' ) AND (partida IS NULL OR partida = '')
+                        AND capitulo IS NOT NULL AND capitulo <> '';
                     ) c ON c.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                        LEFT JOIN ( 
+                    LEFT JOIN ( 
                         SELECT id_presupesto_concepto, partida, denominacion 
                         FROM cat_presupuesto_conceptos 
                         WHERE (capitulo IS NOT NULL AND capitulo <> '') AND 
@@ -218,36 +285,6 @@ class Formato_b extends Webservices
                     ) f ON f.id_presupesto_concepto = pdes.id_presupuesto_concepto
                     LEFT JOIN rel_pnt_presupuesto_desglose pnt ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose");
                     */
-        /*
-        $query = $this->db->query("SELECT " . join(", ", $cols) .  
-                  " FROM tab_presupuestos_desglose pdes 
-                    JOIN tab_presupuestos pre ON pre.id_presupuesto = pdes.id_presupuesto
-                    JOIN cat_ejercicios ej ON ej.id_ejercicio = pre.id_ejercicio
-                    JOIN (SELECT p.id_presupesto_concepto, c.capitulo, c.denominacion 'nombre_concepto', 
-                               p.partida, p.id_presupesto_concepto 'denominacion_partida'
-                          FROM (SELECT id_presupesto_concepto, capitulo, partida, denominacion FROM cat_presupuesto_conceptos pc
-                              WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) <> '' AND trim(coalesce(concepto, '')) <> '' ) p 
-                          JOIN (SELECT capitulo, denominacion FROM cat_presupuesto_conceptos 
-                              WHERE trim(coalesce(capitulo, '')) <> '' AND trim(coalesce(partida, '')) = '') c
-                          ON c.capitulo = p.capitulo) pcon 
-                    ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                    JOIN (
-                        ( SELECT pcon.id_presupesto_concepto, pcon.concepto, 
-                                  SUM(pdes.monto_presupuesto) presupuesto, SUM(pdes.monto_modificacion) modificado
-                           FROM tab_presupuestos_desglose pdes
-                           JOIN (SELECT id_presupesto_concepto, p.concepto
-                                 FROM (SELECT id_presupesto_concepto, concepto FROM cat_presupuesto_conceptos pc
-                                     WHERE trim(coalesce(concepto, '')) <> '' AND trim(coalesce(partida, '')) <> '' AND trim(coalesce(concepto, '')) <> '' ) p 
-                                 JOIN (SELECT concepto FROM cat_presupuesto_conceptos
-                                     WHERE trim(coalesce(concepto, '')) <>'' AND trim(coalesce(partida, '')) = '') c
-                                 ON c.concepto = p.concepto) pcon 
-                           ON pcon.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                           GROUP BY pcon.concepto, pcon.id_presupesto_concepto)
-                    ) total ON total.id_presupesto_concepto = pdes.id_presupuesto_concepto
-                    LEFT JOIN (SELECT numero_partida, SUM(monto_desglose) total_ejercido 
-                               FROM tab_facturas_desglose GROUP BY numero_partida) fact 
-                         ON fact.numero_partida = pcon.partida 
-                    LEFT JOIN rel_pnt_presupuesto_desglose pnt ON pnt.id_presupuesto_desglose = pdes.id_presupuesto_desglose");
         /**/
 
         $rows = $query->result_array();
@@ -257,7 +294,7 @@ class Formato_b extends Webservices
     }
 
     function registrosb3(){
-        $cols = array("pnt.id_contrato id_tpo", "pnt.id_pnt id_pnt", "pnt.id", "ej.ejercicio", 
+        $cols = array("cont.id_contrato id_tpo", "pnt.id_pnt id_pnt", "pnt.id", "ej.ejercicio", 
                       "cont.fecha_celebracion", "cont.numero_contrato", "cont.objeto_contrato", 
                       "f.numeros_factura", "f.files_factura_pdf", "conv.file_convenio",
                       "pnt.estatus_pnt");
