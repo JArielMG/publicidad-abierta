@@ -147,8 +147,8 @@ class Formato_b extends Webservices
     }
 
     function registrosb2(){
-        $cols = array("pnt.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
-                       "d.partida", "c.id_presupesto_concepto", "c.concepto", "d.denominacion", "p.total_presupuesto", 
+        $cols = array("pdes.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
+                       "c.partida", "c.id_par", "c.concepto", "c.concepto_txt", "c.partida_txt", "p.total_presupuesto", 
                        "p.total_modificado", "pdes.monto_presupuesto", 
                        "pdes.monto_modificacion", "f.total_partida", "pnt.estatus_pnt");
 
@@ -156,6 +156,10 @@ class Formato_b extends Webservices
                        "c.partida", "c.id_par", "c.concepto", "c.concepto_txt", "c.partida_txt", "p.total_presupuesto", 
                        "p.total_modificado", "pdes.monto_presupuesto", 
                        "pdes.monto_modificacion", "f.total_partida", "pnt.estatus_pnt");
+
+
+
+        // id a partir de la tabla de B (tab_facturas)
 
         foreach ($cols as &$col) {
             $tag = $col;
@@ -312,7 +316,7 @@ class Formato_b extends Webservices
                 IFNULL(vcon.`Monto pagado a la fecha` , '') AS 'Monto pagado al periodo publicado',
                 cont.fecha_inicio, cont.fecha_fin 
             FROM tab_contratos cont
-            LEFT JOIN vout_contratos vcon ON vcon.`ID (Número de contrato)` = cont.id_contrato
+            LEFT JOIN vout_contratos vcon ON vcon.`ID (Número de contrato)` = cont.numero_contrato
             LEFT JOIN vout_convenios_modificatorios vcmod ON vcmod.`ID (Número de contrato)` = cont.id_contrato
             LEFT JOIN (SELECT f.id_contrato, f.numero_factura numeros_factura, 
                        f.file_factura_pdf files_factura_pdf, f.id_ejercicio
