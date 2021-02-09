@@ -300,7 +300,7 @@ class Formato_b extends Webservices
     function registrosb3(){
         $cols = array("cont.id_contrato id_tpo", "pnt.id_pnt id_pnt", "pnt.id", "ej.ejercicio", 
                       "cont.fecha_celebracion", "cont.numero_contrato", "cont.objeto_contrato", 
-                      "f.numeros_factura", "f.files_factura_pdf", "conv.file_convenio",
+                      "f.numeros_factura", "f.files_factura_pdf", "conv.url_convenio",
                       "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
@@ -312,12 +312,12 @@ class Formato_b extends Webservices
         }
 
         $query = $this->db->query("SELECT " . join(", ", $cols) . ", cont.url_contrato,
-                IFNULL(vcon.`Monto original del contrato` , '') AS 'Monto total del contrato',
+                IFNULL(vcon.`Monto total` , '') AS 'Monto total del contrato',
                 IFNULL(vcon.`Monto pagado a la fecha` , '') AS 'Monto pagado al periodo publicado',
                 cont.fecha_inicio, cont.fecha_fin 
             FROM tab_contratos cont
             LEFT JOIN vout_contratos vcon ON vcon.`ID (Número de contrato)` = cont.numero_contrato
-            LEFT JOIN vout_convenios_modificatorios vcmod ON vcmod.`ID (Número de contrato)` = cont.id_contrato
+            LEFT JOIN vout_convenios_modificatorios vcmod ON vcmod.`ID (Número de contrato)` = cont.numero_contrato
             LEFT JOIN (SELECT f.id_contrato, f.numero_factura numeros_factura, 
                        f.file_factura_pdf files_factura_pdf, f.id_ejercicio
                        FROM tab_facturas f ) f ON f.id_contrato = cont.id_contrato
@@ -325,6 +325,9 @@ class Formato_b extends Webservices
             LEFT JOIN rel_pnt_contrato pnt ON pnt.id_contrato = cont.id_contrato
             LEFT JOIN tab_convenios_modificatorios conv ON conv.id_contrato = cont.id_contrato
             WHERE cont.numero_contrato != 'Sin contrato'; ");
+
+        //SELECT cv.id_contrato, file_convenio, url_convenio FROM tab_contratos JOIN tab_convenios_modificatorios cv ON cv.id_contrato = tab_contratos.id_contrato;
+
 
         $rows = $query->result_array();
 

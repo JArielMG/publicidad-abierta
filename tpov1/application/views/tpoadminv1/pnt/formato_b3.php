@@ -178,7 +178,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'numero_contrato' },
 				{ data: 'objeto_contrato' },
 				{ data: 'url_contrato' },
-				{ data: 'file_convenio' }, //{ data: 'Hipervínculo al convenio modificatorio en su caso' },
+				{ data: 'url_convenio' }, //{ data: 'Hipervínculo al convenio modificatorio en su caso' },
 				{ data: 'Monto total del contrato' },
 				{ data: 'Monto pagado al periodo publicado' },
 				{ data: 'fecha_inicio' },
@@ -204,6 +204,14 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                           return data.split("-").reverse().join("/")
                         } catch(e){ return data}
 
+                        return quitarTags(data)
+                    }
+                },
+                {
+                    targets: [8],
+                    data: "data",
+                    render: function ( data, type, row, meta ) {
+                    	if(row.ejercicio == "2020") console.log(data, row)
                         return quitarTags(data)
                     }
                 },
