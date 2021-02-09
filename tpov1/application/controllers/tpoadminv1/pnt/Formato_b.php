@@ -321,7 +321,7 @@ class Formato_b extends Webservices
             LEFT JOIN (SELECT f.id_contrato, f.numero_factura numeros_factura, 
                        f.file_factura_pdf files_factura_pdf, f.id_ejercicio
                        FROM tab_facturas f ) f ON f.id_contrato = cont.id_contrato
-            LEFT JOIN cat_ejercicios ej ON ej.id_ejercicio = f.id_ejercicio
+            LEFT JOIN cat_ejercicios ej ON ej.id_ejercicio = cont.id_ejercicio
             LEFT JOIN rel_pnt_contrato pnt ON pnt.id_contrato = cont.id_contrato
             LEFT JOIN tab_convenios_modificatorios conv ON conv.id_contrato = cont.id_contrato
             WHERE cont.numero_contrato != 'Sin contrato'; ");

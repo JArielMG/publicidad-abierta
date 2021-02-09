@@ -211,7 +211,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                     targets: [8],
                     data: "data",
                     render: function ( data, type, row, meta ) {
-                    	if(row.ejercicio == "2020") console.log(data, row)
+                    	console.log(data, row)
+                    	if(row.ejercicio == "2021") console.log(data, row)
                         return quitarTags(data)
                     }
                 },
