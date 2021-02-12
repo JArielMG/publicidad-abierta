@@ -147,10 +147,12 @@ class Formato_b extends Webservices
     }
 
     function registrosb2(){
+        /*
         $cols = array("pdes.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
                        "c.partida", "c.id_par", "c.concepto", "c.concepto_txt", "c.partida_txt", "p.total_presupuesto", 
                        "p.total_modificado", "pdes.monto_presupuesto", 
                        "pdes.monto_modificacion", "f.total_partida", "pnt.estatus_pnt");
+        */
 
         $cols = array("pdes.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
                        "c.partida", "c.id_par", "c.concepto", "c.concepto_txt", "c.partida_txt", "p.total_presupuesto", 
@@ -300,7 +302,7 @@ class Formato_b extends Webservices
     function registrosb3(){
         $cols = array("cont.id_contrato id_tpo", "pnt.id_pnt id_pnt", "pnt.id", "ej.ejercicio", 
                       "cont.fecha_celebracion", "cont.numero_contrato", "cont.objeto_contrato", 
-                      "f.numeros_factura", "f.files_factura_pdf", "conv.url_convenio",
+                      "f.numeros_factura", "f.files_factura_pdf",
                       "pnt.estatus_pnt");
 
         foreach ($cols as &$col) {
@@ -312,6 +314,16 @@ class Formato_b extends Webservices
         }
 
         $query = $this->db->query("SELECT " . join(", ", $cols) . ", cont.url_contrato,
+                CASE
+                    WHEN conv.file_convenio IS NOT NULL THEN CONCAT('" . base_url() . "', '/data/convenios/', conv.file_convenio )
+                    WHEN conv.file_convenio IS NULL THEN conv.url_convenio
+                    ELSE ''
+                END AS 'url_convenio',
+                CASE
+                    WHEN cont.file_contrato IS NOT NULL THEN CONCAT('" . base_url() . "', '/data/contratos/', cont.file_contrato )
+                    WHEN cont.file_contrato IS NULL THEN cont.url_contrato
+                    ELSE ''
+                END AS 'url_contrato',
                 IFNULL(vcon.`Monto total` , '') AS 'Monto total del contrato',
                 IFNULL(vcon.`Monto pagado a la fecha` , '') AS 'Monto pagado al periodo publicado',
                 cont.fecha_inicio, cont.fecha_fin 

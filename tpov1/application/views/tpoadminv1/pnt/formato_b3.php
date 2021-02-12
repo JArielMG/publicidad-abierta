@@ -206,16 +206,18 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
                         return quitarTags(data)
                     }
-                },
+                }/*,
                 {
                     targets: [8],
                     data: "data",
                     render: function ( data, type, row, meta ) {
                     	console.log(data, row)
-                    	if(row.ejercicio == "2021") console.log(data, row)
-                        return quitarTags(data)
+                    	if("url_convenio" in row && row.url_convenio != "")
+                    		//return data
+                    		return "<?php echo base_url(); ?>/data/convenios/" +  row.url_convenio
+                        //return ""
                     }
-                },
+                }/**/,
 				{
 				    targets: [3,4,5,6,7,8,9,10,11,12,13,14],
 				    data: "data",
