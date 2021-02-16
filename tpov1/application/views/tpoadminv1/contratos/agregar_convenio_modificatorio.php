@@ -192,14 +192,6 @@
                                 echo form_input(array('type' => 'number', 'step'=>'0.01', 'name' => 'monto_convenio', 'value' => $registro['monto_convenio'], 'class' => $class)); ?>
                     </div>
                     <div class="form-group">
-                        <label>Estatus*
-                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
-                        </label>
-                        <select class="form-control <?php if($error_active) echo 'has-error' ?>" name="active" >
-                            <?php echo $sel_estatus; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label>Hipervínculo Al Convenio Modificatorio, en su Caso
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_convenio']?>"></i>
                         </label>
@@ -265,6 +257,14 @@
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['nota']?>"></i>
                         </label>
                         <textarea class="form-control" name="nota" id="nota"><?php echo $registro['nota']; ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Estatus*
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                        </label>
+                        <select class="form-control <?php if($error_active) echo 'has-error' ?>" name="active" >
+                            <?php echo $sel_estatus; ?>
+                        </select>
                     </div> 
                 </div><!-- /.box-body -->
                 <div class="box-footer">

@@ -332,14 +332,6 @@
                                     echo form_input(array('type' => 'number', 'step'=>'0.01', 'name' => 'precio_unitarios', 'value' => $registro['precio_unitarios'], 'class' => $class)); ?>
                     </div>
                     <div class="form-group">
-                        <label>Estatus*
-                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
-                        </label>
-                        <select name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
-                            <?php echo $sel_estatus; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label>Fecha de validaci&oacute;n
                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_validacion']?>"></i>
                         </label>
@@ -372,6 +364,14 @@
                             <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['nota']?>"></i>
                         </label>
                         <textarea class="form-control" name="nota" id="nota"><?php echo $registro['nota']; ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Estatus*
+                            <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                        </label>
+                        <select name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
+                            <?php echo $sel_estatus; ?>
+                        </select>
                     </div> 
                 </div><!-- /.box-body -->
                 <div class="box-footer">

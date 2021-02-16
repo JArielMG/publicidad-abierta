@@ -642,15 +642,7 @@ for($z = 0; $z < sizeof($docpacs); $z++)
                                 <div class="form-group">
                                     <p class="help-block" id="result_upload"><?php echo $control_update['mensaje_file']; ?> </p>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label>Estatus*
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['estatus']?>"></i>
-                                    </label>
-                                    <select name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
-                                        <?php echo $sel_estatus; ?>
-                                    </select>
-                                </div> 
+
                                 <div class="form-group">
                                     <label>Fecha de validaci&oacute;n
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_validacion']?>"></i>
@@ -689,7 +681,15 @@ for($z = 0; $z < sizeof($docpacs); $z++)
                                         <?php echo set_value('nota'); ?> 
                                     </textarea>
                                 </div>
-                                <br /><br />
+                                <div class="form-group">
+                                    <label>Estatus*
+                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['estatus']?>"></i>
+                                    </label>
+                                    <select name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
+                                        <?php echo $sel_estatus; ?>
+                                    </select>
+                                </div> 
+                                <br />
                                 </div>
                             </div><!-- /.box-body -->
                             <div class="box-footer">
