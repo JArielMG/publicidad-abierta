@@ -315,15 +315,15 @@ class Formato_b extends Webservices
             $col = "IFNULL(" . $col . ", '') AS $tag";
         }
 
-        $query = $this->db->query("SELECT " . join(", ", $cols) . ", cont.url_contrato,
+        $query = $this->db->query("SELECT " . join(", ", $cols) . ", 
                 CASE
-                    WHEN conv.file_convenio IS NOT NULL THEN CONCAT('" . base_url() . "', '/data/convenios/', conv.file_convenio )
-                    WHEN conv.file_convenio IS NULL THEN conv.url_convenio
+                    WHEN (conv.file_convenio IS NOT NULL AND conv.file_convenio != '' ) THEN CONCAT('" . base_url() . "', 'data/convenios/', conv.file_convenio )
+                    WHEN (conv.file_convenio IS NULL OR conv.file_convenio = '') THEN conv.url_convenio
                     ELSE ''
                 END AS 'url_convenio',
                 CASE
-                    WHEN cont.file_contrato IS NOT NULL THEN CONCAT('" . base_url() . "', '/data/contratos/', cont.file_contrato )
-                    WHEN cont.file_contrato IS NULL THEN cont.url_contrato
+                    WHEN (cont.file_contrato IS NOT NULL AND cont.file_contrato != '' ) THEN CONCAT('" . base_url() . "', 'data/contratos/', cont.file_contrato )
+                    WHEN (cont.file_contrato IS NULL OR cont.file_contrato = '') THEN cont.url_contrato
                     ELSE ''
                 END AS 'url_contrato',
                 IFNULL(vcon.`Monto total` , '') AS 'Monto total del contrato',
