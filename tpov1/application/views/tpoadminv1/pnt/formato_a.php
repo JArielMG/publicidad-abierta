@@ -132,13 +132,9 @@ $(document).ready(function(){
             table.draw(); 
         });
 
-    quitarTags =  function(str){
-            str = str.replace(/"/g, "'")
-            var contenido = str.replace(/"/g, "'")
-            var temporal = document.createElement("div");
-            temporal.innerHTML = contenido;
-            return temporal.textContent || temporal.innerText || "";
-        }
+   var quitarTags =  function(str){
+        	return 	str.replace(/(<([^>]+)>)/ig,"")
+	    }
 
     var table = $('#grid1').DataTable({
     	language: {
@@ -189,14 +185,14 @@ $(document).ready(function(){
 			    data: "data",
 			    render: function ( data, type, row, meta ) {
 			      	if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
-			      	return $(data).text()
+			      	return quitarTags(data)
 			    }
 			},
 	        {
 	            targets: 8,
 	            data: "data",
 	            render: function ( data, type, row, meta ) {
-	            	if(data != "") return "<?php echo base_url(); ?>data/programas/" + $(data).text()
+	            	if(data != "") return "<?php echo base_url(); ?>data/programas/" + quitarTags(data)
 	            }
 	        },
 	        {
@@ -204,10 +200,10 @@ $(document).ready(function(){
 	            data: "data",
 	            render: function ( data, type, row, meta ) {
 	                try{
-	                  return data.split("-").reverse().join("/")
-	                } catch(e){ return data}
+	                  return  quitarTags(data).split("-").reverse().join("/")
+	                } catch(e){ return  quitarTags(data)}
 
-	                return $(data).text()
+	                return  quitarTags(data).text()
 	            }
 	        },
 			{
@@ -215,10 +211,10 @@ $(document).ready(function(){
 			    data: "data",
 			    render: function ( data, type, row, meta ) {
 			    	if( !(row.id_pnt) || row.id_pnt === ""){ 
-			      		if(!data) return  "<label class='btn'> <small> N/D </small></label>"
-			        	return (data.length > 100)? data.substr( 0, 100 ) + "..." : $(data).text()
+			      		if(! quitarTags(data)) return  "<label class='btn'> <small> N/D </small></label>"
+			        	return ( quitarTags(data).length > 100)?  quitarTags(data).substr( 0, 100 ) + "..." : $(data).text()
 				     //} else return "<input type='text' value='" + data + "'>" 
-				    } else return $(data).text()
+				    } else return quitarTags(data)
 			    }
 			}
 			/**/
@@ -258,9 +254,9 @@ $(document).ready(function(){
 			    render: function ( data, type, row, meta ) {
 			    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 			      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
-			        	return  $(data).text()
+			        	return quitarTags(data)
 				    //} else return "<input type='text' value='" + data + "'>" 
-				    } else return $(data).text()
+				    } else return  quitarTags(data)
 			    }
 			}
 			/**/
