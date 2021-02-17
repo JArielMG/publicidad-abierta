@@ -47,7 +47,7 @@ class Presupuestos extends CI_Controller
         if($this->session->userdata('usuario_rol') != '2' && $this->session->userdata('usuario_rol') != '3')
         {
             redirect('tpoadminv1/securecms/sin_permiso');
-        }else if($this->session->userdata('usuario_id_so_atribucion') != 1 && $this->session->userdata('usuario_id_so_atribucion') != 3 ){
+        }else if($this->session->userdata('usuario_id_so_atribucion') != 0 && $this->session->userdata('usuario_id_so_atribucion') != 2 ){
             redirect('tpoadminv1/securecms/sin_permiso');
         }
     }
@@ -58,7 +58,7 @@ class Presupuestos extends CI_Controller
         if($this->session->userdata('usuario_rol') != '2' && $this->session->userdata('usuario_rol') != '3')
         {
             redirect('tpoadminv1/securecms/sin_permiso');
-        }else if($this->session->userdata('usuario_id_so_atribucion') != 1 && $this->session->userdata('usuario_id_so_atribucion') != 3 ){
+        }else if($this->session->userdata('usuario_id_so_atribucion') != 0 && $this->session->userdata('usuario_id_so_atribucion') != 2 ){
             redirect('tpoadminv1/securecms/sin_permiso');
         }
     }

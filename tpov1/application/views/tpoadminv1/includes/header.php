@@ -262,7 +262,7 @@ header('Expires: 0'); // Proxies.
 					
                     <?php } 
                     else if($this->session->userdata('usuario_rol') == '2' 
-                        && ($this->session->userdata('usuario_id_so_atribucion') == 1 || $this->session->userdata('usuario_id_so_atribucion') == 3)){ ?>
+                        && ($this->session->userdata('usuario_id_so_atribucion') == 0 || $this->session->userdata('usuario_id_so_atribucion') == 2)){ ?>
                     <li class=" <?php if($active == 'proveedores') { echo ' active'; } ?>">
                         <a href="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/proveedores/busqueda_proveedores">
                             <i class="fa fa-users"></i> Proveedores
@@ -275,21 +275,21 @@ header('Expires: 0'); // Proxies.
                         </a>
                     </li>
                     <?php } if($this->session->userdata('usuario_rol') == '2' 
-                        && ($this->session->userdata('usuario_id_so_atribucion') == 2 || $this->session->userdata('usuario_id_so_atribucion') == 3)){ ?>
+                        && ($this->session->userdata('usuario_id_so_atribucion') == 1 || $this->session->userdata('usuario_id_so_atribucion') == 2)){ ?>
                     <li class=" <?php if($active == 'campanas') { echo ' active'; } ?>">
                         <a href="<?php echo base_url(); ?>index.php/tpoadminv1/campanas/campanas/busqueda_campanas_avisos">
                             <i class="fa fa-database"></i> Campañas y avisos institucionales
                         </a>
                     </li>
 					<?php } if($this->session->userdata('usuario_rol') == '2' 
-                        && ($this->session->userdata('usuario_id_so_atribucion') == 1 || $this->session->userdata('usuario_id_so_atribucion') == 3)){ ?>
+                        && ($this->session->userdata('usuario_id_so_atribucion') == 0 || $this->session->userdata('usuario_id_so_atribucion') == 2)){ ?>
                     <li class=" <?php if($active == 'contratos') { echo ' active'; } ?>">
                         <a href="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/contratos/busqueda_contratos">
                             <i class="fa fa-bookmark-o"></i> Contratos
                         </a>
                     </li>
                     <?php } if($this->session->userdata('usuario_rol') == '2' 
-                        && ($this->session->userdata('usuario_id_so_atribucion') == 1 || $this->session->userdata('usuario_id_so_atribucion') == 3)){ ?>
+                        && ($this->session->userdata('usuario_id_so_atribucion') == 0 || $this->session->userdata('usuario_id_so_atribucion') == 2)){ ?>
                     <li class=" <?php if($active == 'ordenes_compra') { echo ' active'; } ?>">
                         <a href="<?php echo base_url(); ?>index.php/tpoadminv1/capturista/ordenes_compra/busqueda_ordenes_compra">
                             <i class="fa fa-file-text-o"></i> &Oacute;rdenes de compra
