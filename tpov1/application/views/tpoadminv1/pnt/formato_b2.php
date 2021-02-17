@@ -132,13 +132,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             table.draw(); 
         });
 
-        quitarTags =  function(str){
-            str = str.replace(/"/g, "'")
-            var contenido = str.replace(/"/g, "'")
-            var temporal = document.createElement("div");
-            temporal.innerHTML = contenido;
-            return temporal.textContent || temporal.innerText || "";
-        }
+         var quitarTags =  function(str){
+        	return 	str.replace(/(<([^>]+)>)/ig,"")
+	    }
 	    
 	    table = $('#grid').DataTable({
 	    	language: {
@@ -167,7 +163,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 	    	},
     		scrollY: true,
 	    	scrollX: true,
-			columns: [
+			columns: [ //  "sum_ejercido", "sum_original", "sum_mdificaciones", "sum_presupuesto");
 				{ data: 'id_tpo' },
 				{ data: 'id_pnt' },
 				{ data: 'id' },
@@ -177,10 +173,10 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'capitulo_txt' },
 				{ data: 'total_presupuesto' },
 				{ data: 'total_modificado' },
-				{ data: 'concepto_txt' },
-				{ data: 'monto_presupuesto' },
-				{ data: 'monto_modificacion' },
-				{ data: 'total_partida' }/*,
+				{ data: 'partida_txt' },
+				{ data: 'sum_presupuesto' },
+				{ data: 'sum_mdificaciones' },
+				{ data: 'sum_ejercido' }/*,
 				{ data: 'estatus_pnt'}*/
 			],
 			columnDefs: [ 
@@ -189,7 +185,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				      	if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
-				      	return  $(data).text()
+				      	return quitarTags(data)
 				    }
 				},
 				{
@@ -198,9 +194,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    render: function ( data, type, row, meta ) {
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 				      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
-				        	return  $(data).text()
+				        	return quitarTags(data)
 					   //} else return "<input type='text' value='" + data + "'>" 
-				    	} else return  $(data).text()
+				    	} else return quitarTags(data)
 				    }
 				}
 			]
