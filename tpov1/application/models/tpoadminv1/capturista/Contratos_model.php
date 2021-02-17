@@ -803,7 +803,7 @@ class Contratos_Model extends CI_Model
             $count = 1;
             foreach ($query->result_array() as $row) 
             {
-                $montos = $this->getMontos($row['id_contrato'], $row['monto_contrato']);
+                //$montos = $this->getMontos($row['id_contrato'], $row['monto_contrato']);
                 $csv = array(
                         utf8_decode($count),
                         utf8_decode($this->Catalogos_model->dame_nombre_ejercicio($row['id_ejercicio'])),

@@ -230,14 +230,6 @@
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['nota']?>"></i>
                                     </label>
                                     <textarea class="form-control" name="nota" id="nota"><?php echo $registro['nota']; ?></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Estatus*
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
-                                    </label>
-                                    <select name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
-                                        <?php echo $sel_estatus; ?>
-                                    </select>
                                 </div> 
                                 <br /><br />
                                 <div class="callout callout-info">
@@ -344,6 +336,14 @@
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['nota']?>"></i>
                                     </label>
                                     <textarea class="form-control" name="nota_planeacion" id="nota_planeacion"><?php echo $registro['nota_planeacion']; ?></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Estatus*
+                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                    </label>
+                                    <select name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
+                                        <?php echo $sel_estatus; ?>
+                                    </select>
                                 </div>
                             </div><!-- /.box-body -->
                             <div class="box-footer">

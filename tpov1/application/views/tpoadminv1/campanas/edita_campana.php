@@ -645,21 +645,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Estatus*
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['estatus']?>"></i>
-                                    </label>
-                                    <select name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
-                                        <?php echo $sel_estatus; ?>
-                                    </select>
-                                </div> 
-
-                                <div class="form-group">
                                     <label>Fecha de validaci&oacute;n
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_validacion']?>"></i>
                                     </label>
                                     <input type="text" value="<?php if($campana['fecha_validacion'] != '0000-00-00'){ echo $campana['fecha_validacion'];}else { echo '';} ?>" class="form-control" name="fecha_validacion" autocomplete="off"/>
                                 </div>
-
                                 <div class="form-group">
                                     <label>&Aacute;rea responsable de la informaci&oacute;n
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['area_responsable']?>"></i>
@@ -676,14 +666,12 @@
                                             echo form_input(array('type' => 'text', 'name' => 'periodo', 
                                             'value' => $valor, 'class' => $class)); ?>  
                                 </div>
-
                                 <div class="form-group">
                                     <label>Fecha de actualizaci&oacute;n
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['fecha_actualizacion']?>"></i>
                                     </label>
                                     <input type="text" value="<?php if($campana['fecha_actualizacion'] != '0000-00-00'){ echo $campana['fecha_actualizacion'];}else { echo '';} ?>" class="form-control" name="fecha_actualizacion" autocomplete="off"/>
-                                </div>
-                                
+                                </div>                                
                                 <div class="form-group">
                                     <label>Nota
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['nota']?>"></i>
@@ -692,8 +680,15 @@
                                         <?php echo $campana['nota']; ?>
                                     </textarea>
                                 </div>
-
-                                <br /><br />
+                                <div class="form-group">
+                                    <label>Estatus*
+                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['estatus']?>"></i>
+                                    </label>
+                                    <select name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
+                                        <?php echo $sel_estatus; ?>
+                                    </select>
+                                </div>
+                                <br />
                                 
                                 </div>
                             </div><!-- /.box-body -->

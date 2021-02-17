@@ -411,7 +411,7 @@ class Contratos extends CI_Controller
         $data['print_onclick'] = "onclick=\"window.open('" . $print_url . "', '_blank', 'location=yes,height=670,width=1020,scrollbars=yes,status=yes')\"";
         $data['registros'] = $this->Contratos_model->dame_todos_convenios_modificatorios($this->uri->segment(5));
         
-        $data['path_file_csv'] = $this->Contratos_model->descarga_contratos();
+        $data['path_file_csv'] = $this->Contratos_model->descarga_convenios_modificatorios($this->uri->segment(5));
         $data['name_file_csv'] = "convenios_modificatorios_" . $this->uri->segment(5) . ".csv";
 
         $data['scripts'] = "<script type='text/javascript'>" .

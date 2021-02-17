@@ -1082,6 +1082,7 @@ class Campana_Model extends CI_Model
     function descarga_campanas_avisos()
     {
         $filename = 'dist/csv/campanasyavisos.csv';
+        $this->load->model('tpoadminv1/Generales_model');
         $myfile = fopen(FCPATH . $filename, 'w');
         
         $estatus = array('1', '2','3','4');
@@ -1126,6 +1127,7 @@ class Campana_Model extends CI_Model
                     utf8_decode('Evaluación'),
                     utf8_decode('Documento de evaluación'),
                     utf8_decode('Fecha de validación'),
+                    utf8_decode('Área responsable de la información'),
                     utf8_decode('Año'),
                     utf8_decode('Fecha de actualización'),
                     utf8_decode('Nota'),
@@ -1157,7 +1159,7 @@ class Campana_Model extends CI_Model
                     utf8_decode($this->dame_nombre_contratante($row['id_so_contratante'])),
                     utf8_decode($this->dame_tema_nombre($row['id_campana_tema'])),
                     utf8_decode($this->dame_objetivo_nombre($row['id_campana_objetivo'])),
-                    utf8_decode($row['objetivo_comunicacion']),
+                    utf8_decode($this->Generales_model->clear_html_tags($row['objetivo_comunicacion'])),
                     utf8_decode($this->dame_cobertura_nombre($row['id_campana_cobertura'])),
                     utf8_decode($row['campana_ambito_geo']),
                     utf8_decode($row['fecha_inicio']),
@@ -1165,7 +1167,7 @@ class Campana_Model extends CI_Model
                     utf8_decode($this->dame_tiempo_oficial_nombre($row['id_tiempo_oficial'])),
                     utf8_decode($row['monto_tiempo']),
                     utf8_decode($this->dame_tipoTO_nombre($row['id_campana_tipoTO'])),
-                    utf8_decode($row['mensajeTO']),
+                    utf8_decode($this->Generales_model->clear_html_tags($row['mensajeTO'])),
                     utf8_decode($row['fecha_inicio_to']),
                     utf8_decode($row['fecha_termino_to']),
                     utf8_decode($this->dame_medioComunicacion_nombre($row['id_servicio_categoria'])),
@@ -1178,12 +1180,13 @@ class Campana_Model extends CI_Model
                     utf8_decode($row['publicacion_segob']),
                     utf8_decode($row['plan_acs']),
                     utf8_decode($row['fecha_dof']),
-                    utf8_decode($row['evaluacion']),
+                    utf8_decode($this->Generales_model->clear_html_tags($row['evaluacion'])),
                     utf8_decode($row['evaluacion_documento']),
                     utf8_decode($row['fecha_validacion']),
+                    utf8_decode($row['area_responsable']),
                     utf8_decode($row['periodo'] == '0' ? '' : $row['periodo']),
                     utf8_decode($row['fecha_actualizacion']),
-                    utf8_decode($row['nota']),
+                    utf8_decode($this->Generales_model->clear_html_tags($row['nota'])),
                     utf8_decode($this->get_estatus_name($row['active']))
                 );
                 fputcsv($myfile, $csv);

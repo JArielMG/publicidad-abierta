@@ -254,14 +254,6 @@
                                     <input type="hidden" value="<?php echo $registro['fecha_erogacion']; ?>" name="fecha_erogacion_actual" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Estatus*
-                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
-                                    </label>
-                                    <select class="form-control" name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
-                                        <?php echo $sel_estatus; ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <label>Hipervínculo a la factura en formato PDF
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['url_factura_pdf']?>"></i>
                                     </label>
@@ -360,6 +352,14 @@
                                         <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['nota']?>"></i>
                                     </label>
                                     <textarea class="form-control" name="nota" id="nota"><?php echo $registro['nota']; ?></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Estatus*
+                                        <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="<?php echo $texto_ayuda['active']?>"></i>
+                                    </label>
+                                    <select class="form-control" name="active" class="form-control <?php if($error_active) echo 'has-error' ?>">
+                                        <?php echo $sel_estatus; ?>
+                                    </select>
                                 </div> 
                             </div><!-- /.box-body -->
                             <div class="box-footer">
