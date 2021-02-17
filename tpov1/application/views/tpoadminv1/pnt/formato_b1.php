@@ -135,11 +135,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
         });
 
         var quitarTags =  function(str){
-            var contenido = str.replace(/"/g, "'")
-            var temporal = document.createElement("div");
-            temporal.innerHTML = contenido;
-            return temporal.textContent || temporal.innerText || "";
-        }
+        	return 	str.replace(/(<([^>]+)>)/ig,"")
+	    }
 	    
 	    var table = $('#grid').DataTable({
 	    	language: {
@@ -190,14 +187,14 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				      	if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
-				      	return $(data).text();
+				      	return quitarTags(data)
 				    }
 				},
 				{ 
 				    targets: 11,
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
-				      	return $(data).text();
+				      	return quitarTags(data)
 				    }
 				},
 				/*
@@ -223,9 +220,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 				      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
-				        	return $(data).text();
+				        	return quitarTags(data)
 					   //} else return "<input type='text' value='" + data + "'>" 
-				    	} else return $(data).text()
+				    	} else return quitarTags(data)
 
 				    }
 				}
