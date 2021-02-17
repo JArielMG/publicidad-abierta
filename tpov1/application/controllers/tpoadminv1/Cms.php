@@ -174,11 +174,11 @@ class Cms extends CI_Controller
                         else 
                         {
                             //dependiendo el id de atribucion de redirije
-                            if($data['usuario_id_so_atribucion'] == 1){
+                            if($data['usuario_id_so_atribucion'] == 0){
                                 redirect('tpoadminv1/capturista/proveedores/busqueda_proveedores');
-                            }else if($data['usuario_id_so_atribucion'] == 2){
+                            }else if($data['usuario_id_so_atribucion'] == 1){
                                 redirect('tpoadminv1/campanas/campanas/busqueda_campanas_avisos');
-                            }else if($data['usuario_id_so_atribucion'] == 3){
+                            }else if($data['usuario_id_so_atribucion'] == 2){
                                 redirect('tpoadminv1/capturista/proveedores/busqueda_proveedores');
                             }else{
                                 redirect('tpoadminv1/securecms/sin_permiso');
