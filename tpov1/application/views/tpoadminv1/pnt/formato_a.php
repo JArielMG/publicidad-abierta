@@ -189,14 +189,14 @@ $(document).ready(function(){
 			    data: "data",
 			    render: function ( data, type, row, meta ) {
 			      	if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
-			      	return quitarTags(data)
+			      	return $(data).text()
 			    }
 			},
 	        {
 	            targets: 8,
 	            data: "data",
 	            render: function ( data, type, row, meta ) {
-	            	if(data != "") return "<?php echo base_url(); ?>data/programas/" + quitarTags(data)
+	            	if(data != "") return "<?php echo base_url(); ?>data/programas/" + $(data).text()
 	            }
 	        },
 	        {
@@ -207,7 +207,7 @@ $(document).ready(function(){
 	                  return data.split("-").reverse().join("/")
 	                } catch(e){ return data}
 
-	                return quitarTags(data)
+	                return $(data).text()
 	            }
 	        },
 			{
@@ -216,9 +216,9 @@ $(document).ready(function(){
 			    render: function ( data, type, row, meta ) {
 			    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 			      		if(!data) return  "<label class='btn'> <small> N/D </small></label>"
-			        	return (data.length > 100)? data.substr( 0, 100 ) + "..." : quitarTags(data)
+			        	return (data.length > 100)? data.substr( 0, 100 ) + "..." : $(data).text()
 				     //} else return "<input type='text' value='" + data + "'>" 
-				    } else return quitarTags(data)
+				    } else return $(data).text()
 			    }
 			}
 			/**/
@@ -258,9 +258,9 @@ $(document).ready(function(){
 			    render: function ( data, type, row, meta ) {
 			    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 			      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
-			        	return  quitarTags(data)
+			        	return  $(data).text()
 				    //} else return "<input type='text' value='" + data + "'>" 
-				    } else return quitarTags(data)
+				    } else return $(data).text()
 			    }
 			}
 			/**/

@@ -193,7 +193,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				      	if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
-				      	return quitarTags(data)
+				      	return $(data).text()
 				    }
 				},
                 {
@@ -204,7 +204,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                           return data.split("-").reverse().join("/")
                         } catch(e){ return data}
 
-                        return quitarTags(data)
+                        return $(data).text()
                     }
                 }/*,
                 {
@@ -224,7 +224,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    render: function ( data, type, row, meta ) {
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 				      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
-				        	return quitarTags(data)
+				        	return $(data).text()
 					   } else return "<input type='text' value='" + quitarTags(row) + "'>" 
 				    	//} else return data
 				    }

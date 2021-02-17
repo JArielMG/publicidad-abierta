@@ -171,7 +171,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 			columns: [
 				{ data: 'id_factura' },
 				{ data: 'id' },
-				{ data: 'id_tpo' },
+				{ data: 'id_factura' },
 				{ data: 'ejercicio' },
 				{ data: 'nombre_razon_social' },
 				{ data: 'nombres' },
@@ -190,14 +190,14 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
 				      	if(!data) return "<label class='btn'> <small> SIN SUBIR </small></label>"
-				      	return quitarTags(data)
+				      	return $(data).text();
 				    }
 				},
 				{ 
 				    targets: 11,
 				    data: "data",
 				    render: function ( data, type, row, meta ) {
-				      	return quitarTags(data)
+				      	return $(data).text();
 				    }
 				},
 				/*
@@ -223,9 +223,9 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 
 				    	if( !(row.id_pnt) || row.id_pnt === ""){ 
 				      		if(!data) return "<label class='btn'> <small> N/D </small></label>"
-				        	return quitarTags(data)
+				        	return $(data).text();
 					   //} else return "<input type='text' value='" + data + "'>" 
-				    	} else return quitarTags(data)
+				    	} else return $(data).text()
 
 				    }
 				}

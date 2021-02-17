@@ -101,10 +101,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
                 <th> Grupos de Edad </th>
                 <th> Nivel Socioeconómico </th>
                 <th> Respecto a los proveedores y su contratación </th>
-
                 <th> Respecto a los recursos y el presupuesto </th>
                 <th> Respecto a los montos y su contratos </th>
-
                 <th> Área(s) Responsable(s) que generan(n) posee(n), Publica(n) y Actualiza(n) la información </th>
                 <th> Fecha de Validación </th>
                 <th> Fecha de Actualización </th>
@@ -118,7 +116,7 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
             </tr> 
         </tbody>
     </table>
-</section>
+</section>   
 
 <section id="detalles"> </section>
 
