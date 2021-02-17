@@ -173,8 +173,8 @@ if( !( isset($_SESSION['pnt']) ) or !( isset($_SESSION["pnt"]["success"]) ) or !
 				{ data: 'id' },
 				{ data: 'ejercicio' },
 				{ data: 'partida' },
-				{ data: 'concepto' }, //concepto
-				{ data: 'concepto_txt' },
+				{ data: 'capitulo' }, //concepto
+				{ data: 'capitulo_txt' },
 				{ data: 'total_presupuesto' },
 				{ data: 'total_modificado' },
 				{ data: 'partida_txt' },

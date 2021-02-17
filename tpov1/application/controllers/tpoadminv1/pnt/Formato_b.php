@@ -155,9 +155,10 @@ class Formato_b extends Webservices
         */
 
         $cols = array("pdes.id_presupuesto_desglose id_tpo", "pnt.id_pnt", "pnt.id", "ej.ejercicio", 
-                       "c.partida", "c.id_par", "c.concepto", "c.concepto_txt", "c.partida_txt", "p.total_presupuesto", 
-                       "p.total_modificado", "pdes.monto_presupuesto", 
-                       "pdes.monto_modificacion", "f.total_partida", "pnt.estatus_pnt");
+                       "c.partida", "c.id_par", "c.concepto", "c.concepto_txt", "c.partida_txt", 
+                       "c.capitulo", "c.capitulo_txt", "p.total_presupuesto", "p.total_modificado", 
+                       "pdes.monto_presupuesto", "pdes.monto_modificacion", "f.total_partida", 
+                       "pnt.estatus_pnt");
 
 
 
@@ -179,7 +180,8 @@ class Formato_b extends Webservices
                       SELECT p3.id_presupesto_concepto id_par, sp2.capitulo, sp2.capitulo_txt, 
                            sp2.concepto, sp2.concepto_txt, p3.partida, p3.denominacion partida_txt
                       FROM cat_presupuesto_conceptos p3
-                      JOIN ( SELECT sp.id_cap, sp.capitulo, sp.capitulo_txt, p1.id_presupesto_concepto id_con, p1.concepto, p1.denominacion concepto_txt
+                      JOIN ( SELECT sp.id_cap, sp.capitulo, sp.capitulo_txt, p1.id_presupesto_concepto id_con, 
+                            p1.concepto, p1.denominacion concepto_txt
                         FROM cat_presupuesto_conceptos p1
                         JOIN ( SELECT p2.id_presupesto_concepto id_cap, p2.capitulo, p2.denominacion capitulo_txt                        
                           FROM cat_presupuesto_conceptos p2                      
