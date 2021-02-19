@@ -32,10 +32,6 @@ class Sujeto_Model extends CI_Model
                 break;
             case '2':  return 'Inactivo';
                 break;
-            case '3':  return 'En proceso';
-                break;
-            case '4':  return 'Pago emitido';
-                break;
             default: return 'Otro';
                 break;
         }
@@ -43,7 +39,7 @@ class Sujeto_Model extends CI_Model
 
     function dame_todos_sujetos()
     {
-        $estatus = array('1', '2', '3', '4');
+        $estatus = array('1', '2');
         $this->db->where_in('active', $estatus);
         $query = $this->db->get('tab_sujetos_obligados');
         
@@ -178,7 +174,7 @@ class Sujeto_Model extends CI_Model
 
     function get_sujeto_id($sujeto_id)
     {
-        $estatus = array('1', '2', '3', '4');
+        $estatus = array('1', '2');
         $this->db->where_in('active', $estatus);
         $this->db->where('id_sujeto_obligado', $sujeto_id);
         $query = $this->db->get('tab_sujetos_obligados');
@@ -205,7 +201,7 @@ class Sujeto_Model extends CI_Model
 
     function dame_sujeto_id($sujeto_id)
     {
-        $estatus = array('1', '2', '3', '4');
+        $estatus = array('1', '2');
         $this->db->where_in('active', $estatus);
         $this->db->where('id_sujeto_obligado', $sujeto_id);
         $query = $this->db->get('tab_sujetos_obligados');
@@ -223,7 +219,7 @@ class Sujeto_Model extends CI_Model
         $filename = 'dist/csv/sujetos.csv';
         $myfile = fopen(FCPATH . $filename, 'w');
         
-        $estatus = array('1', '2', '3', '4');
+        $estatus = array('1', '2');
         $this->db->where_in('active', $estatus);
         $query = $this->db->get('tab_sujetos_obligados');
         $csv_header = array('#',
@@ -282,7 +278,7 @@ class Sujeto_Model extends CI_Model
     {
         //Validamos que no exista un sujeto obligado con el nombre 
         $this->db->where('nombre_sujeto_obligado', $this->input->post('nombre_sujeto_obligado'));
-        $estatus = array('1', '2', '3', '4');
+        $estatus = array('1', '2');
         $this->db->where_in('active', $estatus);
         $query = $this->db->get('tab_sujetos_obligados');
         
@@ -321,7 +317,7 @@ class Sujeto_Model extends CI_Model
     {
         $this->db->where('id_sujeto_obligado !=', $this->input->post('id_sujeto_obligado'));
         $this->db->where('nombre_sujeto_obligado', $this->input->post('nombre_sujeto_obligado'));
-        $estatus = array('1', '2', '3', '4');
+        $estatus = array('1', '2');
         $this->db->where_in('active', $estatus);
         $query = $this->db->get('tab_sujetos_obligados');
         

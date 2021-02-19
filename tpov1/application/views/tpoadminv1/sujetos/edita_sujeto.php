@@ -148,9 +148,7 @@ for($z = 0; $z < sizeof($estados); $z++)
                             <select class="form-control" name="active" id="active">
                                 <option value="0">- Selecciona -</option>
                                 <option value="1" <?php if($sujeto['active'] == '1') { ?>  selected="selected"; <?php } ?> >Activo</option>
-                                <option value="3" <?php if($sujeto['active'] == '3') { ?>  selected="selected"; <?php } ?>>En Proceso</option>
                                 <option value="2" <?php if($sujeto['active'] == '2') { ?>  selected="selected"; <?php } ?> >Inactivo</option>
-                                <option value="4" <?php if($sujeto['active'] == '4') { ?>  selected="selected"; <?php } ?> >Pago Emitido</option>
                             </select>
                         </div>
                     </div><!-- /.box-body -->

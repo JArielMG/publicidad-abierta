@@ -40,13 +40,12 @@ class Exportar extends CI_Controller
         $str = $this->Graficas_model->limpiar_Cadena($this->uri->segment(4));
         $this->load->model('tpoadminv1/capturista/Presupuestos_model');
         $file_presupuesto = $this->Presupuestos_model->crear_archivo_presupuesto('data/archivos/', 'presupuestos.csv', $str);
-        $file_so = $this->crear_archivo_so('data/archivos/', 'sujetos_obligados.csv');
         $file_contratos = $this->crear_archivo_contratos('data/archivos/', 'contratos.csv');
         $file_convenios = $this->crear_archivo_convenios('data/archivos/', 'convenios.csv');
         $file_ordenes_compra = $this->crear_archivo_ordenes_compra('data/archivos/', 'orden_compra.csv');
         $file_facturas = $this->crear_archivo_facturas('data/archivos/', 'facturas.csv');
         $file_facturas_detalle = $this->crear_archivo_facturas_desglose('data/archivos/', 'facturas_detalles.csv');
-        $file_proveedores = $this->crear_archivo_proveedores('data/archivos/', 'proveedores.csv');
+        $file_gasto_x_proveedor = $this->crear_archivo_gasto_x_proveedor('data/archivos/', 'gasto_x_proveedor.csv');
         $file_desglose_partidas = $this->crear_archivo_desglose_partidas('data/archivos/', 'desglosepartidas.csv');
         $file_videos = $this->crear_archivo_videos('data/archivos/', 'campanasyavisos_videos.csv');
         $file_socioeconomicos = $this->crear_archivo_socioeconomicos('data/archivos/', 'campanasyavisos_socioeconomicos.csv');
@@ -58,8 +57,8 @@ class Exportar extends CI_Controller
         $file_edad = $this->crear_archivo_edad('data/archivos/', 'campanasyavisos_edad.csv');
         $file_audios = $this->crear_archivo_audios('data/archivos/', 'campanasyavisos_audios.csv');
 
-        $files =array($file_presupuesto, $file_so, $file_contratos, $file_convenios, $file_ordenes_compra, $file_proveedores, 
-            $file_desglose_partidas, $file_facturas, $file_facturas_detalle,$file_videos, $file_socioeconomicos, $file_campanasyavisos, $file_sexo,
+        $files =array($file_presupuesto, $file_contratos, $file_convenios, $file_ordenes_compra, $file_desglose_partidas, $file_facturas, 
+            $file_facturas_detalle, $file_gasto_x_proveedor, $file_videos, $file_socioeconomicos, $file_campanasyavisos, $file_sexo,
             $file_lugar, $file_imagenes, $file_educacion, $file_edad, $file_audios);
                
         $leemefile = 'leeme.txt';
@@ -642,13 +641,22 @@ class Exportar extends CI_Controller
         $filename = $path . $namefile;
         $myfile = fopen(FCPATH . $filename, 'w');
         
-        $query = $this->db->get('vout_presupuestos_desglose');
+        $query = $this->db->get('vout_presupuestos_desglose_descarga');
         $csv_header = array('#',
                     utf8_decode('ID de desglose'),
                     utf8_decode('ID de presupuesto'),
                     utf8_decode('Partida presupuestal'),
-                    utf8_decode('Monto asignado'),
+                    utf8_decode('Fuente presupuestaria federal'),
+                    utf8_decode('Monto asignado de la fuente presupuestaria federal'),
+                    utf8_decode('Fuente presupuestaria local'),
+                    utf8_decode('Monto asignado de la fuente presupuestaria local'),
+                    utf8_decode('Monto asignado total'),
                     utf8_decode('Monto de modificación'),
+                    utf8_decode('Fecha de validación'),
+                    utf8_decode('Área responsable de la información'),
+                    utf8_decode('Año'),
+                    utf8_decode('Fecha de actualización'),
+                    utf8_decode('Nota'),
                     utf8_decode('Estatus'));
         fputcsv($myfile, $csv_header);
         
@@ -663,8 +671,17 @@ class Exportar extends CI_Controller
                     utf8_decode($row['ID de desglose']),
                     utf8_decode($row['ID de presupuesto']),
                     utf8_decode($row['Partida presupuestal']),
+                    utf8_decode($row['fuente_federal']),
+                    utf8_decode($row['monto_fuente_federal']),
+                    utf8_decode($row['fuente_local']),
+                    utf8_decode($row['monto_fuente_local']),
                     utf8_decode($row['Monto asignado']),
                     utf8_decode($row['Monto de modificación']),
+                    utf8_decode($row['fecha_validacion']),
+                    utf8_decode($row['area_responsable']),
+                    utf8_decode($row['periodo']),
+                    utf8_decode($row['fecha_actualizacion']),
+                    utf8_decode($row['nota']),
                     utf8_decode($row['Estatus'])
                 );
                 fputcsv($myfile, $csv);
@@ -1290,10 +1307,29 @@ class Exportar extends CI_Controller
         ID de presupuesto\r\n
         Ejercicio\r\n
         Sujeto obligado\r\n
+        Fecha de inicio del periodo que se informa\r\n
+        Fecha de término del periodo que se informa\r\n
         Presupuesto original\r\n
         Monto modificado\r\n
         Presupuesto modificado\r\n
-        Programa Anual\r\n
+        Presupuesto ejercido\r\n
+        Fecha de validación\r\n
+        Área responsable de la información\r\n
+        Año\r\n
+        Fecha de actualización\r\n
+        Nota\r\n
+        Denominación del documento del PACS\r\n
+        Misión y Visión oficiales del Ente Público\r\n
+        Objetivo u objetivos institucionales\r\n
+        Metas nacionales y/o Estrategias transversales establecidas en el Plan Nacional de Desarrollo\r\n
+        Programa o programas sectoriales\r\n
+        Objetivo estratégico o transversal\r\n
+        Temas específicos derivados de los objetivos estratégicos o transversales\r\n
+        Conjunto de Campañas de Comunicación Social a difundirse en el ejercicio fiscal respectivo\r\n
+        Hipervínculo al PACS\r\n
+        Archivo del PACS\r\n
+        Fecha publicación del PACS\r\n
+        Nota del PACS\r\n
         Estatus\r\n";
     }
 
@@ -1420,9 +1456,18 @@ class Exportar extends CI_Controller
         ID de desglose\r\n
         ID de presupuesto\r\n
         Partida presupuestal\r\n
-        Monto asignado\r\n
+        Fuente presupuestaria federal\r\n
+        Monto asignado de la fuente presupuestaria federal\r\n
+        Fuente presupuestaria local\r\n
+        Monto asignado de la fuente presupuestaria local\r\n
+        Monto asignado total\r\n
         Monto de modificación\r\n
-        Estado\r\n";
+        Fecha de validación\r\n
+        Área responsable de la información\r\n
+        Año\r\n
+        Fecha de actualización\r\n
+        Nota\r\n
+        Estatus\r\n";
     }
 
     private function leemeInicio() {
@@ -1958,36 +2003,48 @@ class Exportar extends CI_Controller
         
         $query = $this->db->get('tab_campana_aviso');
 
-        $csv_header = array('#',
-                    utf8_decode('Cobertura'),
+        $csv_header = array('#',                   
                     utf8_decode('Tipo'),
                     utf8_decode('Subtipo'),
-                    utf8_decode('Tema'),
-                    utf8_decode('Objetivo'),
+                    utf8_decode('Nombre'),
+                    utf8_decode('Clave de campaña o aviso institucional'),
+                    utf8_decode('Autoridad que proporcionó la clave'),
                     utf8_decode('Ejercicio'),
                     utf8_decode('Trimestre'),
+                    utf8_decode('Fecha de inicio del periodo que se informa'),
+                    utf8_decode('Fecha de término del periodo que se informa'),
                     utf8_decode('Sujeto obligado contratante'),
                     utf8_decode('Sujeto obligado solicitante'),
+                    utf8_decode('Tema'),
+                    utf8_decode('Objetivo institucional'),
+                    utf8_decode('Objetivo de comunicación'),
+                    utf8_decode('Cobertura'),
+                    utf8_decode('Ámbito geográfico'),                                
+                    utf8_decode('Fecha de inicio'),
+                    utf8_decode('Fecha de término'),
                     utf8_decode('Tiempo oficial'),
-                    utf8_decode('Nombre'),
-                    utf8_decode('Objetivo comunicación'),
-                    utf8_decode('Fecha inicio'),
-                    utf8_decode('Fecha termino'),
+                    utf8_decode('Monto total del tiempo oficial'),
+                    utf8_decode('Tipo de tiempo oficial'),
+                    utf8_decode('Mensaje sobre el tiempo oficial'),
                     utf8_decode('Fecha inicio tiempo oficial'),
-                    utf8_decode('Fecha termino tiempo oficial'),
+                    utf8_decode('Fecha término tiempo oficial'),
+                    utf8_decode('Medio de comunicación'),
+                    utf8_decode('Descripción de unidad'),
+                    utf8_decode('Concesionario responsable de publicar la campaña o la comunicación correspondiente (razón social)'),
+                    utf8_decode('Distintivo y/o nombre comercial del concesionario responsable de publicar la campaña o comunicación'),
+                    utf8_decode('Descripción breve de las razones que justifican la elección del proveedor'),
+                    utf8_decode('Área administrativa encargada de solicitar la difusión del mensaje o producto, en su caso'),
+                    utf8_decode('Número de factura, en su caso'),
                     utf8_decode('Publicación SEGOB'),
-                    utf8_decode('Ámbito geográfico'),
-                    utf8_decode('Documento PACS'),
+                    utf8_decode('Documento del PACS'),                    
                     utf8_decode('Fecha de publicación'),
                     utf8_decode('Evaluación'),
                     utf8_decode('Documento de evaluación'),
                     utf8_decode('Fecha de validación'),
-                    utf8_decode('Área responsable'),
-                    utf8_decode('Período'),
+                    utf8_decode('Área responsable de la información'),
+                    utf8_decode('Año'),
                     utf8_decode('Fecha de actualización'),
-                    utf8_decode('Nota'),
-                    utf8_decode('Autoridad'),
-                    utf8_decode('Clave campana'),
+                    utf8_decode('Nota'),                    
                     utf8_decode('Estatus'),
         );
         fputcsv($myfile, $csv_header);
@@ -1999,26 +2056,39 @@ class Exportar extends CI_Controller
             foreach ($query->result_array() as $row) 
             {
                 $csv = array(
-                    //utf8_decode($count),
                     utf8_decode($row['id_campana_aviso']),
-                    utf8_decode($this->Campana_model->dame_cobertura_nombre($row['id_campana_cobertura'])),
                     utf8_decode($this->Campana_model->dame_camp_tipo_nombre($row['id_campana_tipo'])),
                     utf8_decode($this->Campana_model->dame_camp_subtipo_nombre($row['id_campana_subtipo'])),
-                    utf8_decode($this->Campana_model->dame_tema_nombre($row['id_campana_tema'])),
-                    utf8_decode($this->Campana_model->dame_objetivo_nombre($row['id_campana_objetivo'])),
+                    utf8_decode($row['nombre_campana_aviso']),
+                    utf8_decode($row['clave_campana']),
+                    utf8_decode($row['autoridad']),                    
                     utf8_decode($this->Campana_model->dame_ejercicio_nombre($row['id_ejercicio'])),
                     utf8_decode($this->Campana_model->dame_trimestre_nombre($row['id_trimestre'])),
+                    utf8_decode($row['fecha_inicio_periodo']),
+                    utf8_decode($row['fecha_termino_periodo']),
                     utf8_decode($this->Campana_model->dame_nombre_contratante($row['id_so_contratante'])),
                     utf8_decode($this->Campana_model->dame_nombre_solicitante($row['id_so_solicitante'])),
-                    utf8_decode($this->Campana_model->dame_tiempo_oficial_nombre($row['id_tiempo_oficial'])),
-                    utf8_decode($row['nombre_campana_aviso']),
-                    utf8_decode($this->Generales_model->clear_html_tags($row['objetivo_comunicacion'])),
+                    utf8_decode($this->Campana_model->dame_tema_nombre($row['id_campana_tema'])),
+                    utf8_decode($this->Campana_model->dame_objetivo_nombre($row['id_campana_objetivo'])),
+                    utf8_decode($this->Generales_model->clear_html_tags($row['objetivo_comunicacion'])),                                    
+                    utf8_decode($this->Campana_model->dame_cobertura_nombre($row['id_campana_cobertura'])),
+                    utf8_decode($row['campana_ambito_geo']),
                     utf8_decode($row['fecha_inicio']),
                     utf8_decode($row['fecha_termino']),
+                    utf8_decode($this->Campana_model->dame_tiempo_oficial_nombre($row['id_tiempo_oficial'])),
+                    utf8_decode($row['monto_tiempo']),                    
+                    utf8_decode($this->Generales_model->clear_html_tags($row['mensajeTO'])),                   
                     utf8_decode($row['fecha_inicio_to']),
                     utf8_decode($row['fecha_termino_to']),
+                    utf8_decode($row['id_servicio_categoria']),
+                    utf8_decode($row['descripcion_unidad']),
+                    utf8_decode($row['responsable_publisher']),
+                    utf8_decode($row['name_comercial']),
+                    utf8_decode($row['razones_supplier']),
+                    utf8_decode($row['difusion_mensaje']),
+                    utf8_decode($row['num_factura']),
                     utf8_decode($row['publicacion_segob']),
-                    utf8_decode($row['campana_ambito_geo']),
+                    utf8_decode($row['plan_acs']),
                     utf8_decode($this->Campana_model->dame_docs_nombre($row['id_presupuesto'])),
                     utf8_decode($row['fecha_dof']),
                     utf8_decode($this->Generales_model->clear_html_tags($row['evaluacion'])),
@@ -2027,9 +2097,7 @@ class Exportar extends CI_Controller
                     utf8_decode($row['area_responsable']),
                     utf8_decode($row['periodo']),
                     utf8_decode($row['fecha_actualizacion']),
-                    utf8_decode($this->Generales_model->clear_html_tags($row['nota'])),
-                    utf8_decode($row['autoridad']),
-                    utf8_decode($row['clave_campana']),
+                    utf8_decode($this->Generales_model->clear_html_tags($row['nota'])),                    
                     utf8_decode($this->Campana_model->get_estatus_name($row['active'])),
                 );
                 fputcsv($myfile, $csv);
